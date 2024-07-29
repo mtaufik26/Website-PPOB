@@ -6,6 +6,7 @@ const Home = () => {
   const services = [
     { icon: 'cellphone', title: 'Pulsa' },
     { icon: 'cellphone', title: 'Paket Data' }, // Contoh lain dengan gambar yang sama
+    { icon: 'cellphone', title: 'PLN' }, // Contoh lain dengan gambar yang sama
     // Tambahkan lebih banyak layanan sesuai kebutuhan
   ];
 
