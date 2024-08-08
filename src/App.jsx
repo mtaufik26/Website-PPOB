@@ -9,6 +9,10 @@ import ProcessPayment from './components/pulsa/ProcessPayment';
 import PaymentProcess from './components/PLN/PaymentProcess';
 import KirimUang from './components/KirimUang/KirimUang';
 import ProsesPengiriman from './components/KirimUang/ProsesPengiriman';
+import Dana from './components/TopUp/Dana/Dana';
+import Gopay from './components/TopUp/Gopay/Gopay';
+import LinkAja from './components/TopUp/LinkAja/LinkAja';
+import Ovo from './components/TopUp/Ovo/Ovo';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -29,6 +33,10 @@ const App = () => {
             <Route path="/kirim-uang" element={<KirimUang />} />
             <Route path="/proses-pengiriman" element={<ProsesPengiriman />} />
             <Route path="/process-payment" element={<ProcessPayment />} />
+            <Route path="/dana" element={<Dana />} />
+            <Route path="/gopay" element={<Gopay />} />
+            <Route path="/linkaja" element={<LinkAja />} />
+            <Route path="/ovo" element={<Ovo />} />
           </Routes>
         </main>
         {/* <Footer /> */}
