@@ -5,22 +5,26 @@ import Card from './Card';
 const categories = {
   Favorit: [
     { iconName: 'pulsa', title: 'Pulsa' },
-    { iconName: 'kuota', title: 'Paket Data' },
+    // { iconName: 'kuota', title: 'Paket Data' },
     { iconName: 'listrik', title: 'PLN' },
   ],
   Pembelian: [
     { iconName: 'pulsa', title: 'Pulsa' },
-    { iconName: 'kuota', title: 'Paket Data' },
+    // { iconName: 'kuota', title: 'Paket Data' },
     { iconName: 'listrik', title: 'PLN' },
     { iconName: 'game', title: 'Game' },
     { iconName: 'emoney', title: 'E-money' },
   ],
+  Pembayaran: [
+    { iconName: 'air', title: 'PDAM' },
+    { iconName: 'bpjs', title: 'BPSJ' },
+    { iconName: 'send', title: 'Kirim Uang' },
+  ],
   'Dompet Digital': [
-    { iconName: 'wallet', title: 'GoPay/ DANA/ OVO' },
     { iconName: 'dana', title: 'Top Up DANA' },
     { iconName: 'linkaja', title: 'Top Up LinkAja' },
-    { iconName: 'wallet', title: 'Top Up OVO' },
-    { iconName: 'wallet', title: 'Saldo Dompet Gojek' },
+    { iconName: 'ovo', title: 'Top Up OVO' },
+    { iconName: 'gopay', title: 'Saldo Dompet Gojek' },
   ],
 };
 
@@ -55,8 +59,8 @@ const AllCategories = ({ onBack }) => {
               <div className="grid grid-cols-4 gap-0.5">
                 {items.map((item, index) => (
                   <div key={index} className="flex flex-col items-center">
-                    <div className="bg-gray-100 rounded-lg p-1 mb-1">
-                      <ServiceCard iconName={item.iconName} className="w-10 h-10" />
+                    <div className="rounded-lg p-1 mb-1">
+                      <ServiceCard iconName={item.iconName} className="w-10 h-10 text-sky-600" />
                     </div>
                     <span className="text-xs text-center">{item.title}</span>
                   </div>
