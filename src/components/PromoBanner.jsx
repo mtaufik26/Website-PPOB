@@ -31,7 +31,7 @@ const PromoBanner = () => {
         {images.map((_, index) => (
           <div
             key={index}
-            className={`h-2 w-2 mx-1 rounded-full ${currentImageIndex === index ? 'bg-slate-400' : 'bg-slate-200'}`}
+            className={`h-2 w-2 mx-1 rounded-full ${currentImageIndex === index ? 'bg-sky-600' : 'bg-sky-200'}`}
           ></div>
         ))}
       </div>
@@ -43,17 +43,4 @@ export default PromoBanner;
 
 
 
-//   return (
-//     <div className="bg-pink-500 p-4 rounded-lg shadow-lg overflow-hidden max-w-lg mx-auto">
-//       <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}>
-//         {images.map((image, index) => (
-//           <div key={index} className="w-full p-2">
-//             <img src={image} alt={`Promo ${index}`} className="h-32 w-full object-cover rounded-lg" />
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
 
-// export default PromoBanner;

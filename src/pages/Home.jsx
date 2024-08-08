@@ -4,20 +4,21 @@ import ServiceCard from '../components/ServiceCard';
 import UserInfo from '../components/UserInfo';
 import Header from '../components/Header';
 import AllCategories from '../components/AllCategories';
-import PromoBanner from '../components/PromoBanner'
+import PromoBanner from '../components/PromoBanner';
 
 const services = [
   { iconName: 'pulsa', title: 'Pulsa', category: 'pembelian' },
-  { iconName: 'kuota', title: 'Paket Data', category: 'pembelian' },
   { iconName: 'listrik', title: 'PLN', category: 'pembelian' },
+  { iconName: 'air', title: 'PDAM', category: 'pembayaran' },
   { iconName: 'game', title: 'TopUp Game', category: 'pembelian' },
+  { iconName: 'bpjs', title: 'BPJS', category: 'pembayaran' },
+  // { iconName: 'transferbank', title: 'Transfer Bank', category: 'dompet digital' },
+  { iconName: 'send', title: 'Kirim Uang', category: 'pembayaran' },
   { iconName: 'emoney', title: 'E-Money', category: 'pembelian' },
-  { iconName: 'air', title: 'PDAM', category: 'pembelian' },
-  { iconName: 'bpjs', title: 'BPJS', category: 'pembelian' },
-  { iconName: 'transferbank', title: 'Transfer Bank', category: 'dompet digital' },
-  { iconName: 'send', title: 'Kirim Uang', category: 'dompet digital' },
-  { iconName: 'dana', title: 'Dana', category: 'dompet digital' },
-  { iconName: 'linkaja', title: 'Top Up LinkAja!', category: 'dompet digital' },
+  { iconName: 'dana', title: 'TopUp Dana', category: 'dompet digital' },
+  { iconName: 'linkaja', title: 'TopUp LinkAja!', category: 'dompet digital' },
+  { iconName: 'ovo', title: 'TopUp OVO', category: 'dompet digital' },
+  { iconName: 'gopay', title: 'TopUp Gopay', category: 'dompet digital' },
   { iconName: 'lainnya', title: 'Seluruh Kategori', category: 'lainnya' },
 ];
 
@@ -37,7 +38,7 @@ const Home = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-white"> {/* Tambahkan bg-blue-100 untuk background biru */}
       <Header />
       <div className="mb-10"></div>
       <UserInfo
@@ -47,7 +48,7 @@ const Home = () => {
         methods="+4 metode lainnya"
       />
       <Card>
-      <PromoBanner />
+        <PromoBanner />
         <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-4 cursor-pointer my-6">
           {services.map((service, index) => (
             <ServiceCard 
@@ -58,7 +59,7 @@ const Home = () => {
             />
           ))}
         </div>
-        </Card>
+      </Card>
     </div>
   );
 };

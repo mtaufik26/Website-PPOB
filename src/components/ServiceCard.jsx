@@ -1,22 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Pulsa, Kuota, PLN, Game, Emoney, Air, BPJS, TransferBank, Wallet, Send, Dana, LinkAja, Lainnya } from '../icons/icon'; // Adjust import path as needed
+import { Pulsa, PLN, Game, Emoney, Air, BPJS, Wallet, Send, Dana, LinkAja, OVO, Gopay, Lainnya } from '../icons/icon';
 
 const icons = {
   pulsa: Pulsa,
-  kuota: Kuota,
   listrik: PLN,
   game: Game,
   emoney: Emoney,
   air: Air,
   bpjs: BPJS,
-  transferbank: TransferBank,
   wallet: Wallet,
   send: Send,
   dana: Dana,
   linkaja: LinkAja,
+  ovo: OVO,
+  gopay: Gopay,
   lainnya: Lainnya,
-  // Add other icons here
 };
 
 const ServiceCard = ({ iconName, title, onClick }) => {
@@ -26,6 +25,10 @@ const ServiceCard = ({ iconName, title, onClick }) => {
   const handleClick = () => {
     if (iconName === 'pulsa') {
       navigate('/pulsa');
+    } else if (iconName === 'listrik') {
+      navigate('/pln');
+    } else if (iconName === 'send') {
+      navigate('/kirim-uang');
     } else if (onClick) {
       onClick();
     }
@@ -33,7 +36,7 @@ const ServiceCard = ({ iconName, title, onClick }) => {
 
   return (
     <button
-      className="flex flex-col items-center p-4 text-center bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 transition-all"
+      className="flex flex-col items-center p-4 text-center bg-white rounded-lg shadow-md hover:bg-gray-300 transition-all"
       onClick={handleClick}
     >
       <div className="text-lg mb-1">
