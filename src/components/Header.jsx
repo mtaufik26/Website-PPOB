@@ -10,7 +10,7 @@ const Header = () => {
       <span className="self-center text-xl font-semibold whitespace-nowrap">PPOB App</span>
     </a>
     <div>
-      <a href="#" className="text-white hover:text-sky-300 font-medium px-4 py-2 rounded transition duration-300">Login</a>
+      <a href="/login" className="text-white hover:text-sky-300 font-medium px-4 py-2 rounded transition duration-300">Login</a>
     </div>
   </div>
 </nav>
