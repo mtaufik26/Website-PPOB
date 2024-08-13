@@ -8,6 +8,7 @@ const ElectricityForm = () => {
   const [selectedNominal, setSelectedNominal] = useState(null);
   const [meteranId, setMeteranId] = useState('');
   const [meteranIdError, setMeteranIdError] = useState('');
+  const [notification, setNotification] = useState('');
   const navigate = useNavigate();
 
   const operators = ['Token Listrik', 'Tagihan Listrik', 'PLN Non-Taglis'];
@@ -23,10 +24,22 @@ const ElectricityForm = () => {
   const handleMeteranIdChange = (e) => {
     const value = e.target.value.replace(/\D/g, '');
     setMeteranId(value);
+    setNotification('');
+
     if (value.length < 11 && value.length > 0) {
       setMeteranIdError('Nomor terlalu pendek | minimal 11 karakter');
+    } else if (value.length > 12) {
+      setMeteranIdError('Nomor terlalu panjang | maksimum 12 karakter');
     } else {
       setMeteranIdError('');
+    }
+  };
+
+  const handleCheckMeteranId = () => {
+    if (meteranId.length >= 11 && meteranId.length <= 12) {
+      setNotification('Nomor valid! Anda bisa melanjutkan.');
+    } else {
+      setNotification('Nomor tidak valid! Periksa kembali nomor yang Anda masukkan.');
     }
   };
 
@@ -77,20 +90,34 @@ const ElectricityForm = () => {
         ))}
       </div>
       <div className="px-4 mb-4">
-        <label className="block text-sm text-gray-600 mb-1">No. Meter/ID Pel</label>
-        <div className="flex flex-col">
-          <input
-            type="text"
-            value={meteranId}
-            onChange={handleMeteranIdChange}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
-            aria-label="Meter/ID Input"
-          />
-          {meteranIdError && (
-            <span className="text-red-500 text-sm mt-1">{meteranIdError}</span>
-          )}
-        </div>
-      </div>
+  <label className="block text-sm text-gray-600 mb-1">No. Meter/ID Pel</label>
+  <div className="flex items-center relative">
+    <input
+      type="text"
+      value={meteranId}
+      onChange={handleMeteranIdChange}
+      className="border rounded px-3 py-2 w-full pr-20 focus:outline-none focus:ring-2 focus:ring-sky-400"
+      aria-label="Meter/ID Input"
+    />
+    <button
+      className="absolute right-2 bg-sky-500 text-white px-4 py-2 rounded"
+      onClick={handleCheckMeteranId}
+      aria-label="Check Meteran ID"
+    >
+      Cek
+    </button>
+  </div>
+  {meteranIdError && (
+    <span className="text-red-500 text-sm mt-1">{meteranIdError}</span>
+  )}
+  {notification && (
+    <span
+      className={`text-sm mt-1 ${notification.includes('tidak valid') ? 'text-red-500' : 'text-green-500'}`}
+    >
+      {notification}
+    </span>
+  )}
+</div>
       <div className="px-4 mb-4">
         <h2 className="text-sm text-gray-600 mb-2">Nominal</h2>
         <div className="grid grid-cols-2 gap-4">
@@ -113,7 +140,7 @@ const ElectricityForm = () => {
           ))}
         </div>
       </div>
-      <div className="sticky bottom-0 left-0 right-0 bg-white p-4 border-t shadow-lg">
+      <div className="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-lg border-t">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-sm text-gray-600">Total Harga</p>
@@ -122,10 +149,10 @@ const ElectricityForm = () => {
             </p>
           </div>
           <button
-            className={`bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold transition duration-300 ${
+            className={`bg-sky-500  text-white px-6 py-2 rounded-lg font-semibold transition duration-300 ${
               !selectedNominal || meteranId.length < 11
                 ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-blue-600'
+                : 'hover:bg-sky-600'
             }`}
             onClick={handlePaymentSelection}
             disabled={!selectedNominal || meteranId.length < 11}

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Card from '../Card';
 
-const PaymentConfirmation = ({ packageName, phoneNumber, amount, paymentMethod, onConfirm, onCancel }) => {
+const PaymentConfirmation = ({ packageName, phoneNumber, amount, paymentMethod, onCancel }) => {
   const navigate = useNavigate();
 
   const handlePayment = () => {
@@ -10,33 +9,36 @@ const PaymentConfirmation = ({ packageName, phoneNumber, amount, paymentMethod, 
       state: {
         selectedMethod: paymentMethod,
         amount: amount,
-        accountNumber: phoneNumber, // Assuming this is the account number
+        accountNumber: phoneNumber,
       },
     });
   };
 
   return (
-    <div className='max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg'>
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Konfirmasi Pembelian</h2>
-      <div className="bg-gray-50 p-5 rounded-lg mb-6 shadow-sm">
-        <InfoItem label="Nama paket" value={packageName} />
-        <InfoItem label="Nomor HP" value={phoneNumber} />
-        <InfoItem label="Harga" value={`Rp ${amount.toLocaleString()}`} />
-        <InfoItem label="Metode pembayaran" value={paymentMethod} isLast />
+    <div className='max-w-lg mx-auto mt-6 sm:mt-8'>
+      <div className='bg-white border border-gray-200 rounded-lg shadow-md p-6 mb-8'>
+        <h2 className='text-2xl font-bold text-gray-800 mb-6'>Konfirmasi Pembelian</h2>
+        <div className='space-y-4'>
+          <DetailItem label="Nama Paket" value={packageName} />
+          <DetailItem label="Nomor HP" value={phoneNumber} />
+          <DetailItem label="Harga" value={`Rp ${amount.toLocaleString()}`} />
+          <DetailItem label="Metode Pembayaran" value={paymentMethod} />
+        </div>
+        <div className='flex items-center justify-between border-t border-gray-300 pt-4 mt-4'>
+          <span className='text-lg font-semibold text-gray-900'>Total Harga</span>
+          <span className='text-xl font-bold text-red-600'>Rp {amount.toLocaleString()}</span>
+        </div>
       </div>
-      <div className="mb-6 flex justify-between items-center py-3 border-t border-b border-gray-200">
-        <span className="text-lg font-medium">Total Harga</span>
-        <span className="text-xl font-bold text-red-600">Rp {amount.toLocaleString()}</span>
-      </div>
+
       <button
-        onClick={handlePayment} // Navigate to ProcessPayment page
-        className="w-full bg-sky-500 text-white py-3 rounded-lg mb-3 font-semibold hover:bg-sky-600 transition duration-300 ease-in-out shadow-md"
+        onClick={handlePayment}
+        className='w-full bg-sky-500 text-white py-3 rounded-lg mb-3 font-semibold hover:bg-sky-600 transition duration-300 ease-in-out shadow-md'
       >
         BAYAR
       </button>
       <button
         onClick={onCancel}
-        className="w-full text-sky-500 py-2 font-medium hover:text-sky-600 transition duration-300 ease-in-out"
+        className='w-full bg-gray-200 text-sky-500 py-2 rounded-lg font-medium hover:bg-gray-300 transition duration-300 ease-in-out'
       >
         Kembali
       </button>
@@ -44,10 +46,10 @@ const PaymentConfirmation = ({ packageName, phoneNumber, amount, paymentMethod, 
   );
 };
 
-const InfoItem = ({ label, value, isLast = false }) => (
-  <div className={`flex justify-between ${isLast ? '' : 'mb-3'}`}>
-    <span className="text-gray-600 font-semibold">{label}:</span>
-    <span className="font-medium text-gray-800">{value}</span>
+const DetailItem = ({ label, value }) => (
+  <div className='flex items-center justify-between'>
+    <span className='text-base font-medium text-gray-600'>{label}</span>
+    <span className='text-base font-medium text-gray-900'>{value}</span>
   </div>
 );
 

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Card from '../Card';
+import Card from '../../Card';
+import img1 from '../../../assets/images/1.png'
 
-const ProcessPayment = () => {
+const Process = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const { selectedMethod, amount, accountNumber } = location.state || {};
+  const { amount, selectedMethod, meteranId, productType } = location.state || {};
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,7 +24,7 @@ const ProcessPayment = () => {
     return () => clearTimeout(timer);
   }, [status]);
 
-  const handleClose = () => {
+  const handleDone = () => {
     navigate('/');
   };
 
@@ -33,10 +34,11 @@ const ProcessPayment = () => {
         return (
           <>
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pembayaran</h2>
-            <p className="text-gray-600 mb-2">Metode: {selectedMethod}</p>
-            <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
-            <p className="text-gray-600 mb-4">Nomor HP: {accountNumber}</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pengiriman</h2>
+            <p className="text-gray-600 mb-2">Jumlah: Rp {amount.toLocaleString()}</p>
+            <p className="text-gray-600 mb-4">
+  {productType === 'electricity' ? 'ID Pelanggan' : 'Nomor HP'}: {productType === 'electricity' ? meteranId : phone}
+</p>
             <p className="text-gray-600">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
           </>
         );
@@ -44,7 +46,7 @@ const ProcessPayment = () => {
         return (
           <>
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Memproses Pembayaran</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Proses Pengiriman</h2>
             <p className="text-gray-600">Transaksi Anda sedang diproses...</p>
           </>
         );
@@ -52,13 +54,11 @@ const ProcessPayment = () => {
         return (
           <>
             <div className="text-sky-500 text-6xl mb-4">✅</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
-            <p className="text-gray-600 mb-2">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
-            <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
-            <p className="text-gray-600 mb-6">Nomor HP: {accountNumber}</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Pengiriman Selesai</h2>
+            <p className="text-gray-600 mb-2">Transaksi Anda telah berhasil!</p>
             <button
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
-              onClick={handleClose}
+              onClick={handleDone}
             >
               Kembali ke Beranda
             </button>
@@ -70,22 +70,20 @@ const ProcessPayment = () => {
   };
 
   return (
-    <Card>
-      <div className="max-w-md mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
-        <div className="p-6 text-center">
-          <div className="mb-6">
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
-              <div
-                className="bg-sky-500 h-2.5 rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
+    <Card className="max-w-md mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+      <div className="p-6 text-center">
+        <div className="mb-6">
+          <div className="w-full bg-gray-200 rounded-full h-2.5">
+            <div
+              className="bg-sky-500 h-2.5 rounded-full transition-all duration-500 ease-out"
+              style={{ width: `${progress}%` }}
+            ></div>
           </div>
-          {renderContent()}
         </div>
+        {renderContent()}
       </div>
     </Card>
   );
 };
 
-export default ProcessPayment;
+export default Process;

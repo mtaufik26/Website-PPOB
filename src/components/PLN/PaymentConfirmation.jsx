@@ -33,20 +33,19 @@ const PaymentConfirmation = () => {
         </button>
         <h1 className="text-xl font-semibold">Listrik PLN</h1>
       </header>
-      <main className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Konfirmasi Pembelian</h2>
-        <div className="bg-gray-50 p-5 rounded-lg mb-6 shadow-sm">
-          <dl className="space-y-3">
+      <main className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Konfirmasi Pembelian</h2>
+          <div className="space-y-3">
             <InfoItem term="Nama paket" description={`Pulsa ${selectedNominal.toLocaleString()}`} />
             <InfoItem term="Nomor HP" description={meteranId} />
             <InfoItem term="Harga" description={`Rp ${selectedNominal.toLocaleString()}`} />
             <InfoItem term="Metode pembayaran" description={selectedMethod.toUpperCase()} />
-          </dl>
-        </div>
-        <div className="mb-6 flex justify-between items-center py-3 border-t border-b border-gray-200">
-          <span className="text-lg font-medium">Total Harga</span>
+          </div>
+        <div className="flex items-center justify-between border-t border-gray-300 pt-4 mt-4">
+          <span className="text-lg font-semibold text-gray-900">Total Harga</span>
           <span className="text-xl font-bold text-red-600">Rp {(selectedNominal + 500).toLocaleString()}</span>
         </div>
+      </main>
         <button
           onClick={handlePayment}
           className="w-full bg-sky-500 text-white py-3 rounded-lg mb-3 font-semibold hover:bg-sky-600 transition duration-300 ease-in-out shadow-md"
@@ -56,12 +55,11 @@ const PaymentConfirmation = () => {
         </button>
         <button
           onClick={handleBack}
-          className="w-full text-sky-500 py-2 font-medium hover:text-sky-600 transition duration-300 ease-in-out"
+          className="w-full bg-gray-200 text-sky-500 py-2 rounded-lg font-medium hover:bg-gray-300 transition duration-300 ease-in-out"
           aria-label="Go back to previous page"
         >
           Kembali
         </button>
-      </main>
     </div>
   );
 };
