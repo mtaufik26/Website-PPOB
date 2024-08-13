@@ -24,7 +24,7 @@ const PaymentProcess = () => {
   }, [status]);
 
   const handleClose = () => {
-    navigate('/pln');
+    navigate('/');
   };
 
   const renderContent = () => {
@@ -51,13 +51,13 @@ const PaymentProcess = () => {
       case 'selesai':
         return (
           <>
-            <div className="text-sky-500 text-6xl mb-4">✅</div>
+            <div className="text-sky-500 text-6xl mb-4">✅ </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
             <p className="text-gray-600 mb-2">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
             <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
             <p className="text-gray-600 mb-6">Nomor Meter/ID Pel: {meteranId}</p>
             <button
-              className="bg-sky-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
+              className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
               onClick={handleClose}
             >
               Kembali ke Beranda
@@ -76,7 +76,7 @@ const PaymentProcess = () => {
           <div className="mb-6">
             <div className="w-full bg-gray-200 rounded-full h-2.5">
               <div
-                className="bg-green-500 h-2.5 rounded-full transition-all duration-500 ease-out"
+                className="bg-sky-500 h-2.5 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>

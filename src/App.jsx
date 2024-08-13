@@ -10,18 +10,21 @@ import PaymentProcess from './components/PLN/PaymentProcess';
 import KirimUang from './components/KirimUang/KirimUang';
 import ProsesPengiriman from './components/KirimUang/ProsesPengiriman';
 import Dana from './components/TopUp/Dana/Dana';
+import PaymentPage from './components/TopUp/Dana/PaymentPage';
+import ConfirmationPage from './components/TopUp/Dana/ConfirmationPage';
+import Process from './components/TopUp/Dana/Process';
 import Gopay from './components/TopUp/Gopay/Gopay';
 import LinkAja from './components/TopUp/LinkAja/LinkAja';
 import Ovo from './components/TopUp/Ovo/Ovo';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-const App = () => {
-  return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        {/* <Header /> */}
-        <main className="flex-grow">
+  const App = () => {
+    return (
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          {/* <Header /> */}
+          <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pulsa" element={<PulsaPurchase />} />
@@ -34,15 +37,18 @@ const App = () => {
             <Route path="/proses-pengiriman" element={<ProsesPengiriman />} />
             <Route path="/process-payment" element={<ProcessPayment />} />
             <Route path="/dana" element={<Dana />} />
+            <Route path="/payment-page" element={<PaymentPage />} />
+            <Route path="/confirmation" element={<ConfirmationPage />} />
+            <Route path="/process" element={<Process />} />
             <Route path="/gopay" element={<Gopay />} />
             <Route path="/linkaja" element={<LinkAja />} />
             <Route path="/ovo" element={<Ovo />} />
           </Routes>
-        </main>
-        {/* <Footer /> */}
-      </div>
-    </Router>
-  );
-}
+          </main>
+          {/* <Footer /> */}
+        </div>
+      </Router>
+    );
+  }
 
-export default App;
+  export default App;

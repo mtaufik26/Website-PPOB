@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Card from '../Card';
+import Card from '../../Card';
 
 const paymentMethods = [
   { id: 'gopay', name: 'GoPay', icon: '💳', color: 'bg-blue-100' },
@@ -10,21 +10,31 @@ const paymentMethods = [
   { id: 'mandiri', name: 'Mandiri Virtual Account', icon: '🏦', color: 'bg-yellow-100' },
 ];
 
-const PaymentSelection = () => {
+const PaymentPage = () => {
   const [selectedMethod, setSelectedMethod] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { selectedNominal, meteranId, productType } = location.state || {};
+
+  // Extract data from location.state
+  const { total, phone, nominal } = location.state || {};
+
+  // Validate that all necessary data is available
+  useEffect(() => {
+    if (!total || !phone || !nominal) {
+      navigate('/', { replace: true });
+    }
+  }, [total, phone, nominal, navigate]);
 
   const handlePaymentSelection = () => {
     if (selectedMethod) {
       setError('');
-      navigate('/payment-confirmation', {
+      navigate('/confirmation', {
         state: {
           selectedMethod,
-          selectedNominal,
-          meteranId,
+          total,
+          phone,
+          nominal,
         },
       });
     } else {
@@ -33,15 +43,11 @@ const PaymentSelection = () => {
   };
 
   const handleBack = () => {
-    if (productType === 'electricity') {
-      navigate('/electricity-form');
-    } else {
-      navigate('/');
-    }
+    navigate('/');
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
+    <Card >
       <div className="sticky top-0 bg-white z-10 border-b">
         <div className="flex items-center p-2">
           <button onClick={handleBack} className="mr-4" aria-label="Back">
@@ -55,10 +61,10 @@ const PaymentSelection = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <h1 className="text-lg font-semibold">Listrik PLN</h1>
+          <h1 className="text-lg font-semibold">Pilih Metode Pembayaran</h1>
         </div>
       </div>
-      <Card className="p-6 bg-white shadow-lg rounded-lg">
+      <div className="p-6 bg-white shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Pilih Metode Pembayaran</h2>
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-800 border border-red-300 rounded">
@@ -97,9 +103,9 @@ const PaymentSelection = () => {
         >
           Lanjutkan
         </button>
-      </Card>
-    </div>
+      </div>
+    </Card>
   );
 };
 
-export default PaymentSelection;
+export default PaymentPage;

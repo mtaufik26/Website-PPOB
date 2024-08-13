@@ -31,8 +31,8 @@ const PaymentMethodSelection = ({ onSelect }) => {
         {paymentMethods.map((method) => (
           <button
             key={method.id}
-            className={`w-full p-4 flex items-center justify-between text-left rounded-lg transition-all duration-200 transform hover:scale-105 ${method.color} hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              selectedMethod === method.id ? 'ring-2 ring-green-500' : ''
+            className={`w-full p-4 flex items-center justify-between text-left rounded-lg transition-all duration-200 transform hover:scale-105 ${method.color} hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 ${
+              selectedMethod === method.id ? 'ring-2 ring-sky-500' : ''
             }`}
             onClick={() => handleSelection(method.id)}
             aria-label={`Pilih ${method.name}`}
@@ -59,7 +59,7 @@ const PaymentMethodSelection = ({ onSelect }) => {
         ))}
       </div>
       <button
-        className="mt-6 w-full bg-blue-500 text-white py-3 rounded-lg font-semibold"
+        className="mt-6 w-full bg-sky-500 text-white py-3 rounded-lg font-semibold"
         onClick={handleContinue}
         disabled={!selectedMethod}
       >

@@ -1,3 +1,4 @@
+// Home.js
 import React, { useState } from 'react';
 import Card from '../components/Card';
 import ServiceCard from '../components/ServiceCard';
@@ -12,7 +13,6 @@ const services = [
   { iconName: 'air', title: 'PDAM', category: 'pembayaran' },
   { iconName: 'game', title: 'TopUp Game', category: 'pembelian' },
   { iconName: 'bpjs', title: 'BPJS', category: 'pembayaran' },
-  // { iconName: 'transferbank', title: 'Transfer Bank', category: 'dompet digital' },
   { iconName: 'send', title: 'Kirim Uang', category: 'pembayaran' },
   { iconName: 'emoney', title: 'E-Money', category: 'pembelian' },
   { iconName: 'dana', title: 'TopUp Dana', category: 'dompet digital' },
@@ -43,8 +43,7 @@ const Home = () => {
       <div className="mb-10"></div>
       <UserInfo
         username="Muhammad"
-        balance="0"
-        coins={{ balance: '2.632', amount: '912' }}
+        balance="1000"
         methods="+4 metode lainnya"
       />
       <Card>

@@ -21,8 +21,8 @@ const PulsaPurchase = ({ onBack }) => {
   };
 
   const handleSelectAmount = (amount, total) => {
-    if (!phoneNumber || phoneNumber.length < 1) {
-      setWarning('Masukan Nomor HP Anda');
+    if (!phoneNumber || phoneNumber.length < 1 || !phoneNumber.startsWith('08')) {
+      setWarning('Masukan Nomor HP yang valid');
       return;
     }
     setSelectedAmount({ amount, total });
@@ -102,17 +102,17 @@ const PulsaPurchase = ({ onBack }) => {
         {renderStep()}
         {step === 'form' && (
           <div className="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-lg border-t">
-            <div className="flex justify-between m-2">
+            <div className="flex justify-between items-center">
               <div>
                 <div className="text-sm text-gray-500">Total Harga</div>
-                <div className="font-bold text-lg">
+                <div className="font-bold text-xl">
                   Rp{selectedAmount ? selectedAmount.total.toLocaleString() : '0'}
                 </div>
               </div>
               <button 
-                className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-full font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => setStep('paymentMethod')}
-                disabled={!selectedAmount}
+                disabled={!selectedAmount || !phoneNumber.startsWith('08')}
               >
                 Pilih Pembayaran
               </button> 
