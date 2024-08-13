@@ -1,19 +1,23 @@
+// UserInfo.js
 import React from 'react';
+import { UserCircleIcon } from '@heroicons/react/solid';
 
-const UserInfo = ({ username, balance, coins, methods }) => {
+const UserInfo = ({ username, balance, methods }) => {
   return (
-    <div className="bg-sky-200 shadow-lg rounded-lg p-6 mb-5 flex items-center justify-between max-w-lg mx-auto">
-      <div>
-      <h1 className="text-xl font-bold text-sky-800">Halo, {username}!</h1>
-        <br />
-        <p className="text-sky-600">{methods}</p>
+    <div className="bg-sky-100 shadow-lg rounded-lg p-6 mb-5 flex items-center justify-between max-w-lg mx-auto">
+      <div className="flex items-center">
+        <UserCircleIcon className="h-12 w-12 text-sky-700 mr-4" />
+        <div>
+          <h1 className="text-xl font-bold text-gray-800">Halo, {username}!</h1>
+          <p className="text-gray-600">{methods}</p>
+        </div>
       </div>
       <div className="text-right">
-        <p className="text-lg font-semibold">Rp{coins.balance}</p>
-        {/* <p className="text-gray-500">{coins.amount} Coins</p> */}
+        <p className="text-lg font-semibold" style={{ marginBottom: '0.5rem' }}>Rp{parseInt(balance).toLocaleString('id-ID')}</p>
+        <button className="bg-sky-500 text-white px-4 py-2 rounded-lg">Top Up</button>
       </div>
     </div>
   );
-}
+};
 
 export default UserInfo;

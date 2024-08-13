@@ -58,7 +58,7 @@ const ProsesPengiriman = () => {
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
               onClick={handleDone}
             >
-              Kembali ke Dashboard
+              Kembali ke Beranda
             </button>
           </>
         );

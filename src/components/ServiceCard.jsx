@@ -29,6 +29,8 @@ const ServiceCard = ({ iconName, title, onClick }) => {
       navigate('/pln');
     } else if (iconName === 'send') {
       navigate('/kirim-uang');
+    } else if (iconName === 'dana') {
+      navigate('/dana');
     } else if (onClick) {
       onClick();
     }

@@ -15,17 +15,17 @@ const KirimUang = () => {
     e.preventDefault();
     const unformattedAmount = parseInt(amount.replace(/\./g, ''), 10);
     if (unformattedAmount > MAX_AMOUNT || unformattedAmount < MIN_AMOUNT) {
+      setErrorMessage('Jumlah tidak valid.');
       return;
     }
     setErrorMessage('');
-    // Navigasi ke halaman ProsesPengiriman dengan meneruskan data
     navigate('/proses-pengiriman', {
       state: { amount, selectedBank, accountNumber }
     });
   };
 
   const handleBack = () => {
-    navigate(-1); // Navigates back to the previous page
+    navigate(-1);
   };
 
   const formatAmount = (value) => {
@@ -74,7 +74,6 @@ const KirimUang = () => {
                   className="p-3 pl-10 border rounded w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
                   placeholder="0"
                   required
-                  style={{ paddingLeft: '2.5rem' }} // Adjust padding to prevent overlap
                 />
               </div>
               {errorMessage && (
@@ -118,10 +117,10 @@ const KirimUang = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center mb-6">
+            {/* <div className="flex justify-between items-center mb-6">
               <p className="text-gray-700">Total Bayar</p>
               <p className="text-gray-700">-</p>
-            </div>
+            </div> */}
 
             <button
               type="submit"
