@@ -18,6 +18,7 @@ import LinkAja from './components/TopUp/LinkAja/LinkAja';
 import Ovo from './components/TopUp/Ovo/Ovo';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Login from './pages/auth/Login'
 
   const App = () => {
     return (
@@ -41,8 +42,9 @@ import Footer from './components/Footer';
             <Route path="/confirmation" element={<ConfirmationPage />} />
             <Route path="/process" element={<Process />} />
             <Route path="/gopay" element={<Gopay />} />
-            <Route path="/linkaja" element={<LinkAja />} />
+            <Route path="/linkaja" element={<LinkAja />} />.
             <Route path="/ovo" element={<Ovo />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
           </main>
           {/* <Footer /> */}
