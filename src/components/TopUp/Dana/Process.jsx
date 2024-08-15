@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Ceklis from '../../../assets/images/ceklis.png';
 import Card from '../../Card';
 
 const Process = () => {
@@ -50,7 +51,7 @@ const Process = () => {
       case 'selesai':
         return (
           <>
-            <div className="text-sky-500 text-6xl mb-4">✅</div>
+            <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pengiriman Selesai</h2>
             <p className="text-gray-600 mb-2">Transaksi Anda telah berhasil!</p>
             <button
