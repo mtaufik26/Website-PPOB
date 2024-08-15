@@ -7,9 +7,14 @@ const KirimUang = () => {
   const [selectedBank, setSelectedBank] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [recipientDetails, setRecipientDetails] = useState(null); 
+  const [adminFee, setAdminFee] = useState(2500); 
+  const [bankTax, setBankTax] = useState(0); 
+  const [showSummary, setShowSummary] = useState(false); 
+  const [isCheckButtonPressed, setIsCheckButtonPressed] = useState(false); 
   const navigate = useNavigate();
-  const MAX_AMOUNT = 10000000; // Batas transfer maksimum
-  const MIN_AMOUNT = 10000; // Batas transfer minimum
+  const MAX_AMOUNT = 10000000; 
+  const MIN_AMOUNT = 10000; 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,8 +34,8 @@ const KirimUang = () => {
   };
 
   const formatAmount = (value) => {
-    const cleanValue = value.replace(/\D/g, ''); // Remove all non-digit characters
-    return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add dot every three digits
+    const cleanValue = value.replace(/\D/g, ''); 
+    return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
   };
 
   const handleAmountChange = (e) => {
@@ -45,6 +50,48 @@ const KirimUang = () => {
     } else {
       setErrorMessage('');
     }
+  };
+
+  const handleCheck = () => {
+    if (!amount || !selectedBank || !accountNumber) {
+      setErrorMessage('Harap masukkan jumlah transfer, pilih bank tujuan, dan nomor rekening.');
+      return;
+    }
+
+    setErrorMessage(''); 
+
+    const details = {
+      bank: selectedBank.toUpperCase(),
+      accountNumber: accountNumber,
+      name: 'John Doe'
+    };
+    setRecipientDetails(details);
+
+    switch (selectedBank) {
+      case 'bca':
+        setBankTax(5000);
+        break;
+      case 'bni':
+        setBankTax(3000);
+        break;
+      case 'bri':
+        setBankTax(4000);
+        break;
+      case 'mandiri':
+        setBankTax(3500);
+        break;
+      default:
+        setBankTax(0);
+        break;
+    }
+
+    setShowSummary(true);
+    setIsCheckButtonPressed(true); 
+  };
+
+  const calculateTotal = () => {
+    const transferAmount = parseInt(amount.replace(/\./g, ''), 10);
+    return transferAmount + adminFee + bankTax;
   };
 
   return (
@@ -76,9 +123,6 @@ const KirimUang = () => {
                   required
                 />
               </div>
-              {errorMessage && (
-                <p className="text-red-500 mt-2">{errorMessage}</p>
-              )}
             </div>
 
             <div className="mb-6">
@@ -94,7 +138,6 @@ const KirimUang = () => {
                 <option value="bni">BNI</option>
                 <option value="bri">BRI</option>
                 <option value="mandiri">Mandiri</option>
-                {/* Tambahkan opsi bank lain di sini */}
               </select>
             </div>
 
@@ -110,6 +153,7 @@ const KirimUang = () => {
                 />
                 <button
                   type="button"
+                  onClick={handleCheck}
                   className="absolute right-0 top-1/2 transform -translate-y-1/2 text-sky-500 font-semibold"
                 >
                   Cek
@@ -117,14 +161,44 @@ const KirimUang = () => {
               </div>
             </div>
 
-            {/* <div className="flex justify-between items-center mb-6">
-              <p className="text-gray-700">Total Bayar</p>
-              <p className="text-gray-700">-</p>
-            </div> */}
+            {errorMessage && (
+              <p className="text-red-500 mb-4">{errorMessage}</p>
+            )}
+
+            {showSummary && recipientDetails && (
+              <>
+                <div className="mb-6 bg-gray-100 p-4 rounded">
+                  <p><strong>Bank Tujuan: </strong>{recipientDetails.bank}</p>
+                  <p><strong>No. Rekening: </strong>{recipientDetails.accountNumber}</p>
+                  <p><strong>Nama: </strong>{recipientDetails.name}</p>
+                </div>
+
+                <div className="mb-6 bg-gray-100 p-4 rounded">
+                  <h2 className="font-semibold mb-2">Cek dulu ringkasannya, ya</h2>
+                  <div className="flex justify-between text-gray-700">
+                    <p>Jumlah Transfer</p>
+                    <p>Rp{amount}</p>
+                  </div>
+                  <div className="flex justify-between text-gray-700">
+                    <p>Biaya Admin</p>
+                    <p>Rp{adminFee.toLocaleString()}</p>
+                  </div>
+                  <div className="flex justify-between text-gray-700">
+                    <p>Pajak Bank</p>
+                    <p>Rp{bankTax.toLocaleString()}</p>
+                  </div>
+                  <div className="flex justify-between text-gray-700 font-bold">
+                    <p>Total Bayar</p>
+                    <p>Rp{calculateTotal().toLocaleString()}</p>
+                  </div>
+                </div>
+              </>
+            )}
 
             <button
               type="submit"
-              className="w-full bg-sky-500 text-white py-3 rounded hover:bg-sky-600 transition duration-300"
+              className={`w-full py-3 rounded transition duration-300 ${isCheckButtonPressed ? 'bg-sky-500 text-white hover:bg-sky-600' : 'bg-gray-400 text-gray-700 cursor-not-allowed'}`}
+              disabled={!isCheckButtonPressed}
             >
               Lanjut Verifikasi
             </button>

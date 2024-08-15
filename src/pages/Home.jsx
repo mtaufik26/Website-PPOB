@@ -38,13 +38,13 @@ const Home = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-white"> {/* Tambahkan bg-blue-100 untuk background biru */}
+    <div className="container mx-auto p-4 bg-white">
       <Header />
       <div className="mb-10"></div>
       <UserInfo
         username="Muhammad"
-        balance="1000"
-        methods="+4 metode lainnya"
+        balance="10"
+        methods=""
       />
       <Card>
         <PromoBanner />

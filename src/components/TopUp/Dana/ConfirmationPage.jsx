@@ -5,7 +5,14 @@ import Card from '../../Card';
 const ConfirmationPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, selectedMethod, phone, productType, nominal } = location.state || {}; // Ensure nominal is extracted here
+  const {
+    selectedMethod = '',
+    phone = '',
+    nominal = 0,
+    adminFee = 0,
+  } = location.state || {};
+
+  const totalAmount = nominal + adminFee;
 
   const handleBack = () => {
     navigate(-1);
@@ -13,13 +20,9 @@ const ConfirmationPage = () => {
 
   const handlePayment = () => {
     navigate('/process', {
-      state: { selectedMethod, amount: nominal + 500, phone, nominal, productType },
+      state: { selectedMethod, amount: totalAmount, phone, nominal, adminFee },
     });
   };
-
-  if (nominal === undefined) {
-    return <div>Error: nominal is not defined</div>;
-  }
 
   return (
     <Card className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
@@ -35,19 +38,20 @@ const ConfirmationPage = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 className="text-xl font-semibold">{productType === 'electricity' ? 'Listrik PLN' : 'Konfirmasi Pembayaran'}</h1>
+        <h1 className="text-xl font-semibold">Konfirmasi Pembayaran</h1>
       </header>
       <main className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Konfirmasi Pembelian</h2>
         <div className="space-y-3">
-          <InfoItem term="Nama paket" description={`${productType === 'electricity' ? 'Token' : 'Pulsa'} ${nominal.toLocaleString()}`} />
-          <InfoItem term={productType === 'electricity' ? 'ID Pelanggan' : 'Nomor HP'} description={phone} />
-          <InfoItem term="Harga" description={`Rp ${nominal.toLocaleString()}`} />
+          <InfoItem term="Nominal" description={`Rp ${nominal.toLocaleString('id-ID')}`} />
+          <InfoItem term="No. Telepon" description={phone} />
+          <InfoItem term="Harga" description={`Rp ${nominal.toLocaleString('id-ID')}`} />
+          <InfoItem term="Biaya Admin" description={`Rp ${adminFee.toLocaleString('id-ID')}`} />
           <InfoItem term="Metode pembayaran" description={selectedMethod.toUpperCase()} />
         </div>
         <div className="flex items-center justify-between border-t border-gray-300 pt-4 mt-4">
           <span className="text-lg font-semibold text-gray-900">Total Harga</span>
-          <span className="text-xl font-bold text-red-600">Rp {(nominal + 500).toLocaleString()}</span>
+          <span className="text-xl font-bold text-red-600">Rp {totalAmount.toLocaleString('id-ID')}</span>
         </div>
       </main>
       <button

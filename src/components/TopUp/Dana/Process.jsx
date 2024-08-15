@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../../Card';
-import img1 from '../../../assets/images/1.png'
 
 const Process = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, selectedMethod, meteranId, productType } = location.state || {};
+  const { amount, selectedMethod, phone, productType } = location.state || {};
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,9 +35,7 @@ const Process = () => {
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pengiriman</h2>
             <p className="text-gray-600 mb-2">Jumlah: Rp {amount.toLocaleString()}</p>
-            <p className="text-gray-600 mb-4">
-  {productType === 'electricity' ? 'ID Pelanggan' : 'Nomor HP'}: {productType === 'electricity' ? meteranId : phone}
-</p>
+            <p className="text-gray-600 mb-4">Nomor HP: {phone}</p>
             <p className="text-gray-600">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
           </>
         );

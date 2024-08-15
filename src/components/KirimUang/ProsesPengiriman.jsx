@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Ceklis from '../../assets/images/ceklis.png';
 import Card from '../Card';
+
 
 const ProsesPengiriman = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
+  const [bankTax, setBankTax] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
   const { amount, selectedBank, accountNumber } = location.state || {};
+
+  useEffect(() => {
+    switch (selectedBank) {
+      case 'bca':
+        setBankTax(5000);
+        break;
+      case 'bni':
+        setBankTax(3000);
+        break;
+      case 'bri':
+        setBankTax(4000);
+        break;
+      case 'mandiri':
+        setBankTax(3500);
+        break;
+      default:
+        setBankTax(0);
+        break;
+    }
+  }, [selectedBank]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,8 +58,9 @@ const ProsesPengiriman = () => {
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pengiriman</h2>
             <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
-            <p className="text-gray-600 mb-2">Bank Tujuan: {selectedBank}</p>
-            <p className="text-gray-600 mb-4">Nomor Rekening: {accountNumber}</p>
+            <p className="text-gray-600 mb-2">Bank Tujuan: {selectedBank.toUpperCase()}</p>
+            <p className="text-gray-600 mb-2">Nomor Rekening: {accountNumber}</p>
+            <p className="text-gray-600 mb-2">Pajak Bank: Rp {bankTax.toLocaleString()}</p>
             <p className="text-gray-600">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
           </>
         );
@@ -51,7 +75,7 @@ const ProsesPengiriman = () => {
       case 'selesai':
         return (
           <>
-            <div className="text-sky-500 text-6xl mb-4">✅</div>
+            <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pengiriman Selesai</h2>
             <p className="text-gray-600 mb-2">Transaksi Anda telah berhasil!</p>
             <button
