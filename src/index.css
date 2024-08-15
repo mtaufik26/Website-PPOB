@@ -2,19 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Contoh penambahan custom style jika diperlukan */
+
 input[type="number"], select {
   @apply p-2 border rounded w-full;
 }
 
-/* Untuk Chrome, Safari, Edge, Opera */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Untuk Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
 }

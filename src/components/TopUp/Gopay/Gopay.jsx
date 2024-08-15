@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Gopay() {
+    
   return (
     <div className="bg-white p-4 shadow-md rounded-lg max-w-sm mx-auto">
       <h1 className="text-lg font-semibold">Dompet Digital</h1>

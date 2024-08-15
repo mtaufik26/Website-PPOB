@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineAlternateEmail, MdLockOutline } from 'react-icons/md';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import imageSrc from '../auth/login.jpg'; // Update the path if needed
+import imageSrc from '../../assets/images/login.jpg';
 
 const translations = {
   en: {
@@ -62,7 +62,6 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Add login logic here
       navigate('/');
     }
   };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
+import Ceklis from '../../assets/images/ceklis.png';
 
 const PaymentProcess = () => {
   const [status, setStatus] = useState('verifikasi');
@@ -51,7 +52,7 @@ const PaymentProcess = () => {
       case 'selesai':
         return (
           <>
-            <div className="text-sky-500 text-6xl mb-4">✅ </div>
+            <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
             <p className="text-gray-600 mb-2">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
             <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>

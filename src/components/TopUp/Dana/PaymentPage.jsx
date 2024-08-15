@@ -16,10 +16,8 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Extract data from location.state
-  const { total, phone, nominal } = location.state || {};
+  const { total, phone, nominal, adminFee } = location.state || {};
 
-  // Validate that all necessary data is available
   useEffect(() => {
     if (!total || !phone || !nominal) {
       navigate('/', { replace: true });
@@ -35,6 +33,7 @@ const PaymentPage = () => {
           total,
           phone,
           nominal,
+          adminFee,
         },
       });
     } else {
@@ -43,7 +42,7 @@ const PaymentPage = () => {
   };
 
   const handleBack = () => {
-    navigate('/');
+    navigate(-1);
   };
 
   return (

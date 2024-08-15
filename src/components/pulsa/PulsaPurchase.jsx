@@ -20,8 +20,10 @@ const PulsaPurchase = ({ onBack }) => {
     setWarning('');
   };
 
+  const isPhoneNumberValid = (number) => number && number.startsWith('08');
+
   const handleSelectAmount = (amount, total) => {
-    if (!phoneNumber || phoneNumber.length < 1 || !phoneNumber.startsWith('08')) {
+    if (!isPhoneNumberValid(phoneNumber)) {
       setWarning('Masukan Nomor HP yang valid');
       return;
     }
@@ -112,7 +114,7 @@ const PulsaPurchase = ({ onBack }) => {
               <button 
                 className="bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-full font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => setStep('paymentMethod')}
-                disabled={!selectedAmount || !phoneNumber.startsWith('08')}
+                disabled={!selectedAmount || !isPhoneNumberValid(phoneNumber)}
               >
                 Pilih Pembayaran
               </button> 

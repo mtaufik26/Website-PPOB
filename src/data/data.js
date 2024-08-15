@@ -10,7 +10,7 @@ export const services = [
     { iconName: 'send', title: 'Kirim Uang', category: 'dompet digital' },
     { iconName: 'dana', title: 'Dana', category: 'dompet digital' },
     { iconName: 'linkaja', title: 'Top Up LinkAja!', category: 'dompet digital' },
-    { iconName: 'lainnya', title: 'Seluruh Kategori', category: 'lainnya' }, // Nama ikon disesuaikan
+    { iconName: 'lainnya', title: 'Seluruh Kategori', category: 'lainnya' }, 
   ];
   
   export const categories = [

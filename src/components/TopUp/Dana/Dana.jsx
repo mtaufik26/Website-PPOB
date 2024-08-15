@@ -1,46 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '../../Card';
 
-// Component for selecting a nominal value and phone number
+const danaOptions = [
+  { amount: 5000, admin: 2000 },
+  { amount: 10000, admin: 2000 },
+  { amount: 25000, admin: 2000 },
+  { amount: 40000, admin: 2000 },
+  { amount: 50000, admin: 2000 },
+  { amount: 60000, admin: 2000 },
+  { amount: 75000, admin: 2000 },
+  { amount: 80000, admin: 2000 },
+  { amount: 90000, admin: 2000 },
+  { amount: 100000, admin: 2000 },
+  { amount: 150000, admin: 5000 },
+  { amount: 200000, admin: 5000 },
+  { amount: 300000, admin: 5000 },
+  { amount: 500000, admin: 10000 },
+];
+
 const Dana = () => {
   const navigate = useNavigate();
-  const [nominal, setNominal] = useState('Rp 10.000');
+  const [selectedOption, setSelectedOption] = useState(danaOptions[0]);
   const [phone, setPhone] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [total, setTotal] = useState(0);
   const [isValid, setIsValid] = useState(false);
+  const [purchaseDetails, setPurchaseDetails] = useState(null);
 
-  // Handler for navigating back to the homepage
   const handleBack = () => {
     navigate('/');
   };
 
-  // Function to validate phone number and calculate total price
   const handleCheck = () => {
     if (phone.length >= 12) {
       setErrorMessage('');
       setIsValid(true);
-      const nominalValue = Number(
-        nominal.replace('Rp ', '').replace(/\./g, '').replace(',', '')
-      );
-      setTotal(nominalValue);
+      // Set purchase details
+      setPurchaseDetails({
+        phone,
+        amount: selectedOption.amount,
+      });
     } else {
       setErrorMessage('Nomor terlalu singkat | minimal 12 karakter.');
       setIsValid(false);
-      setTotal(0);
+      setPurchaseDetails(null);
     }
   };
 
-  // Function to navigate to the payment page if validation passes
   const handlePilihPembayaran = () => {
     if (isValid) {
       navigate('/payment-page', {
-        state: { total, phone, nominal }, // Pass the required data
+        state: { 
+          total: selectedOption.amount + selectedOption.admin, 
+          phone, 
+          nominal: selectedOption.amount,
+          adminFee: selectedOption.admin 
+        },
       });
     }
   };
-  
 
   return (
     <Card>
@@ -71,14 +89,15 @@ const Dana = () => {
         </label>
         <div className="relative mb-4">
           <select
-            value={nominal}
-            onChange={(e) => setNominal(e.target.value)}
+            value={selectedOption.amount}
+            onChange={(e) => setSelectedOption(danaOptions.find(option => option.amount === parseInt(e.target.value)))}
             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           >
-            <option>Rp 10.000</option>
-            <option>Rp 20.000</option>
-            <option>Rp 50.000</option>
-            <option>Rp 100.000</option>
+            {danaOptions.map((option) => (
+              <option key={option.amount} value={option.amount}>
+                Rp {option.amount.toLocaleString('id-ID')}
+              </option>
+            ))}
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
@@ -115,21 +134,30 @@ const Dana = () => {
           <p className="text-red-500 text-xs italic mt-2">{errorMessage}</p>
         )}
 
-        <div className="mt-6 border-t pt-4">
-          <div className="flex items-center justify-between">
-            <span className="text-gray-700 font-bold">Total Harga</span>
-            <span className="text-gray-700 font-bold">
-              Rp {total.toLocaleString('id-ID')}
-            </span>
+        {isValid && purchaseDetails && (
+          <div className="mt-6 bg-gray-100 p-4 rounded-lg">
+            <h2 className="text-lg font-semibold mb-2">Detail Pembelian</h2>
+            <p><strong>Nomor:</strong> {purchaseDetails.phone}</p>
+            <p><strong>Nama:</strong> DNI* {purchaseDetails.phone.slice(0, 9)}****</p>
+            <p><strong>Nominal:</strong> Rp {purchaseDetails.amount.toLocaleString('id-ID')}</p>
+          </div>
+        )}
+
+        <div className="mt-6 border-t pt-4 flex items-center justify-between">
+          <div>
+            <span className="text-gray-700 font-bold">Total Bayar</span>
+            <p className="text-gray-700 font-bold">
+              {isValid ? `Rp ${(selectedOption.amount + selectedOption.admin).toLocaleString('id-ID')}` : '-'}
+            </p>
           </div>
           <button
             onClick={handlePilihPembayaran}
-            className={`mt-4 ${
-              isValid ? 'bg-blue-500' : 'bg-gray-300'
-            } text-white py-2 px-4 rounded w-full`}
+            className={`${
+              isValid ? 'bg-blue-500' : 'bg-gray-200 text-gray-500'
+            } py-2 px-4 rounded-lg font-semibold`}
             disabled={!isValid}
           >
-            Pilih Pembayaran
+            Lanjut Verifikasi
           </button>
         </div>
       </div>

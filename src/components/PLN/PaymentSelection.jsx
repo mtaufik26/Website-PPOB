@@ -21,23 +21,14 @@ const PaymentSelection = () => {
     if (selectedMethod) {
       setError('');
       navigate('/payment-confirmation', {
-        state: {
-          selectedMethod,
-          selectedNominal,
-          meteranId,
-        },
+        state: { selectedMethod, selectedNominal, meteranId },
       });
     } else {
-      setError('Silakan pilih metode pembayaran');
     }
   };
 
   const handleBack = () => {
-    if (productType === 'electricity') {
-      navigate('/electricity-form');
-    } else {
-      navigate('/');
-    }
+    navigate(productType === 'electricity' ? '/electricity-form' : '/');
   };
 
   return (
