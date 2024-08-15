@@ -32,7 +32,8 @@ const Dana = () => {
   };
 
   const handleCheck = () => {
-    if (phone.length >= 12) {
+    // Validate phone number starts with 08 and has at least 12 digits
+    if (phone.length >= 12 && phone.startsWith('08')) {
       setErrorMessage('');
       setIsValid(true);
       // Set purchase details
@@ -40,6 +41,10 @@ const Dana = () => {
         phone,
         amount: selectedOption.amount,
       });
+    } else if (!phone.startsWith('08')) {
+      setErrorMessage('Nomor telepon harus dimulai dengan 08.');
+      setIsValid(false);
+      setPurchaseDetails(null);
     } else {
       setErrorMessage('Nomor terlalu singkat | minimal 12 karakter.');
       setIsValid(false);
@@ -58,6 +63,15 @@ const Dana = () => {
         },
       });
     }
+  };
+
+  // Function to format phone number with hyphens
+  const formatPhoneNumber = (number) => {
+    if (number.length <= 0) return number;
+    return number
+      .replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3')
+      .replace(/(\d{4})(\d{4})/, '$1-$2')
+      .replace(/(\d{4})(\d{2})/, '$1-$2');
   };
 
   return (
@@ -137,7 +151,7 @@ const Dana = () => {
         {isValid && purchaseDetails && (
           <div className="mt-6 bg-gray-100 p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-2">Detail Pembelian</h2>
-            <p><strong>Nomor:</strong> {purchaseDetails.phone}</p>
+            <p><strong>Nomor:</strong> {formatPhoneNumber(purchaseDetails.phone)}</p>
             <p><strong>Nama:</strong> DNI* {purchaseDetails.phone.slice(0, 9)}****</p>
             <p><strong>Nominal:</strong> Rp {purchaseDetails.amount.toLocaleString('id-ID')}</p>
           </div>

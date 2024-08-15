@@ -104,19 +104,19 @@ const Login = () => {
                 type="email"
                 name="email"
                 placeholder={t.emailPlaceholder}
-                className={`w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-100 ${errors.email ? 'border-red-500' : ''}`}
+                className={`w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-100 ${errors.email ? 'border-blue-500' : ''}`}
                 value={email}
                 onChange={handleChange(setEmail)}
               />
             </div>
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+            {errors.email && <p className="text-blue-500 text-sm mt-1">{errors.email}</p>}
             <div className="relative flex items-center">
               <MdLockOutline className="absolute left-3 text-gray-400" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder={t.passwordPlaceholder}
-                className={`w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-100 ${errors.password ? 'border-red-500' : ''}`}
+                className={`w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-100 ${errors.password ? 'border-blue-500' : ''}`}
                 value={password}
                 onChange={handleChange(setPassword)}
               />
