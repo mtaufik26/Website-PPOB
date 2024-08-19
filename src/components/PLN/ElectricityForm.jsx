@@ -11,6 +11,7 @@ const ElectricityForm = () => {
   const [notification, setNotification] = useState('');
   const [purchaseDetails, setPurchaseDetails] = useState(null);
   const [nominalNotSelectedError, setNominalNotSelectedError] = useState('');
+  const [isCheckButtonClicked, setIsCheckButtonClicked] = useState(false); // State baru untuk melacak apakah tombol "Cek" ditekan
   const navigate = useNavigate();
 
   const operators = ['Token Listrik', 'Tagihan Listrik', 'PLN Non-Taglis'];
@@ -35,6 +36,7 @@ const ElectricityForm = () => {
     setNotification('');
     setPurchaseDetails(null);
     setNominalNotSelectedError('');
+    setIsCheckButtonClicked(false); // Reset tombol cek ketika nomor meteran diubah
 
     if (value.length < 11 && value.length > 0) {
       setMeteranIdError('Nomor terlalu pendek | minimal 11 karakter');
@@ -58,27 +60,32 @@ const ElectricityForm = () => {
           rate: '',
         });
         setNominalNotSelectedError('');
+        setIsCheckButtonClicked(true); // Set menjadi true ketika tombol cek berhasil ditekan
       }
     } else {
       setNotification('Nomor tidak valid! Periksa kembali nomor yang Anda masukkan.');
       setPurchaseDetails(null);
+      setIsCheckButtonClicked(false); // Pastikan tetap false jika cek gagal
     }
   };
 
-const handlePaymentSelection = () => {
-  if (meteranId.length >= 11 && selectedNominal) {
-    navigate('/payment-selection', {
-      state: {
-        selectedNominal,
-        meteranId,
-        adminFee: getAdminFee(), // Pastikan ini diteruskan
-        productType: 'electricity',
-      },
-    });
-    } else if (!selectedNominal) {
-      setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
+  const handlePaymentSelection = () => {
+    if (meteranId.length >= 11 && selectedNominal && isCheckButtonClicked) {
+      navigate('/payment-confirmation', {
+        state: {
+          selectedNominal,
+          meteranId,
+          adminFee: getAdminFee(),
+          productType: 'electricity',
+        },
+      });
     } else {
-      setMeteranIdError('Nomor harus minimal 11 digit dan pilih nominal');
+      if (!selectedNominal) {
+        setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
+      }
+      if (meteranId.length < 11) {
+        setMeteranIdError('Nomor harus minimal 11 digit untuk melanjutkan.');
+      }
     }
   };
 
@@ -126,7 +133,7 @@ const handlePaymentSelection = () => {
             type="text"
             value={meteranId}
             onChange={handleMeteranIdChange}
-            className="border rounded px-3 py-2 w-full pr-20 focus:outline-none focus:ring-2 focus:ring-sky-400"
+            className="border rounded px-3 py-2 w-full pr-20 focus:outline-none shadow"
             aria-label="Meter/ID Input"
           />
           <button
@@ -196,7 +203,7 @@ const handlePaymentSelection = () => {
           <button
             className={`bg-sky-500 text-white px-6 py-2 rounded-lg font-semibold transition duration-300`}
             onClick={handlePaymentSelection}
-            disabled={!selectedNominal || meteranIdError}
+            disabled={!selectedNominal || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked} // Disable jika cek belum ditekan
           >
             Lanjutkan
           </button>

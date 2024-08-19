@@ -7,14 +7,13 @@ const KirimUang = () => {
   const [selectedBank, setSelectedBank] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [recipientDetails, setRecipientDetails] = useState(null); 
-  const [adminFee, setAdminFee] = useState(2500); 
-  const [bankTax, setBankTax] = useState(0); 
-  const [showSummary, setShowSummary] = useState(false); 
-  const [isCheckButtonPressed, setIsCheckButtonPressed] = useState(false); 
+  const [recipientDetails, setRecipientDetails] = useState(null);
+  const [adminFee, setAdminFee] = useState(2500);
+  const [showSummary, setShowSummary] = useState(false);
+  const [isCheckButtonPressed, setIsCheckButtonPressed] = useState(false);
   const navigate = useNavigate();
-  const MAX_AMOUNT = 10000000; 
-  const MIN_AMOUNT = 10000; 
+  const MAX_AMOUNT = 10000000;
+  const MIN_AMOUNT = 10000;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +24,7 @@ const KirimUang = () => {
     }
     setErrorMessage('');
     navigate('/proses-pengiriman', {
-      state: { amount, selectedBank, accountNumber }
+      state: { amount, selectedBank, accountNumber, adminFee }, // Pass adminFee to the next page
     });
   };
 
@@ -34,8 +33,8 @@ const KirimUang = () => {
   };
 
   const formatAmount = (value) => {
-    const cleanValue = value.replace(/\D/g, ''); 
-    return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+    const cleanValue = value.replace(/\D/g, '');
+    return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
 
   const handleAmountChange = (e) => {
@@ -58,41 +57,25 @@ const KirimUang = () => {
       return;
     }
 
-    setErrorMessage(''); 
+    setErrorMessage('');
 
     const details = {
       bank: selectedBank.toUpperCase(),
       accountNumber: accountNumber,
-      name: 'John Doe'
+      name: 'Suhart***',
     };
     setRecipientDetails(details);
 
-    switch (selectedBank) {
-      case 'bca':
-        setBankTax(5000);
-        break;
-      case 'bni':
-        setBankTax(3000);
-        break;
-      case 'bri':
-        setBankTax(4000);
-        break;
-      case 'mandiri':
-        setBankTax(3500);
-        break;
-      default:
-        setBankTax(0);
-        break;
-    }
-
     setShowSummary(true);
-    setIsCheckButtonPressed(true); 
+    setIsCheckButtonPressed(true);
   };
 
   const calculateTotal = () => {
     const transferAmount = parseInt(amount.replace(/\./g, ''), 10);
-    return transferAmount + adminFee + bankTax;
+    return transferAmount + adminFee;
   };
+
+  const isFormValid = amount && selectedBank && accountNumber && isCheckButtonPressed;
 
   return (
     <Card>
@@ -108,7 +91,7 @@ const KirimUang = () => {
       </div>
 
       <div className="p-4">
-        <div className="bg-white shadow-xl rounded-lg p-6">
+        <div className="rounded-lg p-6">
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label className="block mb-2 text-gray-700">Mau kirim berapa?*</label>
@@ -118,7 +101,7 @@ const KirimUang = () => {
                   type="text"
                   value={amount}
                   onChange={handleAmountChange}
-                  className="p-3 pl-10 border rounded w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="shadow appearance-none border rounded w-full py-3 px-3 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="0"
                   required
                 />
@@ -130,7 +113,7 @@ const KirimUang = () => {
               <select
                 value={selectedBank}
                 onChange={(e) => setSelectedBank(e.target.value)}
-                className="p-3 border rounded w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="p-3 border rounded w-full focus:outline-none"
                 required
               >
                 <option value="">Bank Tujuan</option>
@@ -142,13 +125,14 @@ const KirimUang = () => {
             </div>
 
             <div className="mb-6">
+              <label className="block mb-2 text-gray-700">No. Rekening</label>
               <div className="relative">
                 <input
-                  type="number"
+                  type="text"
                   value={accountNumber}
                   onChange={(e) => setAccountNumber(e.target.value)}
-                  className="p-3 border rounded w-full pr-16 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                  placeholder="Nomor Rekening"
+                  className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder=""
                   required
                 />
                 <button
@@ -167,13 +151,15 @@ const KirimUang = () => {
 
             {showSummary && recipientDetails && (
               <>
-                <div className="mb-6 bg-gray-100 p-4 rounded">
+                <div className="mb-6">
                   <p><strong>Bank Tujuan: </strong>{recipientDetails.bank}</p>
                   <p><strong>No. Rekening: </strong>{recipientDetails.accountNumber}</p>
                   <p><strong>Nama: </strong>{recipientDetails.name}</p>
                 </div>
 
-                <div className="mb-6 bg-gray-100 p-4 rounded">
+                <hr className="border-t-2 border-gray-300 my-4" />
+
+                <div className="mb-6">
                   <h2 className="font-semibold mb-2">Cek dulu ringkasannya, ya</h2>
                   <div className="flex justify-between text-gray-700">
                     <p>Jumlah Transfer</p>
@@ -183,25 +169,25 @@ const KirimUang = () => {
                     <p>Biaya Admin</p>
                     <p>Rp{adminFee.toLocaleString()}</p>
                   </div>
-                  <div className="flex justify-between text-gray-700">
-                    <p>Pajak Bank</p>
-                    <p>Rp{bankTax.toLocaleString()}</p>
-                  </div>
-                  <div className="flex justify-between text-gray-700 font-bold">
-                    <p>Total Bayar</p>
-                    <p>Rp{calculateTotal().toLocaleString()}</p>
-                  </div>
                 </div>
               </>
             )}
 
-            <button
-              type="submit"
-              className={`w-full py-3 rounded transition duration-300 ${isCheckButtonPressed ? 'bg-sky-500 text-white hover:bg-sky-600' : 'bg-gray-400 text-gray-700 cursor-not-allowed'}`}
-              disabled={!isCheckButtonPressed}
-            >
-              Lanjut Verifikasi
-            </button>
+            <div className="flex justify-between items-center mt-4 border-t pt-4">
+              <div>
+                <h2 className="font-semibold text-gray-700">Total Bayar</h2>
+                <p className="text-xl font-bold text-gray-800">
+                  {isCheckButtonPressed ? `Rp${calculateTotal().toLocaleString()}` : '-'}
+                </p>
+              </div>
+              <button
+                type="submit"
+                className={`py-3 px-6 rounded-lg transition duration-300 ${isFormValid ? 'bg-sky-500 text-white' : 'bg-gray-400 text-gray-700 cursor-not-allowed'}`}
+                disabled={!isFormValid}
+              >
+                Lanjut Verifikasi
+              </button>
+            </div>
           </form>
         </div>
       </div>

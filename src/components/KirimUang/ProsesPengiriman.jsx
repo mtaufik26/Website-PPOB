@@ -3,34 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Ceklis from '../../assets/images/ceklis.png';
 import Card from '../Card';
 
-
 const ProsesPengiriman = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
-  const [bankTax, setBankTax] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, selectedBank, accountNumber } = location.state || {};
-
-  useEffect(() => {
-    switch (selectedBank) {
-      case 'bca':
-        setBankTax(5000);
-        break;
-      case 'bni':
-        setBankTax(3000);
-        break;
-      case 'bri':
-        setBankTax(4000);
-        break;
-      case 'mandiri':
-        setBankTax(3500);
-        break;
-      default:
-        setBankTax(0);
-        break;
-    }
-  }, [selectedBank]);
+  const { amount, selectedBank, accountNumber, adminFee = 0 } = location.state || {}; // Set default adminFee to 0
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -58,9 +36,9 @@ const ProsesPengiriman = () => {
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pengiriman</h2>
             <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
-            <p className="text-gray-600 mb-2">Bank Tujuan: {selectedBank.toUpperCase()}</p>
+            <p className="text-gray-600 mb-2">Bank Tujuan: {selectedBank?.toUpperCase()}</p>
             <p className="text-gray-600 mb-2">Nomor Rekening: {accountNumber}</p>
-            <p className="text-gray-600 mb-2">Pajak Bank: Rp {bankTax.toLocaleString()}</p>
+            <p className="text-gray-600 mb-2">Biaya Admin: Rp {adminFee.toLocaleString()}</p> {/* Display admin fee */}
             <p className="text-gray-600">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
           </>
         );

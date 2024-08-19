@@ -5,6 +5,8 @@ import Card from '../Card';
 const PaymentConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  
+  // Pastikan adminFee dan selectedNominal memiliki nilai default jika undefined
   const { selectedMethod, selectedNominal = 0, meteranId = '', adminFee = 0 } = location.state || {};
 
   const handleBack = () => {

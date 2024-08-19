@@ -1,13 +1,15 @@
+//Process.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Card from '../../Card';
+import Ceklis from '../../assets/images/ceklis.png'; // Sesuaikan jalur file gambar
+import Card from '../Card'; // Sesuaikan jalur impor jika perlu
 
-const Process = () => {
+const ProcessPage = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, selectedMethod, phone, productType } = location.state || {};
+  const { amount, selectedMethod, phone } = location.state || {};
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -50,7 +52,7 @@ const Process = () => {
       case 'selesai':
         return (
           <>
-            <div className="text-sky-500 text-6xl mb-4">✅</div>
+            <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pengiriman Selesai</h2>
             <p className="text-gray-600 mb-2">Transaksi Anda telah berhasil!</p>
             <button
@@ -83,4 +85,4 @@ const Process = () => {
   );
 };
 
-export default Process;
+export default ProcessPage;
