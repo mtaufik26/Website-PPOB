@@ -1,6 +1,7 @@
+//ConfirmationPage.jsx
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Card from '../../Card';
+import Card from '../Card';
 
 const ConfirmationPage = () => {
   const navigate = useNavigate();

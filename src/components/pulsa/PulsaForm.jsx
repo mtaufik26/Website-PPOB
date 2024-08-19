@@ -36,7 +36,7 @@ const PulsaForm = ({ onPhoneNumberChange, warning = '' }) => {
             value={phoneNumber}
             onChange={handleChange}
             onBlur={handleBlur}
-            className="w-full p-2 border rounded mb-1"
+            className="w-full p-2 border rounded mb-1 shadow focus:outline-none"
           />
           {(error || warning) && <div className="text-red-500 text-sm mt-1">{error || warning}</div>}
         </div>

@@ -1,14 +1,20 @@
+//Process.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+<<<<<<< HEAD:src/components/TopUp/Process.jsx
+import Ceklis from '../../assets/images/ceklis.png'; // Sesuaikan jalur file gambar
+import Card from '../Card'; // Sesuaikan jalur impor jika perlu
+=======
 import Ceklis from '../../../assets/images/ceklis.png';
 import Card from '../../Card';
+>>>>>>> e4572be176c9aad2faaf225d9383843bad06625f:src/components/TopUp/Dana/Process.jsx
 
-const Process = () => {
+const ProcessPage = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, selectedMethod, phone, productType } = location.state || {};
+  const { amount, selectedMethod, phone } = location.state || {};
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -84,4 +90,4 @@ const Process = () => {
   );
 };
 
-export default Process;
+export default ProcessPage;
