@@ -75,8 +75,9 @@ const PaymentPage = () => {
         <div className="space-y-3">
           {paymentMethods.map((method) => {
             const isDisabled = (walletName.toLowerCase() === 'dana' && method.id === 'dana') ||
-                               (walletName.toLowerCase() === 'linkaja' && method.id === 'linkaja');
-
+                                (walletName.toLowerCase() === 'linkaja' && method.id === 'linkaja') ||
+                                (walletName.toLowerCase() === 'ovo' && method.id === 'ovo') ||
+                                (walletName.toLowerCase() === 'gopay' && method.id === 'gopay');
             return (
               <div key={method.id} className={`relative ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 <button
@@ -92,7 +93,7 @@ const PaymentPage = () => {
                     <div className="flex flex-col">
                       <span className="font-medium text-gray-700">{method.name}</span>
                       {isDisabled && (
-                        <span className="text-sm text-gray-500">Tidak Tersedia untuk Transaksi Ini</span>
+                        <span className="text-sm text-gray-600">Tidak Tersedia untuk Transaksi Ini</span>
                       )}
                     </div>
                   </div>

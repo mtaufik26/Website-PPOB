@@ -46,7 +46,7 @@ const ConfirmationPage = () => {
         <div className="space-y-3">
           <InfoItem term="Nominal" description={`Rp ${nominal.toLocaleString('id-ID')}`} />
           <InfoItem term="No. Telepon" description={phone} />
-          <InfoItem term="Harga" description={`Rp ${nominal.toLocaleString('id-ID')}`} />
+          {/* <InfoItem term="Harga" description={`Rp ${nominal.toLocaleString('id-ID')}`} /> */}
           <InfoItem term="Biaya Admin" description={`Rp ${adminFee.toLocaleString('id-ID')}`} />
           <InfoItem term="Metode pembayaran" description={selectedMethod.toUpperCase()} />
         </div>

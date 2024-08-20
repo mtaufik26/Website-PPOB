@@ -32,8 +32,8 @@ const DigitalWalletPage = ({ walletName, options }) => {
     if (!filteredInput.startsWith('08')) {
       setErrorMessage('Nomor harus dimulai dengan 08');
       setIsValid(false);
-    } else if (filteredInput.length < 12) {
-      setErrorMessage('Nomor terlalu singkat | minimal 12 karakter.');
+    } else if (filteredInput.length < 10) {
+      setErrorMessage('Nomor terlalu singkat | minimal 10 karakter.');
       setIsValid(false);
     } else {
       setErrorMessage('');

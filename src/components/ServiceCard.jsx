@@ -33,6 +33,10 @@ const ServiceCard = ({ iconName, title, onClick }) => {
       navigate('/dana');
     } else if (iconName === 'linkaja') {
       navigate('/linkaja');
+    } else if (iconName === 'ovo') {
+      navigate('/ovo');
+    } else if (iconName === 'gopay') {
+      navigate('/gopay');
     } else if (onClick) {
       onClick();
     }

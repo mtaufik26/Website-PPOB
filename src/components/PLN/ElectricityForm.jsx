@@ -12,7 +12,7 @@ const ElectricityForm = () => {
   const [purchaseDetails, setPurchaseDetails] = useState(null);
   const [nominalNotSelectedError, setNominalNotSelectedError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isCheckButtonClicked, setIsCheckButtonClicked] = useState(false); // State baru untuk melacak apakah tombol "Cek" ditekan
+  const [isCheckButtonClicked, setIsCheckButtonClicked] = useState(false);
   const navigate = useNavigate();
 
   const operators = ['Token Listrik', 'Tagihan Listrik', 'PLN Non-Taglis'];
@@ -37,7 +37,7 @@ const ElectricityForm = () => {
     setNotification('');
     setPurchaseDetails(null);
     setNominalNotSelectedError('');
-    setIsCheckButtonClicked(false); // Reset tombol cek ketika nomor meteran diubah
+    setIsCheckButtonClicked(false);
 
     if (value.length < 11 && value.length > 0) {
       setMeteranIdError('Nomor terlalu pendek | minimal 11 karakter');
@@ -52,7 +52,6 @@ const ElectricityForm = () => {
     if (meteranId.length >= 11 && meteranId.length <= 12) {
       setIsLoading(true); // Start loading
   
-      // Simulate a delay for processing (e.g., API call)
       setTimeout(() => {
         if (!selectedNominal) {
           setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
@@ -214,7 +213,7 @@ const ElectricityForm = () => {
           <button
             className={`bg-sky-500 text-white px-6 py-2 rounded-lg font-semibold transition duration-300`}
             onClick={handlePaymentSelection}
-            disabled={!selectedNominal || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked} // Disable jika cek belum ditekan
+            disabled={!selectedNominal || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked}
           >
             Lanjutkan
           </button>
