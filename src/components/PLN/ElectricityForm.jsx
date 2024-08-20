@@ -11,6 +11,7 @@ const ElectricityForm = () => {
   const [notification, setNotification] = useState('');
   const [purchaseDetails, setPurchaseDetails] = useState(null);
   const [nominalNotSelectedError, setNominalNotSelectedError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isCheckButtonClicked, setIsCheckButtonClicked] = useState(false); // State baru untuk melacak apakah tombol "Cek" ditekan
   const navigate = useNavigate();
 
@@ -49,29 +50,36 @@ const ElectricityForm = () => {
 
   const handleCheckMeteranId = () => {
     if (meteranId.length >= 11 && meteranId.length <= 12) {
-      if (!selectedNominal) {
-        setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
-      } else {
-        setNotification('Nomor valid! Anda bisa melanjutkan.');
-        setPurchaseDetails({
-          amount: selectedNominal,
-          id: meteranId,
-          name: '',
-          rate: '',
-        });
-        setNominalNotSelectedError('');
-        setIsCheckButtonClicked(true); // Set menjadi true ketika tombol cek berhasil ditekan
-      }
+      setIsLoading(true); // Start loading
+  
+      // Simulate a delay for processing (e.g., API call)
+      setTimeout(() => {
+        if (!selectedNominal) {
+          setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
+        } else {
+          setNotification('Nomor valid! Anda bisa melanjutkan.');
+          setPurchaseDetails({
+            amount: selectedNominal,
+            id: meteranId,
+            name: '',
+            rate: '',
+          });
+          setNominalNotSelectedError('');
+          setIsCheckButtonClicked(true); // Set menjadi true ketika tombol cek berhasil ditekan
+        }
+        setIsLoading(false); // End loading
+      }, 2000); // Simulated delay (2 seconds)
     } else {
       setNotification('Nomor tidak valid! Periksa kembali nomor yang Anda masukkan.');
       setPurchaseDetails(null);
       setIsCheckButtonClicked(false); // Pastikan tetap false jika cek gagal
     }
   };
+  
 
   const handlePaymentSelection = () => {
     if (meteranId.length >= 11 && selectedNominal && isCheckButtonClicked) {
-      navigate('/payment-confirmation', {
+      navigate('/payment-selection', {
         state: {
           selectedNominal,
           meteranId,
@@ -137,11 +145,14 @@ const ElectricityForm = () => {
             aria-label="Meter/ID Input"
           />
           <button
-            className="absolute right-2 bg-sky-500 text-white px-3 py-1 rounded"
+            className={`absolute right-2 px-3 py-1 rounded ${
+              !selectedNominal ? ' text-gray-600 cursor-not-allowed' : ' text-sky-500'
+            }`}
             onClick={handleCheckMeteranId}
             aria-label="Check Meteran ID"
+            disabled={!selectedNominal || isLoading} // Disable if no nominal is selected or if it's loading
           >
-            Cek
+            {isLoading ? 'Memproses...' : 'Cek'}
           </button>
         </div>
         {meteranIdError && (

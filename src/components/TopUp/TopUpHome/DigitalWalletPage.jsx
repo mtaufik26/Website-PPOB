@@ -74,10 +74,12 @@ const DigitalWalletPage = ({ walletName, options }) => {
         total: selectedOption.amount + selectedOption.admin, 
         phone, 
         nominal: selectedOption.amount,
-        adminFee: selectedOption.admin 
+        adminFee: selectedOption.admin,
+        walletName, // Pass walletName to PaymentPage
       },
     });
   };
+  
 
   const handleCancelPayment = () => {
     setShowModal(false); // Close modal without proceeding
