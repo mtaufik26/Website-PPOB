@@ -1,6 +1,6 @@
 // TopUp/TopUpHome/Gopay.js
 import React from 'react';
-import DigitalWalletPage from './DigitalWalletPage';
+import DigitalWalletPage4 from './DigitalWalletPage4';
 
 const gopayOptions = [
   { amount: 5000, admin: 2000 },
@@ -20,7 +20,7 @@ const gopayOptions = [
 ];
 
 const Gopay = () => (
-  <DigitalWalletPage walletName="Gopay" options={gopayOptions} />
+  <DigitalWalletPage4 walletName="Gopay" options={gopayOptions} />
 );
 
 export default Gopay;

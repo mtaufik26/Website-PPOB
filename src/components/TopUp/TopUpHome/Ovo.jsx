@@ -1,6 +1,6 @@
 // TopUp/TopUpHome/Ovo.js
 import React from 'react';
-import DigitalWalletPage from './DigitalWalletPage';
+import DigitalWalletPage2 from './DigitalWalletPage2';
 
 const ovoOptions = [
   { amount: 5000, admin: 2000 },
@@ -20,7 +20,7 @@ const ovoOptions = [
 ];
 
 const Ovo = () => (
-  <DigitalWalletPage walletName="Ovo" options={ovoOptions} />
+  <DigitalWalletPage2 walletName="Ovo" options={ovoOptions} />
 );
 
 export default Ovo;
