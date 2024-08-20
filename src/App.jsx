@@ -12,10 +12,6 @@ import KirimUang from './components/KirimUang/KirimUang';
 import ProsesPengiriman from './components/KirimUang/ProsesPengiriman';
 import Dana from './components/TopUp/TopUpHome/Dana';
 import PaymentPage from './components/TopUp/PaymentPage';
-import PaymentPage1 from './components/TopUp/TopUpPayment/PaymentPage1';
-import PaymentPage2 from './components/TopUp/TopUpPayment/PaymentPage2';
-import PaymentPage3 from './components/TopUp/TopUpPayment/PaymentPage3';
-import PaymentPage4 from './components/TopUp/TopUpPayment/PaymentPage4';
 import ConfirmationPage from './components/TopUp/ConfirmationPage';
 import Process from './components/TopUp/Process';
 import Gopay from './components/TopUp/TopUpHome/Gopay';
@@ -45,10 +41,6 @@ import Login from './pages/auth/Login'
             <Route path="/process-payment" element={<ProcessPayment />} />
             <Route path="/dana" element={<Dana />} />
             <Route path="/payment-page" element={<PaymentPage />} />
-            <Route path="/payment-page-dana" element={<PaymentPage1 />} />
-            <Route path="/payment-page-ovo" element={<PaymentPage2 />} />
-            <Route path="/payment-page-linkaja" element={<PaymentPage3 />} />
-            <Route path="/payment-page-gopay" element={<PaymentPage4 />} />
             <Route path="/confirmation" element={<ConfirmationPage />} />
             <Route path="/process" element={<Process />} />
             <Route path="/gopay" element={<Gopay />} />
