@@ -10,7 +10,7 @@ const PulsaForm = ({ onPhoneNumberChange, warning = '' }) => {
 
     if (!filteredInput.startsWith('08') && filteredInput !== '') {
       setError('Nomor harus dimulai dengan 08');
-    } else if (filteredInput.length < 11 && filteredInput !== '') {
+    } else if (filteredInput.length < 10 && filteredInput !== '') {
       setError('Nomor terlalu pendek | minimal 11 karakter');
     } else {
       setError('');
@@ -21,7 +21,7 @@ const PulsaForm = ({ onPhoneNumberChange, warning = '' }) => {
   };
 
   const handleBlur = () => {
-    if (phoneNumber.length < 11 && phoneNumber !== '') {
+    if (phoneNumber.length < 10 && phoneNumber !== '') {
       setError('Nomor terlalu pendek');
     }
   };

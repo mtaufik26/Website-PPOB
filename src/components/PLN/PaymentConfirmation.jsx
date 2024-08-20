@@ -6,8 +6,9 @@ const PaymentConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Pastikan adminFee dan selectedNominal memiliki nilai default jika undefined
   const { selectedMethod, selectedNominal = 0, meteranId = '', adminFee = 0 } = location.state || {};
+
+  console.log('Admin Fee:', adminFee); // Debugging untuk melihat nilai adminFee
 
   const handleBack = () => {
     navigate(-1);
