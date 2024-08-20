@@ -9,6 +9,7 @@ const KirimUang = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [recipientDetails, setRecipientDetails] = useState(null);
   const [adminFee, setAdminFee] = useState(2500);
+  const [loading, setLoading] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [isCheckButtonPressed, setIsCheckButtonPressed] = useState(false);
   const navigate = useNavigate();
@@ -56,19 +57,25 @@ const KirimUang = () => {
       setErrorMessage('Harap masukkan jumlah transfer, pilih bank tujuan, dan nomor rekening.');
       return;
     }
-
+  
     setErrorMessage('');
-
-    const details = {
-      bank: selectedBank.toUpperCase(),
-      accountNumber: accountNumber,
-      name: 'Suhart***',
-    };
-    setRecipientDetails(details);
-
-    setShowSummary(true);
-    setIsCheckButtonPressed(true);
+    setLoading(true); // Start loading
+  
+    // Simulate an API call or delay
+    setTimeout(() => {
+      const details = {
+        bank: selectedBank.toUpperCase(),
+        accountNumber: accountNumber,
+        name: 'Suhart***',
+      };
+      setRecipientDetails(details);
+  
+      setShowSummary(true);
+      setIsCheckButtonPressed(true);
+      setLoading(false); // Stop loading after processing is complete
+    }, 1500); // Simulating a delay for the loading state
   };
+  
 
   const calculateTotal = () => {
     const transferAmount = parseInt(amount.replace(/\./g, ''), 10);
@@ -140,7 +147,7 @@ const KirimUang = () => {
                   onClick={handleCheck}
                   className="absolute right-0 top-1/2 transform -translate-y-1/2 text-sky-500 font-semibold"
                 >
-                  Cek
+                  {loading ? 'Memproses...' : 'Cek'}
                 </button>
               </div>
             </div>

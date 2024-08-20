@@ -1,6 +1,6 @@
 // TopUp/TopUpHome/Dana.js
 import React from 'react';
-import DigitalWalletPage from './DigitalWalletPage';
+import DigitalWalletPage1 from './DigitalWalletPage1';
 
 const danaOptions = [
   { amount: 5000, admin: 2000 },
@@ -20,7 +20,7 @@ const danaOptions = [
 ];
 
 const Dana = () => (
-  <DigitalWalletPage walletName="Dana" options={danaOptions} />
+  <DigitalWalletPage1 walletName="Dana" options={danaOptions} />
 );
 
 export default Dana;

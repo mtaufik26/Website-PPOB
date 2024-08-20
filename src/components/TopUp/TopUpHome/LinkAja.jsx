@@ -1,6 +1,6 @@
 // TopUp/TopUpHome/LinkAja.js
 import React from 'react';
-import DigitalWalletPage from './DigitalWalletPage';
+import DigitalWalletPage3 from './DigitalWalletPage3';
 
 const linkAjaOptions = [
   { amount: 5000, admin: 2000 },
@@ -20,7 +20,7 @@ const linkAjaOptions = [
 ];
 
 const LinkAja = () => (
-  <DigitalWalletPage walletName="LinkAja" options={linkAjaOptions} />
+  <DigitalWalletPage3 walletName="LinkAja" options={linkAjaOptions} />
 );
 
 export default LinkAja;
