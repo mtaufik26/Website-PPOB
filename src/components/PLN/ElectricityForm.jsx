@@ -79,14 +79,18 @@ const ElectricityForm = () => {
 
   const handlePaymentSelection = () => {
     if (meteranId.length >= 11 && selectedNominal && isCheckButtonClicked) {
+      const fee = getAdminFee();
+      console.log('Admin Fee:', fee); // Debug: cek nilai adminFee
+
       navigate('/payment-selection', {
         state: {
           selectedNominal,
           meteranId,
-          adminFee: getAdminFee(),
+          adminFee: fee,  // Pastikan ini benar
           productType: 'electricity',
         },
       });
+      
     } else {
       if (!selectedNominal) {
         setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
@@ -96,6 +100,7 @@ const ElectricityForm = () => {
       }
     }
   };
+
 
   const getAdminFee = () => {
     const selectedNominalObj = nominals.find(nominal => nominal.value === selectedNominal);
