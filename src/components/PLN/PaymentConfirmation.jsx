@@ -5,6 +5,7 @@ import Card from '../Card';
 const PaymentConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location.state);  // Debugging untuk memastikan adminFee terbaca
   
   const { selectedMethod, selectedNominal = 0, meteranId = '', adminFee = 0 } = location.state || {};
 
@@ -15,10 +16,16 @@ const PaymentConfirmation = () => {
   };
 
   const handlePayment = () => {
+    const totalAmount = selectedNominal + adminFee;
+    if (totalAmount <= 0) {
+      console.error('Invalid amount for payment');
+      return;
+    }
     navigate('/payment-process', {
-      state: { selectedMethod, amount: selectedNominal + adminFee, meteranId },
+      state: { selectedMethod, amount: totalAmount, meteranId },
     });
   };
+  
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
