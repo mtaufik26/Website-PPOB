@@ -1,3 +1,4 @@
+//PulsaPurchase.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PulsaForm from './PulsaForm';
@@ -100,7 +101,8 @@ const PulsaPurchase = ({ onBack }) => {
           <h1 className="text-lg font-semibold">Pulsa</h1>
         </div>
       </div>
-      <div className="max-w-md mx-auto m-10 ">
+      <div className="max-w-md mx-auto m-2">
+      <h1 className="text-2xl font-semibold mb-6">TopUp Pulsa</h1>
         {renderStep()}
         {step === 'form' && (
           <div className="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-lg border-t">
@@ -112,11 +114,15 @@ const PulsaPurchase = ({ onBack }) => {
                 </div>
               </div>
               <button 
-                className="bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-full font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                className={`px-6 py-2 rounded-full font-semibold transition duration-300 ${
+                  !selectedAmount || !isPhoneNumberValid(phoneNumber)
+                    ? 'bg-gray-400 text-gray-200'
+                    : 'bg-sky-500 hover:bg-sky-600 text-white'
+                }`}
                 onClick={() => setStep('paymentMethod')}
                 disabled={!selectedAmount || !isPhoneNumberValid(phoneNumber)}
               >
-                Pilih Pembayaran
+                Lanjut Verifikasi
               </button> 
             </div>
           </div>

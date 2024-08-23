@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Pulsa, PLN, Game, Emoney, Air, BPJS, Wallet, Send, Dana, LinkAja, OVO, Gopay, Lainnya } from '../icons/icon';
+import { Pulsa,Kuota,PLN, Game, Emoney, Air, BPJS, Wallet, Send, Dana, LinkAja, OVO, Gopay, Lainnya } from '../icons/icon';
 
 const icons = {
   pulsa: Pulsa,
+  Kuota: Kuota,
   listrik: PLN,
   game: Game,
   emoney: Emoney,
@@ -24,7 +25,9 @@ const ServiceCard = ({ iconName, title, onClick }) => {
 
   const handleClick = () => {
     if (iconName === 'pulsa') {
-      navigate('/pulsa');
+      navigate('/topup-pulsa');
+    } else if (iconName === 'kuota') {
+      navigate('/kuota');
     } else if (iconName === 'listrik') {
       navigate('/pln');
     } else if (iconName === 'send') {
