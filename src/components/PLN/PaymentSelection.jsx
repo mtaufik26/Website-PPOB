@@ -15,13 +15,18 @@ const PaymentSelection = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { selectedNominal, meteranId, productType } = location.state || {};
+  const { selectedNominal, meteranId, productType, adminFee } = location.state || {};
 
   const handlePaymentSelection = () => {
     if (selectedMethod) {
       setError('');
       navigate('/payment-confirmation', {
-        state: { selectedMethod, selectedNominal, meteranId },
+        state: {
+          selectedMethod,
+          selectedNominal,
+          meteranId,
+          adminFee,
+        },
       });
     } else {
     }
