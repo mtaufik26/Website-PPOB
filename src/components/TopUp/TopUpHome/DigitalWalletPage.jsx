@@ -11,28 +11,21 @@ const DigitalWalletPage = ({ walletName, options }) => {
   const [purchaseDetails, setPurchaseDetails] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false); // State for showing modal
+  const [showModal, setShowModal] = useState(false);
 
-  const handleBack = () => {
-    navigate('/');
-  };
+  const handleBack = () => navigate('/');
 
   const handlePhoneChange = (e) => {
-    const input = e.target.value;
-    const filteredInput = input.replace(/[^0-9]/g, '');
+    const input = e.target.value.replace(/[^0-9]/g, '');
+    setPhone(input);
 
-    setPhone(filteredInput);
-
-    if (filteredInput.length === 0) {
+    if (input.length === 0) {
       setErrorMessage('');
       setIsValid(false);
-      return;
-    }
-
-    if (!filteredInput.startsWith('08')) {
+    } else if (!input.startsWith('08')) {
       setErrorMessage('Nomor harus dimulai dengan 08');
       setIsValid(false);
-    } else if (filteredInput.length < 10) {
+    } else if (input.length < 10) {
       setErrorMessage('Nomor terlalu singkat | minimal 10 karakter.');
       setIsValid(false);
     } else {
@@ -62,54 +55,38 @@ const DigitalWalletPage = ({ walletName, options }) => {
   };
 
   const handlePilihPembayaran = () => {
-    if (isValid && checked) {
-      setShowModal(true); // Show confirmation modal
-    }
+    if (isValid && checked) setShowModal(true);
   };
 
   const handleConfirmPayment = () => {
-    setShowModal(false); // Close modal
+    setShowModal(false);
     navigate('/payment-page', {
       state: { 
         total: selectedOption.amount + selectedOption.admin, 
         phone, 
         nominal: selectedOption.amount,
         adminFee: selectedOption.admin,
-        walletName, // Pass walletName to PaymentPage
+        walletName,
       },
     });
   };
   
-
-  const handleCancelPayment = () => {
-    setShowModal(false); // Close modal without proceeding
-  };
+  const handleCancelPayment = () => setShowModal(false);
 
   return (
     <Card>
-      <div className="sticky top-0 bg-white z-10 border-b">
+      <header className="sticky top-0 bg-white z-10 border-b">
         <div className="flex items-center p-2">
           <button onClick={handleBack} className="mr-4" aria-label="Go back">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <h1 className="text-lg font-semibold">Dompet Digital - {walletName}</h1>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-md mx-auto p-4">
+      <section className="max-w-md mx-auto p-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Pilih Nominal Anda
         </label>
@@ -140,16 +117,14 @@ const DigitalWalletPage = ({ walletName, options }) => {
           />
           <button
             onClick={handleCheck}
-            className={`absolute right-2 top-1/2 transform -translate-y-1/2 text-sky-500 px-4 py-1 rounded-lg ${!isValid ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`absolute right-2 top-1/2 transform -translate-y-1/2 text-sky-500 px-4 py-1 rounded-lg ${!isValid ? ' opacity-50' : ''}`}
             disabled={!isValid || loading}
           >
             {loading ? 'Memproses...' : 'Cek'}
           </button>
         </div>
         {errorMessage && (
-          <p className="text-red-500 text-sm mt-2">
-            {errorMessage}
-          </p>
+          <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
         )}
 
         {checked && purchaseDetails && (
@@ -160,7 +135,7 @@ const DigitalWalletPage = ({ walletName, options }) => {
                 <span className="font-semibold">Nomor HP:</span>
                 <span>{purchaseDetails.phone}</span>
               </p>
-              <p className="flex justify-between ">
+              <p className="flex justify-between">
                 <span className="font-semibold">Nominal Top-up:</span>
                 <span>Rp {purchaseDetails.amount.toLocaleString('id-ID')}</span>
               </p>
@@ -185,13 +160,13 @@ const DigitalWalletPage = ({ walletName, options }) => {
           </div>
           <button
             onClick={handlePilihPembayaran}
-            className={`${checked ? 'bg-sky-500 text-white' : 'bg-gray-200 text-gray-500'} py-2 px-4 rounded-lg `}
+            className={`${checked ? 'bg-sky-500 text-white' : 'bg-gray-200 text-gray-500'} py-2 px-4 rounded-lg`}
             disabled={!checked}
           >
             Lanjut Verifikasi
           </button>
         </div>
-      </div>
+      </section>
 
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">

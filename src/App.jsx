@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
+import PulsaPage from './components/PulsaRevisi/PulsaPage';
 import PulsaPurchase from './components/pulsa/PulsaPurchase';
 import ElectricityForm from './components/PLN/ElectricityForm';
 import PaymentSelection from './components/PLN/PaymentSelection';
@@ -29,6 +30,7 @@ import Login from './pages/auth/Login'
           <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/topup-pulsa" element={<PulsaPage />} />
             <Route path="/pulsa" element={<PulsaPurchase />} />
             <Route path="/pln" element={<ElectricityForm />} />
             <Route path="/electricity-form" element={<ElectricityForm />} />

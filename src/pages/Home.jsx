@@ -9,12 +9,13 @@ import PromoBanner from '../components/PromoBanner';
 
 const services = [
   { iconName: 'pulsa', title: 'Pulsa', category: 'pembelian' },
+  { iconName: 'Kuota', title: 'kuota', category: 'pembelian' },
   { iconName: 'listrik', title: 'PLN', category: 'pembelian' },
-  { iconName: 'air', title: 'PDAM', category: 'pembayaran' },
-  { iconName: 'game', title: 'TopUp Game', category: 'pembelian' },
-  { iconName: 'bpjs', title: 'BPJS', category: 'pembayaran' },
-  { iconName: 'send', title: 'Kirim Uang', category: 'pembayaran' },
-  { iconName: 'emoney', title: 'E-Money', category: 'pembelian' },
+  // { iconName: 'air', title: 'PDAM', category: 'pembayaran' },
+  // { iconName: 'game', title: 'TopUp Game', category: 'pembelian' },/
+  // { iconName: 'bpjs', title: 'BPJS', category: 'pembayaran' },
+  // { iconName: 'send', title: 'Kirim Uang', category: 'pembayaran' },
+  // { iconName: 'emoney', title: 'E-Money', category: 'pembelian' },
   { iconName: 'dana', title: 'TopUp Dana', category: 'dompet digital' },
   { iconName: 'linkaja', title: 'TopUp LinkAja!', category: 'dompet digital' },
   { iconName: 'ovo', title: 'TopUp OVO', category: 'dompet digital' },
