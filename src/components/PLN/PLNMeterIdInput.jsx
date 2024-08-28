@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MeterIdInput = ({
+const PLNMeterIdInput = ({
   meteranId,
   handleMeteranIdChange,
   meteranIdError,
@@ -45,4 +45,4 @@ const MeterIdInput = ({
   );
 };
 
-export default MeterIdInput;
+export default PLNMeterIdInput;

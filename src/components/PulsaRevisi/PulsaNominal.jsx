@@ -100,7 +100,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const DenominationButtons = ({ availableDenominations, handleDenominationSelect, denomination }) => {
+const PulsaNominal = ({ availableDenominations, handleDenominationSelect, denomination }) => {
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium text-gray-700 mb-2">Nominal</label>
@@ -127,4 +127,4 @@ const DenominationButtons = ({ availableDenominations, handleDenominationSelect,
   );
 };
 
-export default DenominationButtons;
+export default PulsaNominal;

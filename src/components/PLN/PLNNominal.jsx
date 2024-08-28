@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const NominalButtons = ({ nominals, selectedNominal, setSelectedNominal, meteranId, setMeteranIdError }) => {
+const PLNNominal = ({ nominals, selectedNominal, setSelectedNominal, meteranId, setMeteranIdError }) => {
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium text-gray-700 mb-2">Nominal</label>
@@ -33,4 +33,4 @@ const NominalButtons = ({ nominals, selectedNominal, setSelectedNominal, meteran
   );
 };
 
-export default NominalButtons;
+export default PLNNominal;

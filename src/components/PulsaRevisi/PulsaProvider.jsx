@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaMobileAlt } from 'react-icons/fa';
 
-const ProviderSelector = ({ provider, handleProviderChange, denominations }) => {
+const PulsaProvider = ({ provider, handleProviderChange, denominations }) => {
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium text-gray-700">Pilih Provider</label>
@@ -24,4 +24,4 @@ const ProviderSelector = ({ provider, handleProviderChange, denominations }) => 
   );
 };
 
-export default ProviderSelector;
+export default PulsaProvider;

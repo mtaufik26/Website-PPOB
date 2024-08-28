@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProviderSelector from './PulsaProvider';
-import PhoneNumberInput from './PulsaPinputNumber';
+import PhoneNumberInput from './PulsaInputNumber';
 import DenominationButtons from './PulsaNominal';
 import TotalPrice from './PulsaTotal';
 import { denominations } from './PulsaDenominations';

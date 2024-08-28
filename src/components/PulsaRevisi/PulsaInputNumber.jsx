@@ -44,7 +44,7 @@
 
 import React from 'react';
 
-const PhoneNumberInput = ({ phoneNumber, handlePhoneNumberChange, error }) => {
+const PulsaInputNumber = ({ phoneNumber, handlePhoneNumberChange, error }) => {
   return (
     <div className="mb-2">
       <label className="block text-sm font-medium text-gray-700 mb-2">Nomor HP</label>
@@ -65,4 +65,4 @@ const PhoneNumberInput = ({ phoneNumber, handlePhoneNumberChange, error }) => {
   );
 };
 
-export default PhoneNumberInput;
+export default PulsaInputNumber;

@@ -13,11 +13,11 @@ import ProcessPulsa from './components/PulsaRevisi/ProcessPulsa';
 // import ProcessPayment from './components/pulsa/ProcessPayment';
 
 // PLN
-import ElectricityForm from './components/PLN/ElectricityForm';
-import PaymentSelection from './components/PLN/PaymentSelection';
-import PaymentConfirmation from './components/PLN/PaymentConfirmation';
+import PLNPage from './components/PLN/PLNPage';
+import PaymentPLN from './components/PLN/PaymentPLN';
+import ConfirmationPLN from './components/PLN/ConfirmationPLN';
 import TagihanListrik from './components/PLN/TagihanListrik';
-import PaymentProcess from './components/PLN/ProcessPLN';
+import ProcessPLN from './components/PLN/ProcessPLN';
 
 // Kuota
 import Kuota from './components/Kuota/Kuota';
@@ -61,11 +61,11 @@ const App = () => {
             {/* <Route path="/process-payment" element={<ProcessPayment />} /> */}
 
             {/* PLN */}
-            <Route path="/pln" element={<ElectricityForm />} />
-            <Route path="/electricity-form" element={<ElectricityForm />} />
-            <Route path="/payment-selection" element={<PaymentSelection />} />
-            <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
-            <Route path="/payment-process" element={<PaymentProcess />} />
+            <Route path="/pln" element={<PLNPage />} />
+            <Route path="/electricity-form" element={<PLNPage />} />
+            <Route path="/payment-selection" element={<PaymentPLN />} />
+            <Route path="/payment-confirmation" element={<ConfirmationPLN />} />
+            <Route path="/payment-process" element={<ProcessPLN />} />
             <Route path="/tagihan-listrik" element={<TagihanListrik />} />
 
             {/* Kirim Uang */}
