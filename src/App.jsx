@@ -2,33 +2,36 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 
-//Pulsa
-// import PulsaPurchase from './components/pulsa/PulsaPurchase';
-// import ProcessPayment from './components/pulsa/ProcessPayment';
-
-//PulsaRevisi
+// PulsaRevisi
 import PulsaPage from './components/PulsaRevisi/PulsaPage';
 import MetodePembayaranPulsa from './components/PulsaRevisi/MetodePembayaranPulsa';
 import ConfirmationPulsa from './components/PulsaRevisi/ConfirmationPulsa';
 import ProcessPulsa from './components/PulsaRevisi/ProcessPulsa';
 
-//PLN
-import ElectricityForm from './components/PLN/PLNPage';
-import PaymentSelection from './components/PLN/PaymentPLN';
-import PaymentConfirmation from './components/PLN/ConfirmationPLN';
-import TagihanListrik  from './components/PLN/TagihanListrik';
+// Pulsa (pilih yang ingin dipertahankan atau gabungkan jika diperlukan)
+// import PulsaPurchase from './components/pulsa/PulsaPurchase';
+// import ProcessPayment from './components/pulsa/ProcessPayment';
+
+// PLN
+import ElectricityForm from './components/PLN/ElectricityForm';
+import PaymentSelection from './components/PLN/PaymentSelection';
+import PaymentConfirmation from './components/PLN/PaymentConfirmation';
+import TagihanListrik from './components/PLN/TagihanListrik';
 import PaymentProcess from './components/PLN/ProcessPLN';
 
-//Kirim Uang
+// Kuota
+import Kuota from './components/Kuota/Kuota';
+
+// Kirim Uang
 import KirimUang from './components/KirimUang/KirimUang';
 import ProsesPengiriman from './components/KirimUang/ProsesPengiriman';
 
-//TopUp
+// TopUp
 import PaymentPage from './components/TopUp/PaymentPage';
 import ConfirmationPage from './components/TopUp/ConfirmationPage';
 import Process from './components/TopUp/Process';
 
-//TopUpHome
+// TopUpHome
 import Dana from './components/TopUp/TopUpHome/Dana';
 import Gopay from './components/TopUp/TopUpHome/Gopay';
 import LinkAja from './components/TopUp/TopUpHome/LinkAja';
@@ -36,14 +39,14 @@ import Ovo from './components/TopUp/TopUpHome/Ovo';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Login from './pages/auth/Login'
+import Login from './pages/auth/Login';
 
-  const App = () => {
-    return (
-      <Router>
-        <div className="flex flex-col min-h-screen">
-          {/* <Header /> */}
-          <main className="flex-grow">
+const App = () => {
+  return (
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        {/* <Header /> */}
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             {/* PulsaRevisi */}
@@ -53,6 +56,7 @@ import Login from './pages/auth/Login'
             <Route path="/process-pulsa" element={<ProcessPulsa />} />
 
             {/* Pulsa */}
+            {/* Uncomment jika diperlukan */}
             {/* <Route path="/pulsa" element={<PulsaPurchase />} /> */}
             {/* <Route path="/process-payment" element={<ProcessPayment />} /> */}
 
@@ -62,11 +66,14 @@ import Login from './pages/auth/Login'
             <Route path="/payment-selection" element={<PaymentSelection />} />
             <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
             <Route path="/payment-process" element={<PaymentProcess />} />
-            <Route path="/tagihan-listrik" element={<TagihanListrik  />} />
+            <Route path="/tagihan-listrik" element={<TagihanListrik />} />
 
             {/* Kirim Uang */}
             <Route path="/kirim-uang" element={<KirimUang />} />
             <Route path="/proses-pengiriman" element={<ProsesPengiriman />} />
+
+            {/* Kuota */}
+            <Route path="/kuota" element={<Kuota />} />
 
             {/* TopUp */}
             <Route path="/payment-page" element={<PaymentPage />} />
@@ -76,18 +83,19 @@ import Login from './pages/auth/Login'
             {/* TopUpHome */}
             <Route path="/dana" element={<Dana />} />
             <Route path="/gopay" element={<Gopay />} />
-            <Route path="/linkaja" element={<LinkAja />} />.
+            <Route path="/linkaja" element={<LinkAja />} />
             <Route path="/ovo" element={<Ovo />} />
             <Route path="/login" element={<Login />} />
           </Routes>
-          </main>
-          {/* <Footer /> */}
-        </div>
-      </Router>
-    );
-  }
+        </main>
+        {/* <Footer /> */}
+      </div>
+    </Router>
+  );
+};
 
-  export default App;
+export default App;
+
 
 
 
