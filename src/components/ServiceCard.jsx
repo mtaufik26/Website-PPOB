@@ -4,7 +4,7 @@ import { Pulsa,Kuota,PLN, Game, Emoney, Air, BPJS, Wallet, Send, Dana, LinkAja, 
 
 const icons = {
   pulsa: Pulsa,
-  Kuota: Kuota,
+  kuota: Kuota,
   listrik: PLN,
   game: Game,
   emoney: Emoney,

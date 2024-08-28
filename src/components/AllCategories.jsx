@@ -10,6 +10,7 @@ const categories = {
   Pembelian: [
     { iconName: 'pulsa', title: 'Pulsa' },
     { iconName: 'listrik', title: 'PLN' },
+    { iconName: 'kuota', title: 'Kuota' },
     // { iconName: 'game', title: 'Game' },
     // { iconName: 'emoney', title: 'E-money' },
   ],
