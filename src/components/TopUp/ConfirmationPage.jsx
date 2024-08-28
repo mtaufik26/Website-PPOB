@@ -1,4 +1,3 @@
-//ConfirmationPage.jsx
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
@@ -10,10 +9,9 @@ const ConfirmationPage = () => {
     selectedMethod = '',
     phone = '',
     nominal = 0,
-    adminFee = 0,
   } = location.state || {};
 
-  const totalAmount = nominal + adminFee;
+  const totalAmount = nominal;  // Hapus adminFee dari perhitungan
 
   const handleBack = () => {
     navigate(-1);
@@ -21,7 +19,7 @@ const ConfirmationPage = () => {
 
   const handlePayment = () => {
     navigate('/process', {
-      state: { selectedMethod, amount: totalAmount, phone, nominal, adminFee },
+      state: { selectedMethod, amount: totalAmount, phone, nominal },
     });
   };
 
@@ -46,8 +44,6 @@ const ConfirmationPage = () => {
         <div className="space-y-3">
           <InfoItem term="Nominal" description={`Rp ${nominal.toLocaleString('id-ID')}`} />
           <InfoItem term="No. Telepon" description={phone} />
-          {/* <InfoItem term="Harga" description={`Rp ${nominal.toLocaleString('id-ID')}`} /> */}
-          <InfoItem term="Biaya Admin" description={`Rp ${adminFee.toLocaleString('id-ID')}`} />
           <InfoItem term="Metode pembayaran" description={selectedMethod.toUpperCase()} />
         </div>
         <div className="flex items-center justify-between border-t border-gray-300 pt-4 mt-4">

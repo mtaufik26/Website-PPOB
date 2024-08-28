@@ -3,20 +3,11 @@ import React from 'react';
 import DigitalWalletPage from './DigitalWalletPage';
 
 const ovoOptions = [
-  { amount: 5000, admin: 2000 },
-  { amount: 10000, admin: 2000 },
-  { amount: 25000, admin: 2000 },
-  { amount: 40000, admin: 2000 },
-  { amount: 50000, admin: 2000 },
-  { amount: 60000, admin: 2000 },
-  { amount: 75000, admin: 2000 },
-  { amount: 80000, admin: 2000 },
-  { amount: 90000, admin: 2000 },
-  { amount: 100000, admin: 2000 },
-  { amount: 150000, admin: 5000 },
-  { amount: 200000, admin: 5000 },
-  { amount: 300000, admin: 5000 },
-  { amount: 500000, admin: 10000 },
+  { amount: 20000, productCode: 'SBIOVO20k' },
+  { amount: 25000, productCode: 'SBIOVO25k' },
+  { amount: 50000, productCode: 'SBIOVO50k' },
+  { amount: 100000, productCode: 'SBIOVO100k' },
+  { amount: 200000, productCode: 'SBIOVO200k' },
 ];
 
 const Ovo = () => (

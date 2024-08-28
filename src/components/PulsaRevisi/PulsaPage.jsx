@@ -1,65 +1,116 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProviderDropdown from './ProviderDropdown';
-import DenominationButtons from './DenominationButtons';
-import PhoneNumberInput from './PoneNumberInput';
-import Summary from './Summary';
-import Card from '../Card';
+import ProviderSelector from './PulsaProvider';
+import PhoneNumberInput from './PulsaPinputNumber';
+import DenominationButtons from './PulsaNominal';
+import TotalPrice from './PulsaTotal';
+import { denominations } from './PulsaDenominations';
 
 const PulsaPage = () => {
-    const navigate = useNavigate();
-    const [provider, setProvider] = useState('');
-    const [denomination, setDenomination] = useState({ amount: null, code: '' });
-    const [phoneNumber, setPhoneNumber] = useState('');
-  
-    const handleProviderChange = (selectedProvider) => {
-      setProvider(selectedProvider);
-      setDenomination({ amount: null, code: '' }); // Reset denomination when provider changes
-    };
-  
-    const handleDenominationSelect = (amount, code) => {
-      setDenomination({ amount, code });
-    };
-  
-    const handlePhoneNumberChange = (number) => {
-      setPhoneNumber(number);
-    };
+  const navigate = useNavigate();
+  const [provider, setProvider] = useState('');
+  const [denomination, setDenomination] = useState({ amount: null, code: '' });
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [error, setError] = useState('');
 
-    const handleBack = () => navigate('/');
-  
-    return (
-        <Card>
-            <div className="sticky top-0 bg-white z-10 border-b">
-                <div className="flex items-center p-2">
-                    <button onClick={handleBack} className="mr-4">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                <h1 className="text-lg font-semibold">Pulsa</h1>
-                </div>
-            </div>
-            <div className="max-w-lg mx-auto p-4 ">
-                <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Top-Up Pulsa</h1>
-                
-                <ProviderDropdown onChange={handleProviderChange} provider={provider} />
-                <PhoneNumberInput value={phoneNumber} onChange={handlePhoneNumberChange} />
-                <DenominationButtons provider={provider} onSelect={handleDenominationSelect} selected={denomination} />
-                <Summary provider={provider} denomination={denomination.amount} phoneNumber={phoneNumber} />
-                
-                <button
-                    className={`w-full mt-4 py-3 rounded-lg text-white font-semibold transition-all duration-300 ${
-                    provider && denomination.amount && phoneNumber.length >= 10
-                        ? 'bg-sky-500 hover:bg-sky-600 shadow-lg'
-                        : 'bg-gray-400 '
-                    }`}
-                    disabled={!provider || !denomination.amount || phoneNumber.length < 10}
-                >
-                    Lanjut Verifikasi
-                </button>
-            </div>
-        </Card>
-    );
-};  
+  const handleProviderChange = (selectedProvider) => {
+    setProvider(selectedProvider);
+    setDenomination({ amount: null, code: '' });
+  };
+
+  const handleDenominationSelect = (amount, code) => {
+    setDenomination({ amount, code });
+  };
+
+  const handlePhoneNumberChange = (number) => {
+    const input = number.replace(/[^0-9]/g, '');
+    setPhoneNumber(input);
+
+    if (input && !input.startsWith('08')) {
+      setError('Nomor HP harus dimulai dengan "08".');
+    } else if (input.length < 10) {
+      setError('Nomor HP terlalu pendek. Harus minimal 10 digit.');
+    } else if (input.length > 13) {
+      setError('Nomor HP terlalu panjang. Harus maksimal 13 digit.');
+    } else {
+      setError('');
+    }
+  };
+
+  const handleBack = () => navigate('/');
+
+  const handleVerification = () => {
+    if (isProviderSelected && isDenominationSelected && isPhoneNumberValid) {
+      navigate('/metode-pembayaran-pulsa', {
+        state: {
+          provider,
+          denomination,
+          phoneNumber,
+        },
+      });
+    }
+  };
+
+  const isPhoneNumberValid = phoneNumber.length >= 10 && !error;
+  const isProviderSelected = provider !== '';
+  const isDenominationSelected = denomination.amount !== null;
+
+  const availableDenominations = useMemo(() => denominations[provider], [provider]);
+
+  return (
+    <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">
+      <div className="flex-grow">
+        <div className="sticky top-0 bg-white z-10 border-b">
+          <div className="flex items-center p-2">
+            <button onClick={handleBack} className="mr-4">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <h1 className="text-lg font-semibold">Pulsa</h1>
+          </div>
+        </div>
+        <div className="max-w-lg mx-auto p-4">
+          <h1 className="text-2xl font-bold mb-4">Top-Up Pulsa</h1>
+          <ProviderSelector
+            provider={provider}
+            handleProviderChange={handleProviderChange}
+            denominations={denominations}
+          />
+          <PhoneNumberInput
+            phoneNumber={phoneNumber}
+            handlePhoneNumberChange={handlePhoneNumberChange}
+            error={error}
+          />
+          {provider && (
+            <DenominationButtons
+              availableDenominations={availableDenominations}
+              handleDenominationSelect={handleDenominationSelect}
+              denomination={denomination}
+            />
+          )}
+        </div>
+      </div>
+      <TotalPrice
+        denomination={denomination}
+        isProviderSelected={isProviderSelected}
+        isDenominationSelected={isDenominationSelected}
+        isPhoneNumberValid={isPhoneNumberValid}
+        handleVerification={handleVerification}
+      />
+    </div>
+  );
+};
 
 export default PulsaPage;
