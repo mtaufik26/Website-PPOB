@@ -6,7 +6,7 @@ import PurchaseDetails from './PLNDetails';
 import NominalButtons from './PLNNominal';
 import TotalPrice from './TotalPrice';
 
-const ElectricityForm = () => {
+const PLNPage = () => {
   const [selectedOperator, setSelectedOperator] = useState('Token Listrik');
   const [selectedNominal, setSelectedNominal] = useState(null);
   const [meteranId, setMeteranId] = useState('');
@@ -159,4 +159,4 @@ const ElectricityForm = () => {
   );
 };
 
-export default ElectricityForm;
+export default PLNPage;

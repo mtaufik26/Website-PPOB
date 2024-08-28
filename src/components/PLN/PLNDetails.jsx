@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PurchaseDetails = ({ purchaseDetails }) => {
+const PLNDetails = ({ purchaseDetails }) => {
   return (
     <div className="bg-gray-100 p-4 rounded-lg mb-4">
       <h3 className="text-sm text-gray-600 mb-2">Detail Pembelian</h3>
@@ -12,4 +12,4 @@ const PurchaseDetails = ({ purchaseDetails }) => {
   );
 };
 
-export default PurchaseDetails;
+export default PLNDetails;

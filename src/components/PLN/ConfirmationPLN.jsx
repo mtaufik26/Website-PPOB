@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
 
-const PaymentConfirmation = () => {
+const ConfirmationPLN
+ = () => {
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location.state);  // Debugging untuk memastikan adminFee terbaca
@@ -82,4 +83,5 @@ const InfoItem = ({ term, description }) => (
   </div>
 );
 
-export default PaymentConfirmation;
+export default ConfirmationPLN
+;

@@ -10,7 +10,7 @@ const paymentMethods = [
   { id: 'mandiri', name: 'Mandiri Virtual Account', icon: '🏦', color: 'bg-yellow-100' },
 ];
 
-const PaymentSelection = () => {
+const PaymentPLN = () => {
   const [selectedMethod, setSelectedMethod] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -98,6 +98,6 @@ const PaymentSelection = () => {
   );
 };
 
-export default PaymentSelection;
+export default PaymentPLN;
 
 

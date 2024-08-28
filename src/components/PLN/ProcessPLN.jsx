@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
 import Ceklis from '../../assets/images/ceklis.png';
 
-const PaymentProcess = () => {
+const ProcessPLN = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
@@ -89,4 +89,4 @@ const PaymentProcess = () => {
   );
 };
 
-export default PaymentProcess;
+export default ProcessPLN;
