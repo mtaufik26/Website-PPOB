@@ -3,20 +3,12 @@ import React from 'react';
 import DigitalWalletPage from './DigitalWalletPage';
 
 const danaOptions = [
-  { amount: 5000, admin: 2000 },
-  { amount: 10000, admin: 2000 },
-  { amount: 25000, admin: 2000 },
-  { amount: 40000, admin: 2000 },
-  { amount: 50000, admin: 2000 },
-  { amount: 60000, admin: 2000 },
-  { amount: 75000, admin: 2000 },
-  { amount: 80000, admin: 2000 },
-  { amount: 90000, admin: 2000 },
-  { amount: 100000, admin: 2000 },
-  { amount: 150000, admin: 5000 },
-  { amount: 200000, admin: 5000 },
-  { amount: 300000, admin: 5000 },
-  { amount: 500000, admin: 10000 },
+  { amount: 10000, productCode: 'SBIDANA10k' },
+  { amount: 20000, productCode: 'SBIDANA20k' },
+  { amount: 25000, productCode: 'SBIDANA25k' },
+  { amount: 50000, productCode: 'SBIDANA50k' },
+  { amount: 100000, productCode: 'SBIDANA100k' },
+  { amount: 200000, productCode: 'SBIDANA200k' },
 ];
 
 const Dana = () => (
