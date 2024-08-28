@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import PulsaPage from './components/PulsaRevisi/PulsaPage';
 import PulsaPurchase from './components/pulsa/PulsaPurchase';
+import Kuota from './components/Kuota/Kuota';
 import ElectricityForm from './components/PLN/ElectricityForm';
 import PaymentSelection from './components/PLN/PaymentSelection';
 import PaymentConfirmation from './components/PLN/PaymentConfirmation';
@@ -32,6 +33,7 @@ import Login from './pages/auth/Login'
             <Route path="/" element={<Home />} />
             <Route path="/topup-pulsa" element={<PulsaPage />} />
             <Route path="/pulsa" element={<PulsaPurchase />} />
+            <Route path="/kuota" element={<Kuota />} />
             <Route path="/pln" element={<ElectricityForm />} />
             <Route path="/electricity-form" element={<ElectricityForm />} />
             <Route path="/payment-selection" element={<PaymentSelection />} />
