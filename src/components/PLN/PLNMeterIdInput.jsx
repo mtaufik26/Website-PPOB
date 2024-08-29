@@ -15,7 +15,7 @@ const PLNMeterIdInput = ({
       <label className="block text-sm font-medium text-gray-700 mb-2">No. Meter/ID Pel</label>
       <div className="relative">
         <input
-          type="text"
+          type="number"
           value={meteranId}
           onChange={(e) => handleMeteranIdChange(e.target.value)}
           className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-1 ${
@@ -24,7 +24,7 @@ const PLNMeterIdInput = ({
           aria-label="Meter/ID Input"
         />
         <button
-          className={`absolute right-2 top-1 px-4 py-2 rounded-lg ${
+          className={`absolute right-2 top-1 px-3 py-1 rounded-lg ${
             !selectedNominal ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-white'
           }`}
           onClick={handleCheckMeteranId}

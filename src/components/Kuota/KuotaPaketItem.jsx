@@ -1,32 +1,49 @@
 import React from 'react';
 
-const KuotaPaketItem = ({ nama, hargaBaru, hargaLama, diskon, isSelected, onClick }) => (
-  <div
-    className={`p-4 border rounded-lg mb-4 cursor-pointer shadow-sm ${
-      isSelected ? 'bg-blue-50' : 'bg-white'
-    }`}
-    onClick={onClick}
-  >
-    <div>
-      <div className="flex items-center mb-1">
-        {diskon && (
-          <div className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-sm mr-2">
-            Promo
-          </div>
-        )}
-        <p className="font-medium text-gray-700 text-sm">{nama}</p>
+const KuotaPaketItem = ({ nama, harga, diskon, hargaBaru, isSelected, onClick }) => {
+  return (
+    <div
+      onClick={onClick}
+      className={`p-4 border rounded-lg mb-2 cursor-pointer relative ${
+        isSelected ? 'bg-sky-100 border-sky-500' : 'bg-white'
+      }`}
+    >
+      {/* Label Promo di sudut kiri atas, dengan jarak dari nama paket */}
+      {diskon && diskon !== '0' && (
+        <div className="absolute top-0 left-0 bg-orange-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-br-lg">
+          Promo
+        </div>
+      )}
+
+      <div className="flex flex-col mt-1"> {/* Menambahkan margin-top untuk memberikan jarak */}
+        <h2 className="font-medium text-gray-800">{nama}</h2>
+        <div className="flex flex-col mt-2">
+          {/* Harga Asli dengan coretan jika ada diskon */}
+          {diskon && diskon !== '0' ? (
+            <>
+              <span className="text-sm text-gray-500 line-through">
+                Rp{parseInt(harga.replace(/\./g, ''), 10).toLocaleString()}
+              </span>
+              <div className="flex items-center">
+                {/* Harga setelah diskon */}
+                <span className="text-lg font-bold text-black mr-2">
+                  Rp{parseInt(hargaBaru, 10).toLocaleString()}
+                </span>
+                {/* Persentase Diskon */}
+                <span className="text-xs font-bold text-red-500 bg-red-100 px-2 py-0.5 rounded-lg">
+                  {diskon}%
+                </span>
+              </div>
+            </>
+          ) : (
+            <span className="text-lg font-bold text-black">
+              Rp{parseInt(harga.replace(/\./g, ''), 10).toLocaleString()}
+            </span>
+          )}
+        </div>
       </div>
-      <div className="flex items-center">
-        <p className="text-lg font-semibold text-gray-800">Rp{hargaBaru}</p>
-        {diskon && (
-          <div className="text-red-500 bg-red-100 text-xs font-bold px-2 py-0.5 rounded-full ml-2">
-            {diskon}%
-          </div>
-        )}
-      </div>
-      {hargaLama && <p className="line-through text-gray-400 text-xs mt-1">Rp{hargaLama}</p>}
     </div>
-  </div>
-);
+  );
+};
 
 export default KuotaPaketItem;

@@ -1,34 +1,57 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { KuotaPaketData } from './KuotaPaketData';
-// import KuotaPaketData from './KuotaPaketData';
-import PaketItem from './KuotaPaketItem'; // Import komponen PaketItem
-import KuotaProvider from './KuotaProvider'; // Import komponen KuotaProvider
-import InputNumber from './KuotaInputNumber'; // Import komponen InputNumber
+import KuotaPaketItem from './KuotaPaketItem';
+import KuotaProvider from './KuotaProvider';
+import InputNumber from './KuotaInputNumber';
 
-const Kuota = () => {
+const KuotaPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
   const [selectedProvider, setSelectedProvider] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(location.state?.phoneNumber || '');
+  const [packages, setPackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (!phoneNumber.startsWith('08')) {
-      setErrorMessage('Nomor telepon harus dimulai dengan 08.');
-    } else if (phoneNumber.length < 10 || phoneNumber.length > 15) {
-      setErrorMessage('Nomor telepon harus antara 10 hingga 15 karakter.');
-    } else if (!selectedPackage) {
-      setErrorMessage('Pilih paket data.');
+  useEffect(() => {
+    if (selectedProvider) {
+      setPackages(KuotaPaketData[selectedProvider]?.packages || []);
     } else {
-      console.log('Selected Provider:', selectedProvider);
-      console.log('Phone Number:', phoneNumber);
-      console.log('Selected Package:', selectedPackage);
-      setErrorMessage('');
-      // Handle form submission logic here (e.g., API call)
+      setPackages([]);
     }
-  };
+    setSelectedPackage('');
+  }, [selectedProvider]);
+
+  const handleFormSubmit = () => {
+    const denomination = packages.find(pkg => pkg.kode === selectedPackage);
+
+    if (!denomination) {
+        setErrorMessage('Paket yang dipilih tidak valid.');
+        return;
+    }
+
+    // Calculate the price, handling cases with and without discount
+    const originalPrice = parseInt(denomination.harga.replace(/\./g, ''), 10);
+    const hargaBaru = denomination.diskon 
+        ? (originalPrice * (100 - denomination.diskon) / 100).toFixed(0) 
+        : originalPrice;
+
+    navigate('/metode-pembayaran-kuota', {
+        state: {
+            provider: selectedProvider,
+            denomination: {
+                harga: hargaBaru,  // Corrected price after discount or original price if no discount
+                harga: originalPrice.toString(), // Save original price for display if needed
+                diskon: denomination.diskon,
+                kode: denomination.kode,
+                nama: denomination.nama,
+            },
+            phoneNumber: phoneNumber,
+        },
+    });
+};
 
   const handleBack = () => navigate('/');
 
@@ -42,12 +65,21 @@ const Kuota = () => {
       setErrorMessage('Nomor telepon terlalu singkat, minimal 10 karakter.');
     } else if (value.length > 15) {
       setErrorMessage('Nomor telepon terlalu panjang, maksimal 15 karakter.');
+    } else {
+      setErrorMessage('Nomor telepon tidak valid.');
     }
   };
 
+  const selectedPackageDetails = packages.find(pkg => pkg.kode === selectedPackage);
+  const totalHarga = selectedPackageDetails
+    ? selectedPackageDetails.diskon 
+      ? (parseInt(selectedPackageDetails.harga.replace(/\./g, ''), 10) * (100 - selectedPackageDetails.diskon) / 100).toLocaleString()
+      : parseInt(selectedPackageDetails.harga.replace(/\./g, ''), 10).toLocaleString()
+    : '0';
+
   return (
     <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">
-      <div className="flex-grow">
+      <div className="flex-grow ">
         <div className="sticky top-0 bg-white z-10 border-b">
           <div className="flex items-center p-2">
             <button onClick={handleBack} className="mr-4">
@@ -76,14 +108,20 @@ const Kuota = () => {
           {selectedProvider && (
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">Pilih Paket</label>
-              {KuotaPaketData[selectedProvider].packages.map((pkg, index) => (
-                <PaketItem
-                  key={index}
-                  {...pkg}
-                  isSelected={pkg.kode === selectedPackage}
-                  onClick={() => setSelectedPackage(pkg.kode)}
-                />
-              ))}
+              {packages.map((pkg, index) => {
+                const hargaBaru = pkg.diskon 
+                  ? (parseInt(pkg.harga.replace(/\./g, ''), 10) * (100 - pkg.diskon) / 100).toFixed(0) 
+                  : pkg.harga;
+                return (
+                  <KuotaPaketItem
+                    key={index}
+                    {...pkg}
+                    hargaBaru={hargaBaru}
+                    isSelected={pkg.kode === selectedPackage}
+                    onClick={() => setSelectedPackage(pkg.kode)}
+                  />
+                );
+              })}
             </div>
           )}
         </div>
@@ -93,9 +131,7 @@ const Kuota = () => {
           <div className="flex flex-col">
             <span className="text-xs text-gray-500">Total Harga</span>
             <span className="text-lg font-bold text-black">
-              Rp{selectedPackage && selectedProvider && KuotaPaketData[selectedProvider]
-                ? KuotaPaketData[selectedProvider].packages.find(pkg => pkg.kode === selectedPackage)?.hargaBaru || '0'
-                : '0'}
+              Rp{totalHarga}
             </span>
           </div>
           <button
@@ -115,4 +151,4 @@ const Kuota = () => {
   );
 };
 
-export default Kuota;
+export default KuotaPage;
