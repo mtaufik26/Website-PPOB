@@ -3,14 +3,17 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
 import Ceklis from '../../assets/images/ceklis.png';
 
-const ProcessPulsa = () => {
+const ProcessKuota = () => {
   const [status, setStatus] = useState('verifikasi');
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Mengambil data dari location.state
-  const { selectedMethod, amount, accountNumber, provider } = location.state || {};
+  // Destructuring data from location.state
+  const { selectedMethod, harga, phoneNumber, provider } = location.state || {};
+
+  console.log('Phone Number:', phoneNumber);
+    console.log('Harga:', harga);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,7 +34,7 @@ const ProcessPulsa = () => {
   };
 
   const formatAmount = (amount) => {
-    return amount > 0 ? `Rp ${amount.toLocaleString()}` : 'Rp -';
+    return amount && amount > 0 ? `Rp ${parseInt(amount, 10).toLocaleString()}` : 'Rp -';
   };
 
   const renderContent = () => {
@@ -41,10 +44,10 @@ const ProcessPulsa = () => {
           <>
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pembayaran</h2>
-            <p className="text-gray-600 mb-2">Provider: {provider || '-'}</p>
-            <p className="text-gray-600 mb-4">Nomor HP: {accountNumber || '-'}</p>
-            <p className="text-gray-600 mb-2">Jumlah: {formatAmount(amount)}</p>
-            <p className="text-gray-600 mb-2">Metode: {selectedMethod || '-'}</p>
+            <p className="text-gray-600 mb-2">Provider : {provider || '-'}</p>
+            <p className="text-gray-600 mb-2">Nomor HP : {phoneNumber || '-'}</p>
+            <p className="text-gray-600 mb-2">Harga : {formatAmount(harga)}</p>
+            <p className="text-gray-600 mb-2">Metode : {selectedMethod || '-'}</p>
             <p className="text-gray-600">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
           </>
         );
@@ -61,8 +64,8 @@ const ProcessPulsa = () => {
           <>
             <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
-            <p className="text-gray-600 mb-4">Nomor HP: {accountNumber || '-'}</p>
-            <p className="text-gray-600 mb-2">Jumlah: {formatAmount(amount)}</p>
+            <p className="text-gray-600 mb-1">Nomor HP : {phoneNumber || '-'}</p>
+            <p className="text-gray-600 mb-1">Harga : {formatAmount(harga)}</p>
             <p className="text-gray-600 mb-2">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
             <button
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
@@ -96,4 +99,4 @@ const ProcessPulsa = () => {
   );
 };
 
-export default ProcessPulsa;
+export default ProcessKuota;

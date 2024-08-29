@@ -15,7 +15,7 @@ const PaymentPLN = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { selectedNominal, meteranId, productType, adminFee } = location.state || {};
+  const { selectedNominal, meteranId, productType, productCode } = location.state || {}; // Menerima productCode
 
   const handlePaymentSelection = () => {
     if (selectedMethod) {
@@ -25,12 +25,13 @@ const PaymentPLN = () => {
           selectedMethod,
           selectedNominal,
           meteranId,
-          adminFee,
+          productCode, // Mengirimkan productCode ke halaman konfirmasi
         },
       });
     } else {
+      setError('Pilih metode pembayaran.');
     }
-  };
+  };  
 
   const handleBack = () => {
     navigate(productType === 'electricity' ? '/electricity-form' : '/');
@@ -99,5 +100,3 @@ const PaymentPLN = () => {
 };
 
 export default PaymentPLN;
-
-

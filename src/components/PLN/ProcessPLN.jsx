@@ -8,7 +8,7 @@ const ProcessPLN = () => {
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const { selectedMethod, amount, meteranId } = location.state || {};
+  const { selectedMethod, amount, meteranId, productCode } = location.state || {};
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -54,9 +54,9 @@ const ProcessPLN = () => {
           <>
             <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
-            <p className="text-gray-600 mb-2">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
             <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
             <p className="text-gray-600 mb-6">Nomor Meter/ID Pel: {meteranId}</p>
+            <p className="text-gray-600 mb-2">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
             <button
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
               onClick={handleClose}

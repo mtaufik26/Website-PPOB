@@ -20,12 +20,12 @@ const PLNPage = () => {
 
   const operators = ['Token Listrik', 'Tagihan Listrik', 'PLN Non-Taglis'];
   const nominals = [
-    { value: 20000, admin: 500 },
-    { value: 50000, admin: 500 },
-    { value: 100000, admin: 500 },
-    { value: 200000, admin: 500 },
-    { value: 500000, admin: 500 },
-    { value: 1000000, admin: 500 },
+    { value: 20000 },
+    { value: 50000 },
+    { value: 100000 },
+    { value: 200000 },
+    { value: 500000 },
+    { value: 1000000 },
   ];
 
   useEffect(() => {
@@ -79,13 +79,13 @@ const PLNPage = () => {
 
   const handlePaymentSelection = () => {
     if (meteranId.length >= 11 && selectedNominal && isCheckButtonClicked) {
-      const fee = getAdminFee();
+      const selectedNominalObj = nominals.find((nominal) => nominal.value === selectedNominal);
       navigate('/payment-selection', {
         state: {
           selectedNominal,
           meteranId,
-          adminFee: fee,
           productType: 'electricity',
+          productCode: selectedNominalObj.productCode, // Mengirimkan productCode ke halaman berikutnya
         },
       });
     } else {
@@ -96,12 +96,7 @@ const PLNPage = () => {
         setMeteranIdError('Nomor harus minimal 11 digit untuk melanjutkan.');
       }
     }
-  };
-
-  const getAdminFee = () => {
-    const selectedNominalObj = nominals.find((nominal) => nominal.value === selectedNominal);
-    return selectedNominalObj ? selectedNominalObj.admin : 0;
-  };
+  };  
 
   return (
     <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">
@@ -151,7 +146,6 @@ const PLNPage = () => {
       </div>
       <TotalPrice
         selectedNominal={selectedNominal}
-        getAdminFee={getAdminFee}
         handlePaymentSelection={handlePaymentSelection}
         isDisabled={!selectedNominal || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked}
       />

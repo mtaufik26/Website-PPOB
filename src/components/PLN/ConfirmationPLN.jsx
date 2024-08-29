@@ -2,31 +2,26 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
 
-const ConfirmationPLN
- = () => {
+const ConfirmationPLN = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);  // Debugging untuk memastikan adminFee terbaca
   
-  const { selectedMethod, selectedNominal = 0, meteranId = '', adminFee = 0 } = location.state || {};
-
-  console.log('Admin Fee:', adminFee); // Debugging untuk melihat nilai adminFee
+  const { selectedMethod, selectedNominal = 0, meteranId = '', productCode = '' } = location.state || {}; // Menerima productCode
 
   const handleBack = () => {
     navigate(-1);
   };
 
   const handlePayment = () => {
-    const totalAmount = selectedNominal + adminFee;
+    const totalAmount = selectedNominal;
     if (totalAmount <= 0) {
       console.error('Invalid amount for payment');
       return;
     }
     navigate('/payment-process', {
-      state: { selectedMethod, amount: totalAmount, meteranId },
+      state: { selectedMethod, amount: totalAmount, meteranId, productCode }, // Mengirimkan productCode ke proses pembayaran
     });
-  };
-  
+  };  
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
@@ -50,12 +45,11 @@ const ConfirmationPLN
           <InfoItem term="Nama paket" description={`Rp ${selectedNominal.toLocaleString()}`} />
           <InfoItem term="No. Meter/ID Pel" description={meteranId} />
           <InfoItem term="Harga" description={`Rp ${selectedNominal.toLocaleString()}`} />
-          <InfoItem term="Biaya Admin" description={`Rp ${adminFee.toLocaleString()}`} />  
-          <InfoItem term="Metode pembayaran" description={selectedMethod?.toUpperCase() || '-' } />
+          <InfoItem term="Metode pembayaran" description={selectedMethod?.toUpperCase() || '-'} />
         </div>
         <div className="flex items-center justify-between border-t border-gray-300 pt-4 mt-4">
           <span className="text-lg font-semibold text-gray-900">Total Harga</span>
-          <span className="text-xl font-bold text-red-600">Rp {(selectedNominal + adminFee).toLocaleString()}</span>
+          <span className="text-xl font-bold text-red-600">Rp {selectedNominal.toLocaleString()}</span>
         </div>
       </main>
       <button
@@ -83,5 +77,4 @@ const InfoItem = ({ term, description }) => (
   </div>
 );
 
-export default ConfirmationPLN
-;
+export default ConfirmationPLN;

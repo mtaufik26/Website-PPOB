@@ -8,10 +8,6 @@ import MetodePembayaranPulsa from './components/PulsaRevisi/MetodePembayaranPuls
 import ConfirmationPulsa from './components/PulsaRevisi/ConfirmationPulsa';
 import ProcessPulsa from './components/PulsaRevisi/ProcessPulsa';
 
-// Pulsa (pilih yang ingin dipertahankan atau gabungkan jika diperlukan)
-// import PulsaPurchase from './components/pulsa/PulsaPurchase';
-// import ProcessPayment from './components/pulsa/ProcessPayment';
-
 // PLN
 import PLNPage from './components/PLN/PLNPage';
 import PaymentPLN from './components/PLN/PaymentPLN';
@@ -20,7 +16,10 @@ import TagihanListrik from './components/PLN/TagihanListrik';
 import ProcessPLN from './components/PLN/ProcessPLN';
 
 // Kuota
-import Kuota from './components/Kuota/Kuota';
+import Kuota from './components/Kuota/KuotaPage';
+import MetodePembayaranKuota from './components/Kuota/MetodePembayaranKuota';
+import ConfirmationKuota from './components/Kuota/ConfirmationKuota';
+import ProcessKuota from './components/Kuota/ProcessKuota';
 
 // Kirim Uang
 import KirimUang from './components/KirimUang/KirimUang';
@@ -55,11 +54,6 @@ const App = () => {
             <Route path="/confirmation-pulsa" element={<ConfirmationPulsa />} />
             <Route path="/process-pulsa" element={<ProcessPulsa />} />
 
-            {/* Pulsa */}
-            {/* Uncomment jika diperlukan */}
-            {/* <Route path="/pulsa" element={<PulsaPurchase />} /> */}
-            {/* <Route path="/process-payment" element={<ProcessPayment />} /> */}
-
             {/* PLN */}
             <Route path="/pln" element={<PLNPage />} />
             <Route path="/electricity-form" element={<PLNPage />} />
@@ -74,6 +68,9 @@ const App = () => {
 
             {/* Kuota */}
             <Route path="/kuota" element={<Kuota />} />
+            <Route path="/metode-pembayaran-kuota" element={<MetodePembayaranKuota />} />
+            <Route path="/confirmation-kuota" element={<ConfirmationKuota />} />
+            <Route path="/process-kuota" element={<ProcessKuota />} />
 
             {/* TopUp */}
             <Route path="/payment-page" element={<PaymentPage />} />

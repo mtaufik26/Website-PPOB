@@ -53,7 +53,7 @@ const ProcessPage = () => {
           <>
             <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
-            <p className="text-gray-600 mb-2">Pembayaran Anda telah diproses dengan sukses!</p>
+            <p className="text-gray-600 mb-2">Pembayaran Anda telah diproses dengan sukses dengan metode {selectedMethod}</p>
             <p className="text-gray-600 mb-2">Terima kasih atas transaksi Anda. Selamat menggunakan layanan kami!</p>
             <button
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
