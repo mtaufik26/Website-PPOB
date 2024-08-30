@@ -18,18 +18,26 @@ const ConfirmationKuota = () => {
   };
 
   const handleVerification = () => {
+    const discountedPrice = denomination.harga - (denomination.harga * (denomination.diskon / 100));
     navigate('/process-kuota', {
-        state: {
-            selectedMethod: selectedMethod,
-            harga: parseInt(denomination?.harga, 10),
-            phoneNumber: phoneNumber,
-            provider: provider,
-        },
+      state: {
+        selectedMethod: selectedMethod,
+        harga: discountedPrice,
+        phoneNumber: phoneNumber,
+        provider: provider,
+        diskon: denomination.diskon,
+      },
     });
   };
+  
   const formatAmount = (amount) => {
     if (!amount || isNaN(amount)) return 'Rp -';
     return `Rp ${parseInt(amount, 10).toLocaleString()}`;
+  };
+
+  const calculateDiscountedPrice = (harga, diskon) => {
+    if (!diskon || isNaN(harga)) return harga;
+    return harga - (harga * (diskon / 100));
   };
 
   return (
@@ -58,7 +66,7 @@ const ConfirmationKuota = () => {
         </div>
         <div className='flex items-center justify-between border-t border-gray-300 pt-4 mt-4'>
           <span className='text-lg font-semibold text-gray-900'>Total Harga</span>
-          <span className='text-xl font-bold text-red-600'>{formatAmount(denomination?.harga)}</span>  {/* Show discounted price */}
+          <span className='text-xl font-bold text-red-600'>{formatAmount(calculateDiscountedPrice(denomination?.harga, denomination?.diskon))}</span>  {/* Show discounted price */}
         </div>
       </div>
 

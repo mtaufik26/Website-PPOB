@@ -38,10 +38,11 @@ const KuotaPage = () => {
         ? (originalPrice * (100 - denomination.diskon) / 100).toFixed(0) 
         : originalPrice;
 
-    navigate('/metode-pembayaran-kuota', {
+    navigate('/metode-payment', {
         state: {
             provider: selectedProvider,
             denomination: {
+                type: 'kuota',
                 harga: hargaBaru,  // Corrected price after discount or original price if no discount
                 harga: originalPrice.toString(), // Save original price for display if needed
                 diskon: denomination.diskon,

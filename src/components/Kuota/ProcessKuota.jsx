@@ -10,10 +10,11 @@ const ProcessKuota = () => {
   const location = useLocation();
 
   // Destructuring data from location.state
-  const { selectedMethod, harga, phoneNumber, provider } = location.state || {};
+  const { selectedMethod, harga, phoneNumber, provider, diskon } = location.state || {};
 
   console.log('Phone Number:', phoneNumber);
-    console.log('Harga:', harga);
+  console.log('Harga:', harga);
+  console.log('Diskon:', diskon);
 
   useEffect(() => {
     const timer = setTimeout(() => {
