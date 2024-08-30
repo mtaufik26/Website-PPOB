@@ -4,21 +4,22 @@ import Home from './pages/Home';
 
 // PulsaRevisi
 import PulsaPage from './components/PulsaRevisi/PulsaPage';
-import MetodePembayaranPulsa from './components/PulsaRevisi/MetodePembayaranPulsa';
-import ConfirmationPulsa from './components/PulsaRevisi/ConfirmationPulsa';
-import ProcessPulsa from './components/PulsaRevisi/ProcessPulsa';
+// import MetodePembayaranPulsa from './components/PulsaRevisi/MetodePembayaranPulsa';
+// import ConfirmationPulsa from './components/PulsaRevisi/ConfirmationPulsa';
+// import ProcessPulsa from './components/PulsaRevisi/ProcessPulsa';
 
 // PLN
 import PLNPage from './components/PLN/PLNPage';
-import PaymentPLN from './components/PLN/PaymentPLN';
-import ConfirmationPLN from './components/PLN/ConfirmationPLN';
+// import PaymentPLN from './components/PLN/PaymentPLN';
+// import ConfirmationPLN from './components/PLN/ConfirmationPLN';
 import TagihanListrik from './components/PLN/TagihanListrik';
-import ProcessPLN from './components/PLN/ProcessPLN';
+// import ProcessPLN from './components/PLN/ProcessPLN';
 
 // Kuota
 import Kuota from './components/Kuota/KuotaPage';
 import MetodePembayaranKuota from './components/Kuota/MetodePembayaranKuota';
 import ConfirmationKuota from './components/Kuota/ConfirmationKuota';
+// import { ConfirmationKuota } from './components/NextPage/Confirmation';
 import ProcessKuota from './components/Kuota/ProcessKuota';
 
 // Kirim Uang
@@ -36,6 +37,10 @@ import Gopay from './components/TopUp/TopUpHome/Gopay';
 import LinkAja from './components/TopUp/TopUpHome/LinkAja';
 import Ovo from './components/TopUp/TopUpHome/Ovo';
 
+// NextPage
+import MetodePayment from './components/NextPage/MetodePayment';
+import Confirmation from './components/NextPage/Confirmation';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './pages/auth/Login';
@@ -50,16 +55,16 @@ const App = () => {
             <Route path="/" element={<Home />} />
             {/* PulsaRevisi */}
             <Route path="/topup-pulsa" element={<PulsaPage />} />
-            <Route path="/metode-pembayaran-pulsa" element={<MetodePembayaranPulsa />} />
-            <Route path="/confirmation-pulsa" element={<ConfirmationPulsa />} />
-            <Route path="/process-pulsa" element={<ProcessPulsa />} />
+            {/* <Route path="/metode-pembayaran-pulsa" element={<MetodePembayaranPulsa />} /> */}
+            {/* <Route path="/confirmation-pulsa" element={<ConfirmationPulsa />} /> */}
+            {/* <Route path="/process-pulsa" element={<ProcessPulsa />} /> */}
 
             {/* PLN */}
             <Route path="/pln" element={<PLNPage />} />
             <Route path="/electricity-form" element={<PLNPage />} />
-            <Route path="/payment-selection" element={<PaymentPLN />} />
-            <Route path="/payment-confirmation" element={<ConfirmationPLN />} />
-            <Route path="/payment-process" element={<ProcessPLN />} />
+            {/* <Route path="/payment-selection" element={<PaymentPLN />} /> */}
+            {/* <Route path="/payment-confirmation" element={<ConfirmationPLN />} /> */}
+            {/* <Route path="/payment-process" element={<ProcessPLN />} /> */}
             <Route path="/tagihan-listrik" element={<TagihanListrik />} />
 
             {/* Kirim Uang */}
@@ -68,9 +73,9 @@ const App = () => {
 
             {/* Kuota */}
             <Route path="/kuota" element={<Kuota />} />
-            <Route path="/metode-pembayaran-kuota" element={<MetodePembayaranKuota />} />
-            <Route path="/confirmation-kuota" element={<ConfirmationKuota />} />
-            <Route path="/process-kuota" element={<ProcessKuota />} />
+            {/* <Route path="/metode-pembayaran-kuota" element={<MetodePembayaranKuota />} /> */}
+            {/* <Route path="/confirmation-kuota" element={<ConfirmationKuota />} /> */}
+            {/* <Route path="/process-kuota" element={<ProcessKuota />} /> */}
 
             {/* TopUp */}
             <Route path="/payment-page" element={<PaymentPage />} />
@@ -83,6 +88,18 @@ const App = () => {
             <Route path="/linkaja" element={<LinkAja />} />
             <Route path="/ovo" element={<Ovo />} />
             <Route path="/login" element={<Login />} />
+
+            {/* Metode Payment */}
+            <Route path="/metode-payment" element={<MetodePayment paymentType="kuota" />} />
+            <Route path="/metode-payment-pln" element={<MetodePayment paymentType="pln" />} />
+            <Route path="/metode-payment-pulsa" element={<MetodePayment paymentType="pulsa" />} />
+
+            {/* confirmation */}
+            <Route path="/confirmation-paketdata" element={<Confirmation type="kuota" />} />
+            <Route path="/pln-confirmation" element={<Confirmation type="pln" />} />
+            <Route path="/pulsa-confirmation" element={<Confirmation type="pulsa" />} />
+
+            {/* Process */}
           </Routes>
         </main>
         {/* <Footer /> */}

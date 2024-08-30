@@ -80,7 +80,7 @@ const PLNPage = () => {
   const handlePaymentSelection = () => {
     if (meteranId.length >= 11 && selectedNominal && isCheckButtonClicked) {
       const selectedNominalObj = nominals.find((nominal) => nominal.value === selectedNominal);
-      navigate('/payment-selection', {
+      navigate('/metode-payment-pln', {
         state: {
           selectedNominal,
           meteranId,
