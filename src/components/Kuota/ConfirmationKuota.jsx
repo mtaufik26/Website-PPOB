@@ -29,6 +29,7 @@ const ConfirmationKuota = () => {
       },
     });
   };
+  
   const formatAmount = (amount) => {
     if (!amount || isNaN(amount)) return 'Rp -';
     return `Rp ${parseInt(amount, 10).toLocaleString()}`;
