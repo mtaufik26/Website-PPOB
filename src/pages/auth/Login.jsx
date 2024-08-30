@@ -80,9 +80,9 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 px-4 py-8">
-      <div className="flex w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden">
+      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden">
         {/* Image Section */}
-        <div className="hidden md:block w-1/2">
+        <div className="w-full md:w-1/2">
           <img src={imageSrc} alt="Side illustration" className="h-full w-full object-cover" />
         </div>
 
@@ -92,7 +92,7 @@ const Login = () => {
           <div className="flex justify-end mb-4">
             <button
               onClick={toggleLanguage}
-              className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none"
+              className="bg-gray-300 rounded-ss-2xl rounded-ee-2xl hover:bg-gray-400 focus:outline-none"
             >
               {language === 'en' ? 'ID' : 'EN'}
             </button>
@@ -165,4 +165,3 @@ const Login = () => {
 };
 
 export default Login;
-  

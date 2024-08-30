@@ -9,7 +9,7 @@ import PromoBanner from '../components/PromoBanner';
 
 const services = [
   { iconName: 'pulsa', title: 'Pulsa', category: 'pembelian' },
-  { iconName: 'kuota', title: 'kuota', category: 'pembelian' },
+  { iconName: 'kuota', title: 'Paket Data', category: 'pembelian' },
   { iconName: 'listrik', title: 'PLN', category: 'pembelian' },
   // { iconName: 'air', title: 'PDAM', category: 'pembayaran' },
   // { iconName: 'game', title: 'TopUp Game', category: 'pembelian' },/

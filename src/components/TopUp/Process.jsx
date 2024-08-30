@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Ceklis from '../../assets/images/ceklis.png';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '../Card';
+import Ceklis from '../../assets/images/ceklis.png';
 
-const ProcessPage = () => {
-  const [status, setStatus] = useState('verifikasi');
+const PaymentProcess = ({ initialStatus = 'verifikasi', data, onDone, titles, messages }) => {
+  const [status, setStatus] = useState(initialStatus);
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { amount, selectedMethod, phone } = location.state || {};
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,8 +22,16 @@ const ProcessPage = () => {
     return () => clearTimeout(timer);
   }, [status]);
 
-  const handleDone = () => {
-    navigate('/');
+  const handleClose = () => {
+    if (onDone) {
+      onDone();
+    } else {
+      navigate('/');
+    }
+  };
+
+  const formatAmount = (amount) => {
+    return amount && amount > 0 ? `Rp ${parseInt(amount, 10).toLocaleString()}` : 'Rp -';
   };
 
   const renderContent = () => {
@@ -34,30 +40,31 @@ const ProcessPage = () => {
         return (
           <>
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pengiriman</h2>
-            <p className="text-gray-600 mb-2">Jumlah: Rp {amount.toLocaleString()}</p>
-            <p className="text-gray-600 mb-4">Nomor HP: {phone}</p>
-            <p className="text-gray-600">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">{titles.verifikasi}</h2>
+            {messages.verifikasi.map((message, index) => (
+              <p key={index} className="text-gray-600 mb-2 font-semibold">{message}</p>
+            ))}
           </>
         );
       case 'proses':
         return (
           <>
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Proses Pengiriman</h2>
-            <p className="text-gray-600">Transaksi Anda sedang diproses...</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">{titles.proses}</h2>
+            <p className="text-gray-600 font-semibold">{messages.proses}</p>
           </>
         );
       case 'selesai':
         return (
           <>
             <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
-            <p className="text-gray-600 mb-2">Pembayaran Anda telah diproses dengan sukses dengan metode {selectedMethod}</p>
-            <p className="text-gray-600 mb-2">Terima kasih atas transaksi Anda. Selamat menggunakan layanan kami!</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">{titles.selesai}</h2>
+            {messages.selesai.map((message, index) => (
+              <p key={index} className="text-gray-600 mb-2 font-semibold">{message}</p>
+            ))}
             <button
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
-              onClick={handleDone}
+              onClick={handleClose}
             >
               Kembali ke Beranda
             </button>
@@ -69,20 +76,22 @@ const ProcessPage = () => {
   };
 
   return (
-    <Card className="max-w-md mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
-      <div className="p-6 text-center">
-        <div className="mb-6">
-          <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-sky-500 h-2.5 rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${progress}%` }}
-            ></div>
+    <Card>
+      <div className="max-w-md mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+        <div className="p-6 text-center">
+          <div className="mb-6">
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+              <div
+                className="bg-sky-500 h-2.5 rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
           </div>
+          {renderContent()}
         </div>
-        {renderContent()}
       </div>
     </Card>
   );
 };
 
-export default ProcessPage;
+export default PaymentProcess;

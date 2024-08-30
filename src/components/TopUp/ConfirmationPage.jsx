@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
 
-const ConfirmationPage = () => {
+const ConfirmationTopUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {
@@ -76,4 +76,15 @@ const InfoItem = ({ term, description }) => (
   </div>
 );
 
-export default ConfirmationPage;
+export default ConfirmationTopUp;
+
+
+
+
+
+
+
+
+
+
+

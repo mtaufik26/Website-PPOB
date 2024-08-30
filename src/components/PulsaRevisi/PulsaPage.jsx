@@ -29,9 +29,9 @@ const PulsaPage = () => {
     if (input && !input.startsWith('08')) {
       setError('Nomor HP harus dimulai dengan "08".');
     } else if (input.length < 10) {
-      setError('Nomor HP terlalu pendek. Harus minimal 10 digit.');
-    } else if (input.length > 13) {
-      setError('Nomor HP terlalu panjang. Harus maksimal 13 digit.');
+      setError('Nomor HP terlalu pendek.');
+    } else if (input.length > 20) {
+      setError('Nomor HP terlalu panjang.');
     } else {
       setError('');
     }
