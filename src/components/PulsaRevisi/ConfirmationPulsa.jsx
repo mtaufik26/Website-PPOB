@@ -6,7 +6,7 @@ const ConfirmationPulsa = () => {
   const location = useLocation();
   
   // Tangkap data dari state yang dikirimkan oleh halaman sebelumnya
-  const { selectedMethod, amount, accountNumber, provider } = location.state || {}; // Add provider
+  const { selectedMethod, amount, accountNumber, provider } = location.state || {};
 
   const handleBack = () => {
     navigate(-1);
@@ -18,7 +18,7 @@ const ConfirmationPulsa = () => {
         selectedMethod,
         amount,
         accountNumber,
-        provider,  // Add provider
+        provider,
       },
     });
   };
@@ -42,7 +42,7 @@ const ConfirmationPulsa = () => {
         <div className='bg-white border border-gray-200 rounded-lg shadow-md p-6 mb-8'>
             <h2 className='text-2xl font-bold text-gray-800 mb-4'>Konfirmasi Pulsa</h2>
             <div className='space-y-2'>
-                <DetailItem label="Provider" value={provider || '-'} /> {/* Add this line */}
+                <DetailItem label="Provider" value={provider || '-'} />
                 <DetailItem label="Nomor HP" value={accountNumber || '-'} />
                 <DetailItem label="Nominal" value={formatAmount(amount)} />
                 <DetailItem label="Metode Pembayaran" value={selectedMethod || '-'} />
@@ -56,7 +56,6 @@ const ConfirmationPulsa = () => {
         <button
             onClick={handleVerification}
             className='w-full bg-sky-500 text-white py-3 rounded-lg mb-4 font-semibold hover:bg-sky-600 transition duration-300 ease-in-out shadow-md'
-            disabled={!selectedMethod || !amount || !accountNumber}
         >
             Lanjut Verifikasi
         </button>

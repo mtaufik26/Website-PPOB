@@ -6,6 +6,7 @@ const paymentMethods = [
   { id: 'gopay', name: 'GoPay', icon: '💳', color: 'bg-blue-100' },
   { id: 'ovo', name: 'OVO', icon: '💳', color: 'bg-purple-100' },
   { id: 'dana', name: 'DANA', icon: '💳', color: 'bg-indigo-100' },
+  { id: 'linkaja', name: 'LinkAja', icon: '💳', color: 'bg-red-100' },
   { id: 'bca', name: 'BCA Virtual Account', icon: '🏦', color: 'bg-green-100' },
   { id: 'mandiri', name: 'Mandiri Virtual Account', icon: '🏦', color: 'bg-yellow-100' },
 ];

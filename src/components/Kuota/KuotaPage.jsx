@@ -62,9 +62,9 @@ const KuotaPage = () => {
     } else if (!value.startsWith('08')) {
       setErrorMessage('Nomor telepon harus dimulai dengan 08.');
     } else if (value.length < 10) {
-      setErrorMessage('Nomor telepon terlalu singkat, minimal 10 karakter.');
-    } else if (value.length > 15) {
-      setErrorMessage('Nomor telepon terlalu panjang, maksimal 15 karakter.');
+      setErrorMessage('Nomor telepon terlalu singkat.');
+    } else if (value.length > 20) {
+      setErrorMessage('Nomor telepon terlalu panjang.');
     } else {
       setErrorMessage('Nomor telepon tidak valid.');
     }
