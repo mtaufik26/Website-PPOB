@@ -73,7 +73,7 @@ const App = () => {
 
             {/* Kuota */}
             <Route path="/kuota" element={<Kuota />} />
-            {/* <Route path="/metode-pembayaran-kuota" element={<MetodePembayaranKuota />} /> */}
+            <Route path="/metode-pembayaran-kuota" element={<MetodePembayaranKuota />} />
             {/* <Route path="/confirmation-kuota" element={<ConfirmationKuota />} /> */}
             {/* <Route path="/process-kuota" element={<ProcessKuota />} /> */}
 
@@ -98,6 +98,7 @@ const App = () => {
             <Route path="/confirmation-paketdata" element={<Confirmation type="kuota" />} />
             <Route path="/pln-confirmation" element={<Confirmation type="pln" />} />
             <Route path="/pulsa-confirmation" element={<Confirmation type="pulsa" />} />
+            <Route path="/topup-confirmation" element={<Confirmation />} />
 
             {/* Process */}
           </Routes>
