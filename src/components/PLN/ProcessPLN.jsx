@@ -35,10 +35,10 @@ const ProcessPLN = () => {
           <>
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Verifikasi Pembayaran</h2>
-            <p className="text-gray-600 mb-2">Metode: {selectedMethod}</p>
-            <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
-            <p className="text-gray-600 mb-4">Nomor Meter/ID Pel: {meteranId}</p>
-            <p className="text-gray-600">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
+            <p className="text-gray-600 mb-2 font-semibold">Metode: {selectedMethod}</p>
+            <p className="text-gray-600 mb-2 font-semibold">Jumlah: Rp {amount}</p>
+            <p className="text-gray-600 mb-2 font-semibold">Nomor Meter/ID Pel: {meteranId}</p>
+            <p className="text-gray-600 font-semibold">Mohon tunggu, kami sedang memverifikasi transaksi Anda...</p>
           </>
         );
       case 'proses':
@@ -46,7 +46,7 @@ const ProcessPLN = () => {
           <>
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-sky-500 mx-auto mb-6"></div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Memproses Pembayaran</h2>
-            <p className="text-gray-600">Transaksi Anda sedang diproses...</p>
+            <p className="text-gray-600 font-semibold">Transaksi Anda sedang diproses...</p>
           </>
         );
       case 'selesai':
@@ -54,9 +54,8 @@ const ProcessPLN = () => {
           <>
             <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
-            <p className="text-gray-600 mb-2">Jumlah: Rp {amount}</p>
-            <p className="text-gray-600 mb-6">Nomor Meter/ID Pel: {meteranId}</p>
-            <p className="text-gray-600 mb-2">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
+            <p className="text-gray-600 mb-2 font-semibold">Jumlah: Rp {amount}</p>
+            <p className="text-gray-600 mb-2 font-semibold">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
             <button
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
               onClick={handleClose}

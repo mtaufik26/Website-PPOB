@@ -1,189 +1,170 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import classNames from 'classnames';
+import Card from '../../Card';
 
-const DigitalWalletPage = ({ walletName, options }) => {
-    const navigate = useNavigate();
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [phone, setPhone] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isValid, setIsValid] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [checked, setChecked] = useState(false);
+const DigitalWalletPage = ({ walletName, options = [] }) => {
+  const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState(options[0] || {});
+  const [phone, setPhone] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isValid, setIsValid] = useState(false);
+  const [purchaseDetails, setPurchaseDetails] = useState(null);
+  const [checked, setChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const handleBack = () => navigate('/');
+  const handleBack = () => navigate('/');
 
-    const handlePhoneChange = (e) => {
-        let input = e.target.value.replace(/[^0-9]/g, ''); // Hanya izinkan angka
-        setPhone(input); // Set state phone dengan input yang sudah diproses
+  const handlePhoneChange = (e) => {
+    const input = e.target.value.replace(/[^0-9]/g, '');
+    setPhone(input);
 
-        // Validasi input
-        if (input.length === 0) {
-            setErrorMessage('');
-            setIsValid(false);
-        } else if (!input.startsWith('8') && input.length > 1) { // Nomor harus dimulai dengan '8' setelah +62
-            setErrorMessage('Nomor harus dimulai dengan 8 setelah +62.');
-            setIsValid(false);
-        } else if (input.length < 9) { // Minimal panjang nomor setelah +62 adalah 9
-            setErrorMessage('Nomor terlalu singkat | minimal 9 karakter.');
-            setIsValid(false);
+    if (input.length === 0) {
+      setErrorMessage('');
+      setIsValid(false);
+    } else if (!input.startsWith('08')) {
+      setErrorMessage('Nomor harus dimulai dengan 08');
+      setIsValid(false);
+    } else if (input.length < 10) {
+      setErrorMessage('Nomor terlalu singkat | minimal 10 karakter.');
+      setIsValid(false);
+    } else {
+      setErrorMessage('');
+      setIsValid(true);
+    }
+  };
+
+  const handleCheck = () => {
+    if (isValid) {
+      setLoading(true);
+      setTimeout(() => {
+        const isSuccess = true;
+        if (isSuccess) {
+          setChecked(true);
+          setPurchaseDetails({
+            phone,
+            amount: selectedOption?.amount || 0,
+            admin: selectedOption?.admin || 0,
+          });
         } else {
-            setErrorMessage('');
-            setIsValid(true);
+          setErrorMessage('Gagal memproses top-up, coba lagi nanti.');
         }
-    };
+        setLoading(false);
+      }, 2000);
+    }
+  };
 
-    // Menggunakan useEffect untuk menghilangkan angka 0 di awal jika ada
-    useEffect(() => {
-        if (phone.startsWith('0') && phone.length > 1) {
-            setPhone(phone.substring(1)); // Hapus angka 0 di awal jika lebih dari 1 karakter
-        }
-    }, [phone]);
 
-    const handleCheck = () => {
-        if (isValid) {
-            setLoading(true);
-            setTimeout(() => {
-                const isSuccess = true;
-                if (isSuccess) {
-                    setChecked(true);
-                } else {
-                    setErrorMessage('Gagal memproses top-up, coba lagi nanti.');
-                }
-                setLoading(false);
-            }, 2000);
-        }
-    };
+  const handleConfirmPayment = () => {
+    navigate('/topup-confirmation', {
+      state: {
+        serviceType: 'ewallet',
+        total: (selectedOption?.amount || 0) + (selectedOption?.admin || 0),
+        phone,
+        nominal: selectedOption?.amount || 0,
+        adminFee: selectedOption?.admin || 0,
+        walletName,
+        productType: 'wallet',
+      },
+    });
+  };
 
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
-    };
-
-    const handleVerification = () => {
-        if (isValid && selectedOption && phone) {
-            // Use productCode for backend communication, not for UI display
-            const requestData = {
-                total: selectedOption.amount,
-                phone: `+62${phone}`,
-                nominal: selectedOption.amount,
-                productCode: selectedOption.productCode, 
-                walletName,
-            };
-
-            // Mocking backend interaction with navigate
-            navigate('/payment-page', {
-                state: requestData,
-            });
-        }
-    };
-
-    const isOptionSelected = selectedOption !== null;
-    const isPhoneNumberValid = phone.length >= 9 && !errorMessage;
-
-    return (
-        <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">
-            <div className="flex-grow">
-                <div className="sticky top-0 bg-white z-10 border-b">
-                    <div className="flex items-center p-2">
-                        <button onClick={handleBack} className="mr-4">
-                            <svg
-                                className="w-6 h-6"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 19l-7-7 7-7"
-                                />
-                            </svg>
-                        </button>
-                        <h1 className="text-lg font-semibold">Dompet Digital - {walletName}</h1>
-                    </div>
-                </div>
-                <div className="max-w-lg mx-auto p-4">
-                    <h1 className="text-2xl font-bold mb-4">Top-Up {walletName}</h1>
-
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Pilih Nominal Anda</label>
-                        <div className="relative">
-                            <select
-                                value={selectedOption?.amount || ''}
-                                onChange={(e) => handleOptionClick(options.find(opt => opt.amount == e.target.value))}
-                                className="w-full p-2 border rounded-lg focus:outline-none appearance-none"
-                            >
-                                <option value="">Pilih Nominal</option>
-                                {options.map((option) => (
-                                    <option key={option.amount} value={option.amount}>
-                                        Rp {option.amount.toLocaleString('id-ID')}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="mb-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Nomor HP</label>
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                <span className="text-gray-500">+62</span>
-                            </div>
-                            <input
-                                type="text"
-                                value={phone}
-                                onChange={handlePhoneChange}
-                                placeholder="xxxxxxxxx"
-                                className={classNames(
-                                    'w-full p-3 pl-10 border rounded-lg focus:outline-none focus:ring-1 shadow-sm',
-                                    errorMessage ? 'focus:ring-red-500 border-red-500' : 'focus:ring-sky-500 border-gray-300'
-                                )}
-                            />
-                        </div>
-                        {errorMessage && <p className="text-red-500 text-sm mt-2">{errorMessage}</p>}
-                    </div>
-                    {checked && (
-                        <div className="mt-4 bg-gray-100 p-3 rounded-lg">
-                            <h2 className="text-base font-semibold mb-3">Top-up {walletName}</h2>
-                            <div className="text-gray-700 text-sm">
-                                <p className="flex justify-between">
-                                    <span className="font-semibold">Nomor HP:</span>
-                                    <span>+62{phone}</span>
-                                </p>
-                                <p className="flex justify-between">
-                                    <span className="font-semibold">Nominal Top-up:</span>
-                                    <span>Rp {selectedOption.amount.toLocaleString('id-ID')}</span>
-                                </p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
-            <div className="sticky bottom-0 bg-white shadow-md p-4 border-t">
-                <div className="flex items-center justify-between">
-                    <div className="flex flex-col">
-                        <span className="text-xs text-gray-500">Total Harga</span>
-                        <span className="text-lg font-bold text-black">
-                            Rp{selectedOption ? selectedOption.amount.toLocaleString('id-ID') : '0'}
-                        </span>
-                    </div>
-                    <button
-                        onClick={handleVerification}
-                        disabled={!isOptionSelected || !isPhoneNumberValid}
-                        className={`px-4 py-2 rounded-full text-white text-sm font-semibold ${
-                            !isOptionSelected || !isPhoneNumberValid
-                                ? 'bg-gray-400 cursor-not-allowed'
-                                : 'bg-sky-500 hover:bg-sky-600'
-                        }`}
-                    >
-                        Lanjut Verifikasi
-                    </button>
-                </div>
-            </div>
+  return (
+    <div className='max-w-md mx-auto p-2  flex-col h-screen justify-between'>
+      <header className="sticky top-0 bg-white z-10 border-b">
+        <div className="flex items-center p-2">
+          <button onClick={handleBack} className="mr-4" aria-label="Go back">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h1 className="text-lg font-semibold">Dompet Digital - {walletName}</h1>
         </div>
-    );
+      </header>
+
+      <section className="max-w-md mx-auto p-4 flex flex-col h-screen justify-between">
+        <div>
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Pilih Nominal Anda
+          </label>
+          <div className="relative mb-4">
+            <select
+              value={selectedOption?.amount || ''}
+              onChange={(e) => setSelectedOption(options.find(option => option.amount === parseInt(e.target.value)))}
+              className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            >
+              {options.map((option) => (
+                <option key={option.amount} value={option.amount}>
+                  Rp {option.amount?.toLocaleString('id-ID') || '0'}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            No. Telepon
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="08xxxxxxxxxxx"
+              value={phone}
+              onChange={handlePhoneChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <button
+              onClick={handleCheck}
+              className={`absolute right-2 top-1/2 transform -translate-y-1/2 text-sky-500 px-4 py-1 rounded-lg ${!isValid ? ' opacity-50' : ''}`}
+              disabled={!isValid || loading}
+            >
+              {loading ? 'Memproses...' : 'Cek'}
+            </button>
+          </div>
+          {errorMessage && (
+            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+          )}
+
+          {checked && purchaseDetails && (
+            <div className="mt-6 bg-gray-100 p-4 rounded-lg">
+              <h2 className="text-lg font-semibold mb-4">Top-up {walletName}</h2>
+              <div className="text-gray-700">
+                <p className="flex justify-between">
+                  <span className="font-semibold">Nomor HP:</span>
+                  <span>{purchaseDetails.phone}</span>
+                </p>
+                <p className="flex justify-between">
+                  <span className="font-semibold">Nominal Top-up:</span>
+                  <span>Rp {purchaseDetails.amount?.toLocaleString('id-ID') || '0'}</span>
+                </p>
+                <p className="flex justify-between">
+                  <span className="font-semibold">Nama:</span>
+                  <span>{purchaseDetails.phone.slice(0, 2)}********************{purchaseDetails.phone.slice(-1)}</span>
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Sticky Footer */}
+        <div className="sticky bottom-0 bg-white shadow-md p-4 border-t">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-gray-700 font-bold">Total Bayar</span>
+              <p className="text-gray-700 font-bold">
+                {checked ? `Rp ${((selectedOption?.amount || 0) + (selectedOption?.admin || 0)).toLocaleString('id-ID')}` : 'Rp 0'}
+              </p>
+            </div>
+            <button
+              onClick={handleConfirmPayment}
+              className={`${checked ? 'bg-sky-500 text-white' : 'bg-gray-200 text-gray-500'} py-2 px-4 rounded-lg`}
+              disabled={!checked}
+            >
+              Lanjut Verifikasi
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export default DigitalWalletPage;

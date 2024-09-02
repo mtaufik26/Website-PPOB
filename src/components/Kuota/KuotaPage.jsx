@@ -38,13 +38,12 @@ const KuotaPage = () => {
         ? (originalPrice * (100 - denomination.diskon) / 100).toFixed(0) 
         : originalPrice;
 
-    navigate('/metode-payment', {
+    navigate('/metode-pembayaran-kuota', {
         state: {
             provider: selectedProvider,
             denomination: {
                 type: 'kuota',
-                harga: hargaBaru,  // Corrected price after discount or original price if no discount
-                harga: originalPrice.toString(), // Save original price for display if needed
+                harga: originalPrice.toString(),
                 diskon: denomination.diskon,
                 kode: denomination.kode,
                 nama: denomination.nama,
@@ -63,9 +62,9 @@ const KuotaPage = () => {
     } else if (!value.startsWith('08')) {
       setErrorMessage('Nomor telepon harus dimulai dengan 08.');
     } else if (value.length < 10) {
-      setErrorMessage('Nomor telepon terlalu singkat, minimal 10 karakter.');
-    } else if (value.length > 15) {
-      setErrorMessage('Nomor telepon terlalu panjang, maksimal 15 karakter.');
+      setErrorMessage('Nomor telepon terlalu singkat.');
+    } else if (value.length > 20) {
+      setErrorMessage('Nomor telepon terlalu panjang.');
     } else {
       setErrorMessage('Nomor telepon tidak valid.');
     }
@@ -130,7 +129,7 @@ const KuotaPage = () => {
       <div className="sticky bottom-0 bg-white shadow-md p-4 border-t">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-xs text-gray-500">Total Harga</span>
+            <span className="text-xs text-gray-500">Total Tagihan</span>
             <span className="text-lg font-bold text-black">
               Rp{totalHarga}
             </span>
