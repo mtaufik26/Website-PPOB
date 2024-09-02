@@ -55,7 +55,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
 
 
   const handleConfirmPayment = () => {
-    navigate('/payment-page', {
+    navigate('/topup-confirmation', {
       state: {
         serviceType: 'ewallet',
         total: (selectedOption?.amount || 0) + (selectedOption?.admin || 0),
