@@ -6,6 +6,9 @@ const paymentMethods = [
   { id: 'indomaret', name: 'Indomaret / Ceriamart', icon: paymentIcons.indomaret, color: 'bg-white' },
   { id: 'alfamart', name: 'Alfamart / Alfamidi / Dan+Dan', icon: paymentIcons.alfamart, color: 'bg-white' },
   { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
+  { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
+  { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
+  { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
   // Tambahkan metode pembayaran tambahan di sini
 ];
 
@@ -65,6 +68,10 @@ const MetodePembayaranKuota = () => {
 
   const toggleShowMoreMethods = () => {
     setShowMoreMethods(!showMoreMethods);
+  };
+
+  const handleMethodClick = (methodId) => {
+    navigate('/confirmation-kuota', { state: { methodId } });
   };
 
   const methodsToDisplay = showMoreMethods ? paymentMethods : paymentMethods.slice(0, 3);
@@ -136,52 +143,68 @@ const MetodePembayaranKuota = () => {
               )}
               
               {showMoreMethods && (
-                <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 p-4">
-                  <div className="max-w-md mx-auto p-2 flex flex-col bg-white border rounded shadow-md h-[70vh] overflow-x-hidden">
-                    <div className="sticky top-0 bg-white z-10 flex items-center justify-start space-x-1 p-2 border-b">
-                      <button
-                        className="text-gray-600 hover:text-gray-800"
-                        onClick={toggleShowMoreMethods}
-                        aria-label="Tutup"
+              <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 p-4">
+                <div className="max-w-md mx-auto p-2 flex flex-col bg-white border rounded shadow-md h-[70vh] overflow-x-hidden">
+                  <div className="sticky top-0 bg-white z-10 flex items-center justify-start space-x-1 p-2 border-b">
+                    <button
+                      className="text-gray-600 hover:text-gray-800"
+                      onClick={toggleShowMoreMethods}
+                      aria-label="Tutup"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="w-6 h-6"
                       >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                    <p className="text-lg font-bold">Pilih Metode Pembayaran</p> 
+                  </div>
+                  <div className="text-sm font-bold px-4 pt-2">Gerai Offline</div>
+                  <div className="overflow-y-auto space-y-1">
+                    {paymentMethods.map((method) => (
+                      <div
+                        key={method.id}
+                        className="flex items-center justify-between p-4 border-b cursor-pointer hover:bg-gray-50"
+                        onClick={() => handleMethodClick(method.id)}
+                      >
+                        <div className="flex items-center space-x-4">
+                          <img
+                            src={method.icon}
+                            alt={`${method.name} icon`}
+                            className="w-12 h-12 object-contain"
+                          />
+                          <span className="font-medium text-gray-800">{method.name}</span>
+                        </div>
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-6 h-6 text-gray-500"
                           fill="none"
-                          viewBox="0 0 24 24"
                           stroke="currentColor"
-                          className="w-6 h-6"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                          />
+                            strokeWidth="2"
+                            d="M9 5l7 7-7 7"
+                          ></path>
                         </svg>
-                      </button>
-                      <p className="text-lg font-bold">Metode Pembayaran Tambahan</p> 
-                    </div>
-                    <div className="overflow-y-auto space-y-3">
-                      {paymentMethods.map((method) => (
-                        <div
-                          key={method.id}
-                          className={`w-96 p-1 flex items-center justify-between text-left rounded-lg transition-all duration-200 transform ${method.color} hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500`}
-                        >
-                          <div className="flex items-center space-x-6">
-                            <img src={method.icon} alt={`${method.name} icon`} className="w-10 h-10 object-contain" />
-                            <div className="flex flex-col">
-                              <span className="font-medium text-gray-700">{method.name}</span>
-                              {/* Optional additional details */}
-                              {/* <span className="text-xs text-red-600">Saldo tidak mencukupi</span> */}
-                              {/* <span className="text-xs text-gray-600">Tidak Tersedia untuk Transaksi Ini</span> */}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              )}
+              </div>
+            )}
+
             </div>
 
             <div className="mt-1 border-t-8 pt-4">
