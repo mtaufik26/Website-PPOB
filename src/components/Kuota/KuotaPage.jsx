@@ -28,8 +28,8 @@ const KuotaPage = () => {
     const denomination = packages.find(pkg => pkg.kode === selectedPackage);
 
     if (!denomination) {
-        setErrorMessage('Paket yang dipilih tidak valid.');
-        return;
+      setErrorMessage('Paket yang dipilih tidak valid.');
+      return;
     }
 
     // Calculate the price, handling cases with and without discount
@@ -38,6 +38,7 @@ const KuotaPage = () => {
         ? (originalPrice * (100 - denomination.diskon) / 100).toFixed(0) 
         : originalPrice;
 
+<<<<<<< HEAD
     navigate('/metode-pembayaran-kuota', {
         state: {
             provider: selectedProvider,
@@ -49,9 +50,25 @@ const KuotaPage = () => {
                 nama: denomination.nama,
             },
             phoneNumber: phoneNumber,
+=======
+    const totalHarga = parseInt(hargaBaru, 10).toLocaleString();
+
+    navigate('/metode-pembayaran-kuota', {
+      state: {
+        provider: selectedProvider,
+        denomination: {
+          type: 'kuota',
+          harga: originalPrice.toString(), // Save original price for display if needed
+          diskon: denomination.diskon,
+          kode: denomination.kode,
+          nama: denomination.nama,
+>>>>>>> c056c67 (taufik)
         },
+        phoneNumber: phoneNumber,
+        totalHarga: totalHarga,  // Send totalHarga to the next page
+      },
     });
-};
+  };
 
   const handleBack = () => navigate('/');
 
