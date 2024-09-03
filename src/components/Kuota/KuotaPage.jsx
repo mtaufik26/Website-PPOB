@@ -8,7 +8,7 @@ import InputNumber from './KuotaInputNumber';
 const KuotaPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [selectedProvider, setSelectedProvider] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(location.state?.phoneNumber || '');
   const [packages, setPackages] = useState([]);
@@ -25,32 +25,18 @@ const KuotaPage = () => {
   }, [selectedProvider]);
 
   const handleFormSubmit = () => {
-    const denomination = packages.find(pkg => pkg.kode === selectedPackage);
+    const selectedPackageDetails = packages.find(pkg => pkg.kode === selectedPackage);
 
-    if (!denomination) {
+    if (!selectedPackageDetails) {
       setErrorMessage('Paket yang dipilih tidak valid.');
       return;
     }
 
-    // Calculate the price, handling cases with and without discount
-    const originalPrice = parseInt(denomination.harga.replace(/\./g, ''), 10);
-    const hargaBaru = denomination.diskon 
-        ? (originalPrice * (100 - denomination.diskon) / 100).toFixed(0) 
-        : originalPrice;
+    const originalPrice = parseInt(selectedPackageDetails.harga.replace(/\./g, ''), 10);
+    const hargaBaru = selectedPackageDetails.diskon
+      ? (originalPrice * (100 - selectedPackageDetails.diskon) / 100).toFixed(0)
+      : originalPrice;
 
-<<<<<<< HEAD
-    navigate('/metode-pembayaran-kuota', {
-        state: {
-            provider: selectedProvider,
-            denomination: {
-                type: 'kuota',
-                harga: originalPrice.toString(),
-                diskon: denomination.diskon,
-                kode: denomination.kode,
-                nama: denomination.nama,
-            },
-            phoneNumber: phoneNumber,
-=======
     const totalHarga = parseInt(hargaBaru, 10).toLocaleString();
 
     navigate('/metode-pembayaran-kuota', {
@@ -58,14 +44,13 @@ const KuotaPage = () => {
         provider: selectedProvider,
         denomination: {
           type: 'kuota',
-          harga: originalPrice.toString(), // Save original price for display if needed
-          diskon: denomination.diskon,
-          kode: denomination.kode,
-          nama: denomination.nama,
->>>>>>> c056c67 (taufik)
+          harga: originalPrice.toString(),
+          diskon: selectedPackageDetails.diskon,
+          kode: selectedPackageDetails.kode,
+          nama: selectedPackageDetails.nama,
         },
         phoneNumber: phoneNumber,
-        totalHarga: totalHarga,  // Send totalHarga to the next page
+        totalHarga: totalHarga,
       },
     });
   };
@@ -80,7 +65,7 @@ const KuotaPage = () => {
       setErrorMessage('Nomor telepon harus dimulai dengan 08.');
     } else if (value.length < 10) {
       setErrorMessage('Nomor telepon terlalu singkat.');
-    } else if (value.length > 20) {
+    } else if (value.length > 15) {
       setErrorMessage('Nomor telepon terlalu panjang.');
     } else {
       setErrorMessage('Nomor telepon tidak valid.');
@@ -89,14 +74,14 @@ const KuotaPage = () => {
 
   const selectedPackageDetails = packages.find(pkg => pkg.kode === selectedPackage);
   const totalHarga = selectedPackageDetails
-    ? selectedPackageDetails.diskon 
+    ? selectedPackageDetails.diskon
       ? (parseInt(selectedPackageDetails.harga.replace(/\./g, ''), 10) * (100 - selectedPackageDetails.diskon) / 100).toLocaleString()
       : parseInt(selectedPackageDetails.harga.replace(/\./g, ''), 10).toLocaleString()
     : '0';
 
   return (
     <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">
-      <div className="flex-grow ">
+      <div className="flex-grow">
         <div className="sticky top-0 bg-white z-10 border-b">
           <div className="flex items-center p-2">
             <button onClick={handleBack} className="mr-4">
@@ -126,8 +111,8 @@ const KuotaPage = () => {
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">Pilih Paket</label>
               {packages.map((pkg, index) => {
-                const hargaBaru = pkg.diskon 
-                  ? (parseInt(pkg.harga.replace(/\./g, ''), 10) * (100 - pkg.diskon) / 100).toFixed(0) 
+                const hargaBaru = pkg.diskon
+                  ? (parseInt(pkg.harga.replace(/\./g, ''), 10) * (100 - pkg.diskon) / 100).toFixed(0)
                   : pkg.harga;
                 return (
                   <KuotaPaketItem
