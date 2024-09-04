@@ -43,7 +43,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
           setPurchaseDetails({
             phone,
             amount: selectedOption?.amount || 0,
-            admin: selectedOption?.admin || 0,
+            productCode: selectedOption?.productCode || '',  // Menyimpan productCode
           });
         } else {
           setErrorMessage('Gagal memproses top-up, coba lagi nanti.');
@@ -53,15 +53,14 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
     }
   };
 
-
   const handleConfirmPayment = () => {
-    navigate('/topup-confirmation', {
+    navigate('/payment-page', {
       state: {
         serviceType: 'ewallet',
-        total: (selectedOption?.amount || 0) + (selectedOption?.admin || 0),
+        total: selectedOption?.amount || 0,
         phone,
         nominal: selectedOption?.amount || 0,
-        adminFee: selectedOption?.admin || 0,
+        productCode: selectedOption?.productCode || '',  // Meneruskan productCode ke halaman berikutnya
         walletName,
         productType: 'wallet',
       },
@@ -69,7 +68,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
   };
 
   return (
-    <div className='max-w-md mx-auto p-2  flex-col h-screen justify-between'>
+    <div className='max-w-md mx-auto p-2 flex-col h-screen justify-between'>
       <header className="sticky top-0 bg-white z-10 border-b">
         <div className="flex items-center p-2">
           <button onClick={handleBack} className="mr-4" aria-label="Go back">
@@ -144,13 +143,12 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
           )}
         </div>
 
-        {/* Sticky Footer */}
         <div className="sticky bottom-0 bg-white shadow-md p-4 border-t">
           <div className="flex items-center justify-between">
             <div>
               <span className="text-gray-700 font-bold">Total Bayar</span>
               <p className="text-gray-700 font-bold">
-                {checked ? `Rp ${((selectedOption?.amount || 0) + (selectedOption?.admin || 0)).toLocaleString('id-ID')}` : 'Rp 0'}
+                {checked ? `Rp ${(selectedOption?.amount || 0).toLocaleString('id-ID')}` : 'Rp 0'}
               </p>
             </div>
             <button

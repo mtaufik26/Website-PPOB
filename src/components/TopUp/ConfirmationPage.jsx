@@ -9,6 +9,7 @@ const ConfirmationTopUp = () => {
     selectedMethod = '',
     phone = '',
     nominal = 0,
+    productCode = '',  // Menambahkan productCode
   } = location.state || {};
 
   const totalAmount = nominal;  // Hapus adminFee dari perhitungan
@@ -19,9 +20,25 @@ const ConfirmationTopUp = () => {
 
   const handlePayment = () => {
     navigate('/process', {
-      state: { selectedMethod, amount: totalAmount, phone, nominal },
+      state: {
+        selectedMethod,
+        amount: totalAmount,
+        phone,
+        productCode,  // Pastikan productCode diteruskan
+        titles: {
+          verifikasi: 'Memverifikasi Pembayaran',
+          proses: 'Proses Pembayaran',
+          selesai: 'Pembayaran Selesai'
+        },
+        messages: {
+          verifikasi: ['Mohon tunggu sebentar, sedang memverifikasi pembayaran Anda.'],
+          proses: 'Pembayaran sedang diproses.',
+          selesai: ['Pembayaran berhasil!', 'Terima kasih atas pembayaran Anda.']
+        }
+      },
     });
   };
+  
 
   return (
     <Card className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
@@ -77,14 +94,3 @@ const InfoItem = ({ term, description }) => (
 );
 
 export default ConfirmationTopUp;
-
-
-
-
-
-
-
-
-
-
-
