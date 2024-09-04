@@ -1,4 +1,3 @@
-// PaymentPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card'; 
@@ -18,7 +17,7 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { total, phone, nominal, adminFee, walletName } = location.state || {};
+  const { total, phone, nominal, walletName, productCode } = location.state || {};  // Menambahkan productCode
 
   useEffect(() => {
     if (!total || !phone || !nominal) {
@@ -40,7 +39,7 @@ const PaymentPage = () => {
           total,
           phone,
           nominal,
-          adminFee,
+          productCode,  // Meneruskan productCode ke halaman berikutnya
         },
       });
     } else {

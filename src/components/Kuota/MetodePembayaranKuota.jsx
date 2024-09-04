@@ -3,28 +3,75 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { paymentIcons } from "../../assets/images/MetodePembayaran/paymentIcons";
 
 const paymentMethods = [
-  { id: 'indomaret', name: 'Indomaret / Ceriamart', icon: paymentIcons.indomaret, color: 'bg-white' },
-  { id: 'alfamart', name: 'Alfamart / Alfamidi / Dan+Dan', icon: paymentIcons.alfamart, color: 'bg-white' },
-  { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
-  { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
-  { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
-  { id: 'klikbca', name: 'KlikBCA', icon: paymentIcons.klikbca, color: 'bg-white' },
-  // Tambahkan metode pembayaran tambahan di sini
+  {
+    id: 'ovo',
+    name: 'OVO',
+    balance: 'Rp0',
+    status: 'Dana tidak tersedia',
+    icon: paymentIcons.ovo,
+    category: 'Dompet Digital',
+    color: 'bg-white'
+  },
+  {
+    id: 'dana',
+    name: 'Dana',
+    balance: 'Rp0',
+    status: 'Tidak Tersedia',
+    icon: paymentIcons.dana,
+    category: 'Dompet Digital',
+    color: 'bg-white'
+  },
+  {
+    id: 'indomaret',
+    name: 'Indomaret / Ceriamart',
+    icon: paymentIcons.indomaret,
+    category: 'Gerai Offline',
+    color: 'bg-white'
+  },
+  {
+    id: 'alfamart',
+    name: 'Alfamart / Alfamidi / Dan+Dan',
+    icon: paymentIcons.alfamart,
+    category: 'Gerai Offline',
+    color: 'bg-white'
+  },
+  {
+    id: 'klikbca',
+    name: 'KlikBCA',
+    icon: paymentIcons.bca,
+    category: 'Internet Banking',
+    color: 'bg-white'
+  },
+  {
+    id: 'bri',
+    name: 'Bank BRI',
+    icon: paymentIcons.bri,
+    category: 'Transfer Bank',
+    color: 'bg-white'
+  },
+  {
+    id: 'mandiri',
+    name: 'Bank Mandiri',
+    icon: paymentIcons.mandiri,
+    category: 'Transfer Bank',
+    color: 'bg-white'
+  },
 ];
 
 const MetodePembayaranKuota = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { provider, denomination, phoneNumber, totalHarga = 0 } = location.state || {};  
+  const { provider, denomination, phoneNumber, totalHarga = 0 } = location.state || {};
   const [selectedMethod, setSelectedMethod] = useState('');
   const [error, setError] = useState('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showMoreMethods, setShowMoreMethods] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       e.preventDefault();
-      e.returnValue = ''; 
+      e.returnValue = '';
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -36,7 +83,7 @@ const MetodePembayaranKuota = () => {
 
   const handleSelection = (methodId) => {
     setSelectedMethod(methodId);
-    setError(''); 
+    setError('');
   };
 
   const handleBack = () => {
@@ -67,17 +114,38 @@ const MetodePembayaranKuota = () => {
   };
 
   const toggleShowMoreMethods = () => {
-    setShowMoreMethods(!showMoreMethods);
+    if (showMoreMethods) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setShowMoreMethods(false);
+        setIsAnimating(false);
+      }, 500);
+    } else {
+      setShowMoreMethods(true);
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 500);
+    }
   };
 
   const handleMethodClick = (methodId) => {
     navigate('/confirmation-kuota', { state: { methodId } });
   };
 
-  const methodsToDisplay = showMoreMethods ? paymentMethods : paymentMethods.slice(0, 3);
+  // Tentukan urutan kategori yang diinginkan
+  const categoryOrder = [
+    'Dompet Digital',
+    'Gerai Offline',
+    'Transfer Bank',
+    'Internet Banking'
+  ];
+
+  // Mengelompokkan metode pembayaran berdasarkan kategori
+  const groupedMethods = categoryOrder.reduce((acc, category) => {
+    acc[category] = paymentMethods.filter(method => method.category === category);
+    return acc;
+  }, {});
 
   return (
-    <div className="flex items-center justify-center h-screen">
       <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">
         <div className="flex-grow">
           <div className="sticky top-0 bg-white z-10 border-b">
@@ -113,17 +181,26 @@ const MetodePembayaranKuota = () => {
               </div>
             )}
 
-            <div className="space-y-3">
-              {methodsToDisplay.map((method) => (
+            {/* Hanya menampilkan metode pembayaran yang tersedia */}
+            <div className="space-y-6">
+              {paymentMethods.slice(0, 3).map((method) => (
                 <button
                   key={method.id}
-                  className={`w-96 p-1 flex items-center justify-between text-left rounded-lg transition-all duration-200 transform hover:scale-105 ${method.color} hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 ${selectedMethod === method.id ? 'ring-1 ring-sky-500' : ''}`}
+                  className={`w-full p-1 flex items-center justify-between text-left rounded-lg transition-all duration-200 transform hover:scale-105 ${method.color} hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 ${selectedMethod === method.id ? 'ring-1 ring-sky-500' : ''}`}
                   onClick={() => handleSelection(method.id)}
                   aria-label={`Pilih ${method.name}`}
                 >
                   <div className="flex items-center space-x-6">
                     <img src={method.icon} alt={`${method.name} icon`} className="w-10 h-10 object-contain" />
-                    <span className="font-medium text-gray-700">{method.name}</span>
+                    <div>
+                      <span className="font-medium text-gray-700">{method.name}</span>
+                      {method.balance && (
+                        <div className="text-sm text-gray-500">{method.balance}</div>
+                      )}
+                      {method.status && (
+                        <div className="text-sm text-gray-400">{method.status}</div>
+                      )}
+                    </div>
                   </div>
                   <input
                     type="radio"
@@ -133,19 +210,27 @@ const MetodePembayaranKuota = () => {
                   />
                 </button>
               ))}
-              
-              {!showMoreMethods && (
-                <div className="flex justify-center">
-                  <button className="text-green-600 font-semibold" onClick={toggleShowMoreMethods}>
-                    Lihat Semua
-                  </button>
-                </div>
-              )}
-              
-              {showMoreMethods && (
-              <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 p-4">
-                <div className="max-w-md mx-auto p-2 flex flex-col bg-white border rounded shadow-md h-[70vh] overflow-x-hidden">
-                  <div className="sticky top-0 bg-white z-10 flex items-center justify-start space-x-1 p-2 border-b">
+            </div>
+            {/* Tombol untuk melihat semua metode pembayaran */}
+            <div className="flex justify-center mt-6">
+              <button
+                className={`text-green-600 font-semibold ${showMoreMethods ? 'opacity-50 ' : ''}`}
+                onClick={!showMoreMethods ? toggleShowMoreMethods : undefined}
+                disabled={showMoreMethods}
+              >
+                Lihat Semua
+              </button>
+            </div>
+
+            {/* Modal untuk menampilkan metode pembayaran lengkap dan terurut */}
+            {showMoreMethods && (
+              <div
+                className={`fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-500 ease-in-out transform ${
+                  isAnimating ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
+                }`}
+              >
+                <div className="max-w-lg mx-auto px-6 flex flex-col bg-white border rounded-xl shadow-lg h-[80vh] overflow-x-hidden overflow-y-auto transition-transform duration-500 ease-in-out">
+                  <div className="sticky top-0 bg-white z-10 flex items-center justify-start space-x-1 p-4 border-b">
                     <button
                       className="text-gray-600 hover:text-gray-800"
                       onClick={toggleShowMoreMethods}
@@ -166,59 +251,62 @@ const MetodePembayaranKuota = () => {
                         />
                       </svg>
                     </button>
-                    <p className="text-lg font-bold">Pilih Metode Pembayaran</p> 
+                    <p className="text-lg font-bold">Pilih Metode Pembayaran</p>
                   </div>
-                  <div className="text-sm font-bold px-4 pt-2">Gerai Offline</div>
-                  <div className="overflow-y-auto space-y-1">
-                    {paymentMethods.map((method) => (
-                      <div
-                        key={method.id}
-                        className="flex items-center justify-between p-4 border-b cursor-pointer hover:bg-gray-50"
-                        onClick={() => handleMethodClick(method.id)}
-                      >
-                        <div className="flex items-center space-x-4">
-                          <img
-                            src={method.icon}
-                            alt={`${method.name} icon`}
-                            className="w-12 h-12 object-contain"
-                          />
-                          <span className="font-medium text-gray-800">{method.name}</span>
+                  <div className="overflow-y-auto space-y-4 px-4">
+                    {categoryOrder.map((category) => (
+                      groupedMethods[category] && groupedMethods[category].length > 0 && (
+                        <div key={category}>
+                          <h3 className="text-lg font-bold text-gray-800">{category}</h3>
+                          <div className="space-y-3 mt-2">
+                            {groupedMethods[category].map((method) => (
+                              <div
+                                key={method.id}
+                                className="flex items-center justify-between py-2 px-5 border-b cursor-pointer hover:bg-gray-50 rounded-lg"
+                                onClick={() => handleMethodClick(method.id)}
+                              >
+                                <div className="flex items-center space-x-4">
+                                  <img
+                                    src={method.icon}
+                                    alt={`${method.name} icon`}
+                                    className="w-14 h-14 object-contain"
+                                  />
+                                  <span className="font-medium text-gray-800">{method.name}</span>
+                                </div>
+                                <svg
+                                  className="w-6 h-6 text-gray-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 5l7 7-7 7"
+                                  ></path>
+                                </svg>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                        <svg
-                          className="w-6 h-6 text-gray-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M9 5l7 7-7 7"
-                          ></path>
-                        </svg>
-                      </div>
+                      )
                     ))}
                   </div>
                 </div>
               </div>
             )}
-
+          </div>
+          <div className="mt-4 border-t-8 pt-4">
+            <h3 className="text-gray-800 font-semibold">Ringkasan pembayaran</h3>
+            <div className="flex justify-between items-center">
+              <p className="text-sm text-gray-600">Total Belanja</p>
+              <p className="text-base text-gray-800">Rp{totalHarga.toLocaleString()}</p>
             </div>
-
-            <div className="mt-1 border-t-8 pt-4">
-              <h3 className="text-gray-800 font-semibold">Ringkasan pembayaran</h3>
-              <div className="flex justify-between items-center">
-                <p className="text-sm text-gray-600">Total Belanja</p>
-                <p className="text-base text-gray-800">Rp{totalHarga.toLocaleString()}</p>
-              </div>
-            </div>
-
           </div>
         </div>
-
-        <div className="sticky bottom-0 bg-white shadow-md p-4 border-t">
+        <div className="sticky bottom-0 bg-white shadow-md p-3 border-t">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
               <span className="text-xs text-gray-500">Total Harga</span>
@@ -263,7 +351,6 @@ const MetodePembayaranKuota = () => {
           </div>
         )}
       </div>
-    </div>
   );
 };
 

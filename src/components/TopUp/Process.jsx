@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Card from '../Card';
 import Ceklis from '../../assets/images/ceklis.png';
 
-const PaymentProcess = ({ initialStatus = 'verifikasi', data, onDone, titles, messages }) => {
-  const [status, setStatus] = useState(initialStatus);
-  const [progress, setProgress] = useState(0);
+const PaymentProcess = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const {
+    selectedMethod,
+    amount,
+    phone,
+    productCode,  
+    titles = {},
+    messages = {},
+  } = location.state || {};
+
+  const [status, setStatus] = useState('verifikasi');
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,11 +34,7 @@ const PaymentProcess = ({ initialStatus = 'verifikasi', data, onDone, titles, me
   }, [status]);
 
   const handleClose = () => {
-    if (onDone) {
-      onDone();
-    } else {
-      navigate('/');
-    }
+    navigate('/');
   };
 
   const formatAmount = (amount) => {
