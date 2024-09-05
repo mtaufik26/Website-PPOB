@@ -9,17 +9,17 @@ import { denominations } from './PulsaDenominations';
 const PulsaPage = () => {
   const navigate = useNavigate();
   const [provider, setProvider] = useState('');
-  const [denomination, setDenomination] = useState({ amount: null, code: '' });
+  const [denomination, setDenomination] = useState({ harga: null, productCode: '' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
 
   const handleProviderChange = (selectedProvider) => {
     setProvider(selectedProvider);
-    setDenomination({ amount: null, code: '' });
+    setDenomination({ harga: null, productCode: '' });
   };
 
-  const handleDenominationSelect = (amount, code) => {
-    setDenomination({ amount, code });
+  const handleDenominationSelect = (harga, productCode) => {
+    setDenomination({ harga, productCode });
   };
 
   const handlePhoneNumberChange = (number) => {
@@ -45,18 +45,19 @@ const PulsaPage = () => {
         state: {
           type: 'pulsa',
           provider,
-          denomination,
           phoneNumber,
+          harga: denomination.harga,
+          productCode: denomination.productCode
         },
       });
     }
-  };  
+  };
 
   const isPhoneNumberValid = phoneNumber.length >= 10 && !error;
   const isProviderSelected = provider !== '';
-  const isDenominationSelected = denomination.amount !== null;
+  const isDenominationSelected = denomination.harga !== null;
 
-  const availableDenominations = useMemo(() => denominations[provider], [provider]);
+  const availableDenominations = useMemo(() => denominations[provider] || [], [provider]);
 
   return (
     <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">

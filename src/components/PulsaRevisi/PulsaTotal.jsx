@@ -13,7 +13,7 @@ const TotalPrice = ({
         <div className="flex flex-col">
           <span className="text-xs text-gray-500">Total Harga</span>
           <span className="text-lg font-bold text-black">
-            Rp{denomination.amount ? denomination.amount.toLocaleString() : '0'}
+            Rp {denomination.harga ? denomination.harga.toLocaleString() : '0'}
           </span>
         </div>
         <button

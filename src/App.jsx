@@ -74,7 +74,7 @@ const App = () => {
             {/* Kuota */}
             <Route path="/kuota" element={<Kuota />} />
             <Route path="/metode-pembayaran-kuota" element={<MetodePembayaranKuota />} />
-            {/* <Route path="/confirmation-kuota" element={<ConfirmationKuota />} /> */}
+            <Route path="/confirmation-kuota1" element={<ConfirmationKuota />} />
             {/* <Route path="/process-kuota" element={<ProcessKuota />} /> */}
 
             {/* TopUp */}
@@ -90,17 +90,17 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             {/* Next Page */}
               {/* Metode Payment */}
-              <Route path="/metode-payment" element={<MetodePayment paymentType="kuota" />} />
+              {/* <Route path="/metode-payment" element={<MetodePayment paymentType="kuota" />} />
               <Route path="/metode-payment-pln" element={<MetodePayment paymentType="pln" />} />
-              <Route path="/metode-payment-pulsa" element={<MetodePayment paymentType="pulsa" />} />
+              <Route path="/metode-payment-pulsa" element={<MetodePayment paymentType="pulsa" />} /> */}
               <Route path="/metode-payment/:paymentType" element={<MetodePayment />} />
 
               {/* confirmation */}
-              <Route path="/confirmation-paketdata" element={<Confirmation type="kuota" />} />
+              {/* <Route path="/confirmation-paketdata" element={<Confirmation type="kuota" />} />
               <Route path="/pln-confirmation" element={<Confirmation type="pln" />} />
               <Route path="/pulsa-confirmation" element={<Confirmation type="pulsa" />} />
-              <Route path="/topup-confirmation" element={<Confirmation />} />
-              {/* <Route path="/confirmation/:type" element={<Confirmation />} /> */}
+              <Route path="/topup-confirmation" element={<Confirmation />} /> */}
+              <Route path="/confirmation/:type" element={<Confirmation />} />
 
             {/* Process */}
           </Routes>
