@@ -5,7 +5,7 @@ const PLNMeterIdInput = ({
   handleMeteranIdChange,
   meteranIdError,
   handleCheckMeteranId,
-  selectedNominal,
+  harga, 
   isLoading,
   notification,
   nominalNotSelectedError,
@@ -25,11 +25,11 @@ const PLNMeterIdInput = ({
         />
         <button
           className={`absolute right-2 top-1 px-3 py-1 rounded-lg ${
-            !selectedNominal ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-white'
+            !harga || meteranId.length < 11 ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-white'
           }`}
           onClick={handleCheckMeteranId}
           aria-label="Check Meteran ID"
-          disabled={!selectedNominal || isLoading}
+          disabled={!harga || meteranId.length < 11 || isLoading}
         >
           {isLoading ? 'Memproses...' : 'Cek'}
         </button>

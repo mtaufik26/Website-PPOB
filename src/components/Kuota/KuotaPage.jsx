@@ -25,7 +25,7 @@ const KuotaPage = () => {
   }, [selectedProvider]);
 
   const handleFormSubmit = () => {
-    const selectedPackageDetails = packages.find(pkg => pkg.kode === selectedPackage);
+    const selectedPackageDetails = packages.find(pkg => pkg.productCode === selectedPackage);
 
     if (!selectedPackageDetails) {
       setErrorMessage('Paket yang dipilih tidak valid.');
@@ -46,7 +46,7 @@ const KuotaPage = () => {
           type: 'kuota',
           harga: originalPrice.toString(),
           diskon: selectedPackageDetails.diskon,
-          kode: selectedPackageDetails.kode,
+          productCode: selectedPackageDetails.productCode,
           nama: selectedPackageDetails.nama,
         },
         phoneNumber: phoneNumber,
@@ -72,7 +72,7 @@ const KuotaPage = () => {
     }
   };
 
-  const selectedPackageDetails = packages.find(pkg => pkg.kode === selectedPackage);
+  const selectedPackageDetails = packages.find(pkg => pkg.productCode === selectedPackage);
   const totalHarga = selectedPackageDetails
     ? selectedPackageDetails.diskon
       ? (parseInt(selectedPackageDetails.harga.replace(/\./g, ''), 10) * (100 - selectedPackageDetails.diskon) / 100).toLocaleString()
@@ -119,8 +119,8 @@ const KuotaPage = () => {
                     key={index}
                     {...pkg}
                     hargaBaru={hargaBaru}
-                    isSelected={pkg.kode === selectedPackage}
-                    onClick={() => setSelectedPackage(pkg.kode)}
+                    isSelected={pkg.productCode === selectedPackage}
+                    onClick={() => setSelectedPackage(pkg.productCode)}
                   />
                 );
               })}

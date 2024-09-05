@@ -89,15 +89,15 @@ const ConfirmationKuota = () => {
 const ConfirmationPLN = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
-  const { selectedMethod, selectedNominal = 0, meteranId = '', productCode = '' } = location.state || {};
+
+  const { selectedMethod, harga = 0, meteranId = '', productCode = '' } = location.state || {};
 
   const handleBack = () => {
     navigate(-1);
   };
 
   const handlePayment = () => {
-    const totalAmount = selectedNominal;
+    const totalAmount = harga;
     if (totalAmount <= 0) {
       console.error('Invalid amount for payment');
       return;
@@ -105,7 +105,7 @@ const ConfirmationPLN = () => {
     navigate('/payment-process', {
       state: { selectedMethod, amount: totalAmount, meteranId, productCode },
     });
-  };  
+  };
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
@@ -126,14 +126,14 @@ const ConfirmationPLN = () => {
       <main className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Konfirmasi Pembelian</h2>
         <div className="space-y-3">
-          <InfoItem term="Nama paket" description={`Rp ${selectedNominal.toLocaleString()}`} />
+          <InfoItem term="Nama paket" description={`Rp ${harga.toLocaleString()}`} />
           <InfoItem term="No. Meter/ID Pel" description={meteranId} />
-          <InfoItem term="Harga" description={`Rp ${selectedNominal.toLocaleString()}`} />
+          <InfoItem term="Harga" description={`Rp ${harga.toLocaleString()}`} />
           <InfoItem term="Metode pembayaran" description={selectedMethod?.toUpperCase() || '-'} />
         </div>
         <div className="flex items-center justify-between border-t border-gray-300 pt-4 mt-4">
           <span className="text-lg font-semibold text-gray-900">Total Harga</span>
-          <span className="text-xl font-bold text-red-600">Rp {selectedNominal.toLocaleString()}</span>
+          <span className="text-xl font-bold text-red-600">Rp {harga.toLocaleString()}</span>
         </div>
       </main>
       <button

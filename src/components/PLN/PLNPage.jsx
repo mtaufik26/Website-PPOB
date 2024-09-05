@@ -8,7 +8,7 @@ import TotalPrice from './TotalPrice';
 
 const PLNPage = () => {
   const [selectedOperator, setSelectedOperator] = useState('Token Listrik');
-  const [selectedNominal, setSelectedNominal] = useState(null);
+  const [harga, setHarga] = useState(null); // Mengganti selectedNominal dengan harga
   const [meteranId, setMeteranId] = useState('');
   const [meteranIdError, setMeteranIdError] = useState('');
   const [notification, setNotification] = useState('');
@@ -20,12 +20,12 @@ const PLNPage = () => {
 
   const operators = ['Token Listrik', 'Tagihan Listrik', 'PLN Non-Taglis'];
   const nominals = [
-    { value: 20000 },
-    { value: 50000 },
-    { value: 100000 },
-    { value: 200000 },
-    { value: 500000 },
-    { value: 1000000 },
+    { value: 20000, productCode: 'SBIPLN20' },
+    { value: 50000, productCode: 'SBIPLN50' },
+    { value: 100000, productCode: 'SBIPLN100' },
+    { value: 200000, productCode: 'SBIPLN200' },
+    { value: 500000, productCode: 'SBIPLN500' },
+    { value: 1000000, productCode: 'SBIPLN1000' }
   ];
 
   useEffect(() => {
@@ -55,12 +55,12 @@ const PLNPage = () => {
       setIsLoading(true);
 
       setTimeout(() => {
-        if (!selectedNominal) {
+        if (!harga) {
           setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
         } else {
           setNotification('Nomor valid! Anda bisa melanjutkan.');
           setPurchaseDetails({
-            amount: selectedNominal,
+            amount: harga, // Mengganti selectedNominal dengan harga
             id: meteranId,
             name: '',
             rate: '',
@@ -78,25 +78,25 @@ const PLNPage = () => {
   };
 
   const handlePaymentSelection = () => {
-    if (meteranId.length >= 11 && selectedNominal && isCheckButtonClicked) {
-      const selectedNominalObj = nominals.find((nominal) => nominal.value === selectedNominal);
-      navigate('/metode-payment-pln', {
+    if (meteranId.length >= 11 && harga && isCheckButtonClicked) {
+      const selectedNominalObj = nominals.find((nominal) => nominal.value === harga); // Temukan kode produk yang sesuai
+      navigate('/metode-payment/:paymentType', {
         state: {
-          selectedNominal,
+          harga, // Menggunakan harga yang dipilih
           meteranId,
           productType: 'electricity',
-          productCode: selectedNominalObj.productCode, // Mengirimkan productCode ke halaman berikutnya
+          productCode: selectedNominalObj?.productCode, // Mengirimkan productCode ke halaman berikutnya
         },
       });
     } else {
-      if (!selectedNominal) {
+      if (!harga) {
         setNominalNotSelectedError('Pilih nominal sebelum melanjutkan.');
       }
       if (meteranId.length < 11) {
         setMeteranIdError('Nomor harus minimal 11 digit untuk melanjutkan.');
       }
     }
-  };  
+  };
 
   return (
     <div className="max-w-md mx-auto p-2 flex flex-col h-screen justify-between">
@@ -129,7 +129,7 @@ const PLNPage = () => {
             handleMeteranIdChange={handleMeteranIdChange}
             meteranIdError={meteranIdError}
             handleCheckMeteranId={handleCheckMeteranId}
-            selectedNominal={selectedNominal}
+            harga={harga} // Mengganti selectedNominal dengan harga
             isLoading={isLoading}
             notification={notification}
             nominalNotSelectedError={nominalNotSelectedError}
@@ -137,17 +137,17 @@ const PLNPage = () => {
           {purchaseDetails && <PurchaseDetails purchaseDetails={purchaseDetails} />}
           <NominalButtons
             nominals={nominals}
-            selectedNominal={selectedNominal}
-            setSelectedNominal={setSelectedNominal}
+            harga={harga} // Mengganti selectedNominal dengan harga
+            setHarga={setHarga} // Mengganti setSelectedNominal dengan setHarga
             meteranId={meteranId}
             setMeteranIdError={setMeteranIdError}
           />
         </div>
       </div>
       <TotalPrice
-        selectedNominal={selectedNominal}
+        harga={harga} // Mengganti selectedNominal dengan harga
         handlePaymentSelection={handlePaymentSelection}
-        isDisabled={!selectedNominal || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked}
+        isDisabled={!harga || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked} // Mengganti selectedNominal dengan harga
       />
     </div>
   );

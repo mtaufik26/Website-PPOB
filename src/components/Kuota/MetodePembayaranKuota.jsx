@@ -6,55 +6,58 @@ const paymentMethods = [
   {
     id: 'ovo',
     name: 'OVO',
-    balance: 'Rp0',
-    status: 'Dana tidak tersedia',
     icon: paymentIcons.ovo,
     category: 'Dompet Digital',
-    color: 'bg-white'
+    color: 'bg-white',
+    typemetode: 'digital_wallet'
   },
   {
     id: 'dana',
     name: 'Dana',
-    balance: 'Rp0',
-    status: 'Tidak Tersedia',
     icon: paymentIcons.dana,
     category: 'Dompet Digital',
-    color: 'bg-white'
+    color: 'bg-white',
+    typemetode: 'digital_wallet'
   },
   {
     id: 'indomaret',
     name: 'Indomaret / Ceriamart',
     icon: paymentIcons.indomaret,
     category: 'Gerai Offline',
-    color: 'bg-white'
+    color: 'bg-white',
+    typemetode: 'offline_store'
   },
   {
     id: 'alfamart',
     name: 'Alfamart / Alfamidi / Dan+Dan',
     icon: paymentIcons.alfamart,
     category: 'Gerai Offline',
-    color: 'bg-white'
+    color: 'bg-white',
+    typemetode: 'offline_store'
   },
   {
     id: 'klikbca',
     name: 'KlikBCA',
     icon: paymentIcons.bca,
     category: 'Internet Banking',
-    color: 'bg-white'
+    color: 'bg-white',
+    typemetode: 'internet_banking'
   },
   {
     id: 'bri',
     name: 'Bank BRI',
     icon: paymentIcons.bri,
     category: 'Transfer Bank',
-    color: 'bg-white'
+    color: 'bg-white',
+    typemetode: 'bank_transfer'
   },
   {
     id: 'mandiri',
     name: 'Bank Mandiri',
     icon: paymentIcons.mandiri,
     category: 'Transfer Bank',
-    color: 'bg-white'
+    color: 'bg-white',
+    typemetode: 'bank_transfer'
   },
 ];
 
@@ -99,15 +102,42 @@ const MetodePembayaranKuota = () => {
   };
 
   const handleContinue = () => {
+    const selectedPaymentMethod = paymentMethods.find(method => method.id === selectedMethod);
+
     if (selectedMethod) {
-      navigate('/confirmation-kuota', {
-        state: {
-          selectedMethod,
-          provider,
-          denomination,
-          phoneNumber,
-        },
-      });
+      // Validasi tambahan untuk typemetode
+      if (!selectedPaymentMethod.typemetode) {
+        setError('Tipe metode pembayaran tidak valid.');
+        return;
+      }
+
+      // Cek apakah typemetode adalah 'offline_store'
+      if (selectedPaymentMethod.typemetode === 'offline_store') {
+        // Jika metode pembayaran offline, arahkan ke halaman konfirmasi dengan informasi tambahan
+        navigate('/confirmation-kuota1', {
+          state: {
+            selectedMethod: selectedMethod,
+            typemetode: selectedPaymentMethod.typemetode,
+            provider: provider,
+            denomination: denomination,
+            phoneNumber: phoneNumber,
+            isOfflinePayment: true,  // Tambahkan flag untuk pembayaran offline
+            offlineStore: selectedPaymentMethod.name,  // Nama toko (Indomaret/Alfamart)
+            paymentCode: '1234567890',  // Simulasi kode pembayaran, ini bisa berasal dari server/API
+          },
+        });
+      } else {
+        // Untuk metode pembayaran lainnya, tetap arahkan ke halaman konfirmasi biasa
+        navigate('/confirmation-kuota1', {
+          state: {
+            selectedMethod,
+            typemetode: selectedPaymentMethod.typemetode,  // Kirim typemetode ke halaman berikutnya
+            provider,
+            denomination,
+            phoneNumber,
+          },
+        });
+      }
     } else {
       setError('Silakan pilih metode pembayaran.');
     }
@@ -128,7 +158,18 @@ const MetodePembayaranKuota = () => {
   };
 
   const handleMethodClick = (methodId) => {
-    navigate('/confirmation-kuota', { state: { methodId } });
+    const selectedPaymentMethod = paymentMethods.find(method => method.id === methodId);
+
+    if (selectedPaymentMethod && selectedPaymentMethod.typemetode) {
+      navigate('/confirmation-kuota1', {
+        state: {
+          methodId,
+          typemetode: selectedPaymentMethod.typemetode  // Kirim typemetode ke halaman berikutnya
+        },
+      });
+    } else {
+      setError('Metode pembayaran tidak valid.');
+    }
   };
 
   // Tentukan urutan kategori yang diinginkan
@@ -194,12 +235,6 @@ const MetodePembayaranKuota = () => {
                     <img src={method.icon} alt={`${method.name} icon`} className="w-10 h-10 object-contain" />
                     <div>
                       <span className="font-medium text-gray-700">{method.name}</span>
-                      {method.balance && (
-                        <div className="text-sm text-gray-500">{method.balance}</div>
-                      )}
-                      {method.status && (
-                        <div className="text-sm text-gray-400">{method.status}</div>
-                      )}
                     </div>
                   </div>
                   <input
@@ -335,16 +370,16 @@ const MetodePembayaranKuota = () => {
               <p className="mt-4 text-gray-700 text-center">Transaksi tidak akan diproses jika kamu meninggalkan halaman ini.</p>
               <div className="mt-6 flex flex-col items-center space-y-4">
                 <button
-                  className="w-full bg-blue-600 text-white py-2 rounded font-medium hover:bg-blue-700 transition ease-in-out duration-150"
-                  onClick={handleConfirmLeave}
+                  className="w-full bg-sky-600 text-white py-2 rounded font-medium hover:bg-sky-700 transition ease-in-out duration-150"
+                  onClick={handleCancelLeave}
                 >
-                  Keluar
+                  Lanjut Bayar
                 </button>
                 <button
                   className="w-full bg-gray-300 text-gray-700 py-2 rounded font-medium hover:bg-gray-400 transition ease-in-out duration-150"
-                  onClick={handleCancelLeave}
+                  onClick={handleConfirmLeave}
                 >
-                  Batal
+                  Keluar
                 </button>
               </div>
             </div>

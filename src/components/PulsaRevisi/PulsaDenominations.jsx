@@ -1,50 +1,50 @@
 export const denominations = {
     axis: [
-      { amount: 5000, code: 'SBIAXIS5k' },
-      { amount: 10000, code: 'SBIAXIS10k' },
-      { amount: 25000, code: 'SBIAXIS25k' },
-      { amount: 50000, code: 'SBIAXIS50k' },
-      { amount: 100000, code: 'SBIAXIS100k' },
-      { amount: 200000, code: 'SBIAXIS200k' }
+      { harga: 5000, productCode: 'SBIAXIS5k' },
+      { harga: 10000, productCode: 'SBIAXIS10k' },
+      { harga: 25000, productCode: 'SBIAXIS25k' },
+      { harga: 50000, productCode: 'SBIAXIS50k' },
+      { harga: 100000, productCode: 'SBIAXIS100k' },
+      { harga: 200000, productCode: 'SBIAXIS200k' }
     ],
     indosat: [
-      { amount: 5000, code: 'SBIINDOSAT5k' },
-      { amount: 10000, code: 'SBIINDOSAT10k' },
-      { amount: 25000, code: 'SBIINDOSAT25k' },
-      { amount: 50000, code: 'SBIINDOSAT50k' },
-      { amount: 100000, code: 'SBIINDOSAT100k' },
-      { amount: 200000, code: 'SBIINDOSAT200k' }
+      { harga: 5000, productCode: 'SBIINDOSAT5k' },
+      { harga: 10000, productCode: 'SBIINDOSAT10k' },
+      { harga: 25000, productCode: 'SBIINDOSAT25k' },
+      { harga: 50000, productCode: 'SBIINDOSAT50k' },
+      { harga: 100000, productCode: 'SBIINDOSAT100k' },
+      { harga: 200000, productCode: 'SBIINDOSAT200k' }
     ],
     smartfren: [
-      { amount: 5000, code: 'SBISMARTFREN5k' },
-      { amount: 10000, code: 'SBISMARTFREN10k' },
-      { amount: 25000, code: 'SBISMARTFREN25k' },
-      { amount: 50000, code: 'SBISMARTFREN50k' },
-      { amount: 100000, code: 'SBISMARTFREN100k' },
-      { amount: 200000, code: 'SBISMARTFREN200k' }
+      { harga: 5000, productCode: 'SBISMARTFREN5k' },
+      { harga: 10000, productCode: 'SBISMARTFREN10k' },
+      { harga: 25000, productCode: 'SBISMARTFREN25k' },
+      { harga: 50000, productCode: 'SBISMARTFREN50k' },
+      { harga: 100000, productCode: 'SBISMARTFREN100k' },
+      { harga: 200000, productCode: 'SBISMARTFREN200k' }
     ],
     telkomsel: [
-      { amount: 5000, code: 'SBITELKOMSEL5k' },
-      { amount: 10000, code: 'SBITELKOMSEL10k' },
-      { amount: 25000, code: 'SBITELKOMSEL25k' },
-      { amount: 50000, code: 'SBITELKOMSEL50k' },
-      { amount: 100000, code: 'SBITELKOMSEL100k' },
-      { amount: 200000, code: 'SBITELKOMSEL200k' }
+      { harga: 5000, productCode: 'SBITELKOMSEL5k' },
+      { harga: 10000, productCode: 'SBITELKOMSEL10k' },
+      { harga: 25000, productCode: 'SBITELKOMSEL25k' },
+      { harga: 50000, productCode: 'SBITELKOMSEL50k' },
+      { harga: 100000, productCode: 'SBITELKOMSEL100k' },
+      { harga: 200000, productCode: 'SBITELKOMSEL200k' }
     ],
     tri: [
-      { amount: 5000, code: 'SBITRI5k' },
-      { amount: 10000, code: 'SBITRI10k' },
-      { amount: 25000, code: 'SBITRI25k' },
-      { amount: 30000, code: 'SBITRI30k' },
-      { amount: 50000, code: 'SBITRI50k' },
-      { amount: 100000, code: 'SBITRI100k' }
+      { harga: 5000, productCode: 'SBITRI5k' },
+      { harga: 10000, productCode: 'SBITRI10k' },
+      { harga: 25000, productCode: 'SBITRI25k' },
+      { harga: 30000, productCode: 'SBITRI30k' },
+      { harga: 50000, productCode: 'SBITRI50k' },
+      { harga: 100000, productCode: 'SBITRI100k' }
     ],
     xl: [
-      { amount: 5000, code: 'SBIXL5k' },
-      { amount: 10000, code: 'SBIXL10k' },
-      { amount: 25000, code: 'SBIXL25k' },
-      { amount: 50000, code: 'SBIXL50k' },
-      { amount: 100000, code: 'SBIXL100k' },
-      { amount: 200000, code: 'SBIXL200k' }
+      { harga: 5000, productCode: 'SBIXL5k' },
+      { harga: 10000, productCode: 'SBIXL10k' },
+      { harga: 25000, productCode: 'SBIXL25k' },
+      { harga: 50000, productCode: 'SBIXL50k' },
+      { harga: 100000, productCode: 'SBIXL100k' },
+      { harga: 200000, productCode: 'SBIXL200k' }
     ],
   };
