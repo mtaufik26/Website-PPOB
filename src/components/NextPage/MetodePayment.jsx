@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Card from '../Card';
 
 const paymentMethods = [
@@ -10,7 +10,8 @@ const paymentMethods = [
   { id: 'mandiri', name: 'Mandiri Virtual Account', icon: '🏦', color: 'bg-yellow-100' },
 ];
 
-const MetodePayment = ({ paymentType }) => {
+const MetodePayment = () => {
+  const { paymentType } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedMethod, setSelectedMethod] = useState('');
@@ -71,7 +72,7 @@ const MetodePayment = ({ paymentType }) => {
           };
           break;
         case 'pulsa':
-          route = '/pulsa-confirmation';
+          route = '/confirmation/pulsa';
           stateData = {
             type: 'pulsa',
             selectedMethod,

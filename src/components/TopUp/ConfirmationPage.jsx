@@ -19,7 +19,7 @@ const ConfirmationTopUp = () => {
   };
 
   const handlePayment = () => {
-    navigate('/process', {
+    navigate('/process-topup', {
       state: {
         selectedMethod,
         amount: totalAmount,
