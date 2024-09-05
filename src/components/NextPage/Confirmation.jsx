@@ -165,8 +165,9 @@ const ConfirmationPulsa = () => {
   };
 
   const handleVerification = () => {
-    navigate('/process-pulsa', {
+    navigate('/process/pulsa', {
       state: {
+        type: 'pulsa',
         selectedMethod,
         amount,
         accountNumber,

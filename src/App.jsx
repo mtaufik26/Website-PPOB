@@ -4,7 +4,7 @@ import Home from './pages/Home';
 
 // PulsaRevisi
 import PulsaPage from './components/PulsaRevisi/PulsaPage';
-// import MetodePembayaranPulsa from './components/PulsaRevisi/MetodePembayaranPulsa';
+import MetodePembayaranPulsa from './components/PulsaRevisi/MetodePembayaranPulsa';
 // import ConfirmationPulsa from './components/PulsaRevisi/ConfirmationPulsa';
 // import ProcessPulsa from './components/PulsaRevisi/ProcessPulsa';
 
@@ -29,7 +29,7 @@ import ProsesPengiriman from './components/KirimUang/ProsesPengiriman';
 // TopUp
 import PaymentPage from './components/TopUp/PaymentPage';
 import ConfirmationPage from './components/TopUp/ConfirmationPage';
-import Process from './components/TopUp/Process';
+import ProcessTopUp from './components/TopUp/ProcessTopUp';
 
 // TopUpHome
 import Dana from './components/TopUp/TopUpHome/Dana';
@@ -40,6 +40,7 @@ import Ovo from './components/TopUp/TopUpHome/Ovo';
 // NextPage
 import MetodePayment from './components/NextPage/MetodePayment';
 import Confirmation from './components/NextPage/Confirmation';
+import Process from './components/NextPage/Process';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -55,7 +56,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             {/* PulsaRevisi */}
             <Route path="/topup-pulsa" element={<PulsaPage />} />
-            {/* <Route path="/metode-pembayaran-pulsa" element={<MetodePembayaranPulsa />} /> */}
+            <Route path="/metode-pembayaran-pulsa" element={<MetodePembayaranPulsa />} />
             {/* <Route path="/confirmation-pulsa" element={<ConfirmationPulsa />} /> */}
             {/* <Route path="/process-pulsa" element={<ProcessPulsa />} /> */}
 
@@ -80,7 +81,7 @@ const App = () => {
             {/* TopUp */}
             <Route path="/payment-page" element={<PaymentPage />} />
             <Route path="/confirmation" element={<ConfirmationPage />} />
-            <Route path="/process" element={<Process />} />
+            <Route path="/process-topup" element={<ProcessTopUp />} />
 
             {/* TopUpHome */}
             <Route path="/dana" element={<Dana />} />
@@ -103,6 +104,7 @@ const App = () => {
               <Route path="/confirmation/:type" element={<Confirmation />} />
 
             {/* Process */}
+            <Route path="/process/:type" element={<Process />} />
           </Routes>
         </main>
         {/* <Footer /> */}
