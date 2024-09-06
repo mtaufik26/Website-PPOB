@@ -18,8 +18,9 @@ const ConfirmationKuota = () => {
 
   const handleVerification = () => {
     const discountedPrice = denomination.harga - (denomination.harga * (denomination.diskon / 100));
-    navigate('/process-kuota', {
+    navigate('/process/kuota', {
       state: {
+        type: 'kuota',
         selectedMethod: selectedMethod,
         harga: discountedPrice,
         phoneNumber: phoneNumber,
@@ -29,9 +30,9 @@ const ConfirmationKuota = () => {
     });
   };
   
-  const formatAmount = (amount) => {
-    if (!amount || isNaN(amount)) return 'Rp -';
-    return `Rp ${parseInt(amount, 10).toLocaleString()}`;
+  const formatHarga = (harga) => {
+    if (!harga || isNaN(harga)) return 'Rp -';
+    return `Rp ${parseInt(harga, 10).toLocaleString()}`;
   };
 
   const calculateDiscountedPrice = (harga, diskon) => {
@@ -57,7 +58,7 @@ const ConfirmationKuota = () => {
           <DetailItem label="Provider" value={provider || '-'} />
           <DetailItem label="Nomor HP" value={phoneNumber || '-'} />
           <DetailItem label="Nama Paket" value={denomination?.nama || '-'} />
-          <DetailItem label="Harga" value={formatAmount(denomination?.harga)} />
+          <DetailItem label="Harga" value={formatHarga(denomination?.harga)} />
           {denomination?.diskon && (
             <DetailItem label="Diskon" value={`${denomination.diskon}%`} />
           )}
@@ -65,7 +66,7 @@ const ConfirmationKuota = () => {
         </div>
         <div className='flex items-center justify-between border-t border-gray-300 pt-4 mt-4'>
           <span className='text-lg font-semibold text-gray-900'>Total Harga</span>
-          <span className='text-xl font-bold text-red-600'>{formatAmount(calculateDiscountedPrice(denomination?.harga, denomination?.diskon))}</span>
+          <span className='text-xl font-bold text-red-600'>{formatHarga(calculateDiscountedPrice(denomination?.harga, denomination?.diskon))}</span>
         </div>
       </div>
 
@@ -97,13 +98,13 @@ const ConfirmationPLN = () => {
   };
 
   const handlePayment = () => {
-    const totalAmount = harga;
-    if (totalAmount <= 0) {
-      console.error('Invalid amount for payment');
+    const totalHarga = harga;
+    if (totalHarga <= 0) {
+      console.error('Invalid Harga for payment');
       return;
     }
     navigate('/payment-process', {
-      state: { selectedMethod, amount: totalAmount, meteranId, productCode },
+      state: { selectedMethod, Harga: totalHarga, meteranId, productCode },
     });
   };
 
@@ -157,8 +158,8 @@ const ConfirmationPLN = () => {
 const ConfirmationPulsa = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
-  const { selectedMethod, amount, accountNumber, provider } = location.state || {};
+
+  const { selectedMethod, accountNumber, provider, denomination, harga = 0 } = location.state || {};
 
   const handleBack = () => {
     navigate(-1);
@@ -168,16 +169,16 @@ const ConfirmationPulsa = () => {
     navigate('/process/pulsa', {
       state: {
         type: 'pulsa',
+        denomination,
+        harga,
         selectedMethod,
-        amount,
         accountNumber,
         provider,
       },
     });
   };
-
-  const formatAmount = (amount) => {
-    return amount > 0 ? `Rp ${amount.toLocaleString()}` : 'Rp -';
+  const formatHarga = (harga) => {
+    return harga > 0 ? `Rp ${harga.toLocaleString()}` : 'Rp -';
   };
 
   return (
@@ -197,19 +198,19 @@ const ConfirmationPulsa = () => {
         <div className='space-y-2'>
           <DetailItem label="Provider" value={provider || '-'} />
           <DetailItem label="Nomor HP" value={accountNumber || '-'} />
-          <DetailItem label="Nominal" value={formatAmount(amount)} />
+          <DetailItem label="Nominal" value={formatHarga(harga)} />
           <DetailItem label="Metode Pembayaran" value={selectedMethod || '-'} />
         </div>
         <div className='flex items-center justify-between border-t border-gray-300 pt-4 mt-4'>
           <span className='text-lg font-semibold text-gray-900'>Total Harga</span>
-          <span className='text-xl font-bold text-red-600'>{formatAmount(amount)}</span>
+          <span className='text-xl font-bold text-red-600'>{formatHarga(harga)}</span>
         </div>
       </div>
 
       <button
         onClick={handleVerification}
         className='w-full bg-sky-500 text-white py-3 rounded-lg mb-4 font-semibold hover:bg-sky-600 transition duration-300 ease-in-out shadow-md'
-        disabled={!selectedMethod || !amount || !accountNumber}
+        disabled={!selectedMethod || !harga || !accountNumber}
       >
         Lanjut Verifikasi
       </button>

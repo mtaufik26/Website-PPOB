@@ -41,7 +41,7 @@ const PulsaPage = () => {
 
   const handleVerification = () => {
     if (isProviderSelected && isDenominationSelected && isPhoneNumberValid) {
-      navigate(`/metode-payment/pulsa`, {
+      navigate('/metode-payment/pulsa', {
         state: {
           type: 'pulsa',
           provider,
