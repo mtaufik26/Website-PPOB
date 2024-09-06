@@ -13,11 +13,10 @@ const Process = () => {
   const {
     type,
     selectedMethod,
-    harga,
     phoneNumber,
     provider,
     diskon,
-    amount,
+    harga,
     meteranId,
     productCode,
     accountNumber,
@@ -41,8 +40,8 @@ const Process = () => {
     navigate('/');
   };
 
-  const formatAmount = (amount) => {
-    return amount && amount > 0 ? `Rp ${parseInt(amount, 10).toLocaleString()}` : 'Rp -';
+  const formatHarga= (harga) => {
+    return harga && harga > 0 ? `Rp ${parseInt(harga, 10).toLocaleString()}` : 'Rp -';
   };
 
   const renderContent = () => {
@@ -56,20 +55,20 @@ const Process = () => {
               <>
                 <p className="text-gray-600 mb-2 font-semibold">Provider: {provider || '-'}</p>
                 <p className="text-gray-600 mb-2 font-semibold">Nomor HP: {phoneNumber || '-'}</p>
-                <p className="text-gray-600 mb-2 font-semibold">Harga: {formatAmount(harga)}</p>
+                <p className="text-gray-600 mb-2 font-semibold">Harga: {formatHarga(harga)}</p>
               </>
             )}
             {type === 'pln' && (
               <>
                 <p className="text-gray-600 mb-2 font-semibold">Nomor Meter/ID Pel: {meteranId || '-'}</p>
-                <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatAmount(amount)}</p>
+                <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatHarga(harga)}</p>
               </>
             )}
             {type === 'pulsa' && (
               <>
                 <p className="text-gray-600 mb-2 font-semibold">Provider: {provider || '-'}</p>
                 <p className="text-gray-600 mb-2 font-semibold">Nomor HP: {accountNumber || '-'}</p>
-                <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatAmount(amount)}</p>
+                <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatHarga(harga)}</p>
               </>
             )}
             <p className="text-gray-600 mb-2 font-semibold">Metode: {selectedMethod || '-'}</p>
@@ -90,13 +89,13 @@ const Process = () => {
             <img src={Ceklis} alt="Ceklis" className="w-16 h-16 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil</h2>
             {type === 'kuota' && (
-              <p className="text-gray-600 mb-2 font-semibold">Harga: {formatAmount(harga)}</p>
+              <p className="text-gray-600 mb-2 font-semibold">Harga: {formatHarga(harga)}</p>
             )}
             {type === 'pln' && (
-              <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatAmount(amount)}</p>
+              <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatHarga(harga)}</p>
             )}
             {type === 'pulsa' && (
-              <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatAmount(amount)}</p>
+              <p className="text-gray-600 mb-2 font-semibold">Jumlah: {formatHarga(harga)}</p>
             )}
             <p className="text-gray-600 mb-2 font-semibold">Terima kasih atas pembayaran Anda dengan metode {selectedMethod}.</p>
             <button

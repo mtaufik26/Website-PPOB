@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { paymentIcons } from "../../assets/images/MetodePembayaran/paymentIcons";
+import { Kuota } from '../../icons/icon';
 
 const paymentMethods = [
   {
@@ -19,30 +20,30 @@ const paymentMethods = [
     color: 'bg-white',
     typemetode: 'digital_wallet'
   },
-  {
-    id: 'indomaret',
-    name: 'Indomaret / Ceriamart',
-    icon: paymentIcons.indomaret,
-    category: 'Gerai Offline',
-    color: 'bg-white',
-    typemetode: 'offline_store'
-  },
-  {
-    id: 'alfamart',
-    name: 'Alfamart / Alfamidi / Dan+Dan',
-    icon: paymentIcons.alfamart,
-    category: 'Gerai Offline',
-    color: 'bg-white',
-    typemetode: 'offline_store'
-  },
-  {
-    id: 'klikbca',
-    name: 'KlikBCA',
-    icon: paymentIcons.bca,
-    category: 'Internet Banking',
-    color: 'bg-white',
-    typemetode: 'internet_banking'
-  },
+  // {
+  //   id: 'indomaret',
+  //   name: 'Indomaret / Ceriamart',
+  //   icon: paymentIcons.indomaret,
+  //   category: 'Gerai Offline',
+  //   color: 'bg-white',
+  //   typemetode: 'offline_store'
+  // },
+  // {
+  //   id: 'alfamart',
+  //   name: 'Alfamart / Alfamidi / Dan+Dan',
+  //   icon: paymentIcons.alfamart,
+  //   category: 'Gerai Offline',
+  //   color: 'bg-white',
+  //   typemetode: 'offline_store'
+  // },
+  // {
+  //   id: 'klikbca',
+  //   name: 'KlikBCA',
+  //   icon: paymentIcons.bca,
+  //   category: 'Internet Banking',
+  //   color: 'bg-white',
+  //   typemetode: 'internet_banking'
+  // },
   {
     id: 'bri',
     name: 'Bank BRI',
@@ -114,7 +115,7 @@ const MetodePembayaranKuota = () => {
       // Cek apakah typemetode adalah 'offline_store'
       if (selectedPaymentMethod.typemetode === 'offline_store') {
         // Jika metode pembayaran offline, arahkan ke halaman konfirmasi dengan informasi tambahan
-        navigate('/confirmation-kuota1', {
+        navigate('/confirmation/kuota', {
           state: {
             selectedMethod: selectedMethod,
             typemetode: selectedPaymentMethod.typemetode,
@@ -128,8 +129,9 @@ const MetodePembayaranKuota = () => {
         });
       } else {
         // Untuk metode pembayaran lainnya, tetap arahkan ke halaman konfirmasi biasa
-        navigate('/confirmation-kuota1', {
+        navigate('/confirmation/kuota', {
           state: {
+            type: 'kuota',
             selectedMethod,
             typemetode: selectedPaymentMethod.typemetode,  // Kirim typemetode ke halaman berikutnya
             provider,
