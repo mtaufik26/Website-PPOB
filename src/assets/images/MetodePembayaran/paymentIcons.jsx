@@ -5,6 +5,7 @@ import briIcon from './BRI.png';
 import mandiriIcon from './mandiri.png';
 import danaIcon from './Dana.png';
 import ovoIcon from './Ovo.png';
+import gopayIcon from './Gopay.png'
 
 export const paymentIcons = {
   indomaret: indomaretIcon,
@@ -14,5 +15,6 @@ export const paymentIcons = {
   mandiri: mandiriIcon,
   dana: danaIcon,
   ovo: ovoIcon,
+  gopay: gopayIcon,
 
 };

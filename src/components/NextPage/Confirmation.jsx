@@ -103,10 +103,17 @@ const ConfirmationPLN = () => {
       console.error('Invalid Harga for payment');
       return;
     }
-    navigate('/payment-process', {
-      state: { selectedMethod, Harga: totalHarga, meteranId, productCode },
+    navigate('/process/pln', {
+      state: {
+        type: 'pln',
+        selectedMethod,
+        harga: totalHarga,
+        meteranId,  // pastikan meteranId juga ikut dikirim
+        productCode,
+      },
     });
   };
+  
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
