@@ -92,8 +92,8 @@ const App = () => {
             {/* Next Page */}
               {/* Metode Payment */}
               {/* <Route path="/metode-payment" element={<MetodePayment paymentType="kuota" />} />
-              <Route path="/metode-payment-pln" element={<MetodePayment paymentType="pln" />} />
-              <Route path="/metode-payment-pulsa" element={<MetodePayment paymentType="pulsa" />} /> */}
+              <Route path="/metode-payment-pln" element={<MetodePayment paymentType="pln" />} /> */}
+              <Route path="/metode-payment-pulsa" element={<MetodePayment />} />
               <Route path="/metode-payment/:paymentType" element={<MetodePayment />} />
 
               {/* confirmation */}
