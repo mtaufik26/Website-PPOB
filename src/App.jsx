@@ -10,7 +10,7 @@ import MetodePembayaranPulsa from './components/PulsaRevisi/MetodePembayaranPuls
 
 // PLN
 import PLNPage from './components/PLN/PLNPage';
-// import PaymentPLN from './components/PLN/PaymentPLN';
+import PaymentPLN from './components/PLN/PaymentPLN';
 // import ConfirmationPLN from './components/PLN/ConfirmationPLN';
 import TagihanListrik from './components/PLN/TagihanListrik';
 // import ProcessPLN from './components/PLN/ProcessPLN';
@@ -63,7 +63,7 @@ const App = () => {
             {/* PLN */}
             <Route path="/pln" element={<PLNPage />} />
             <Route path="/electricity-form" element={<PLNPage />} />
-            {/* <Route path="/payment-selection" element={<PaymentPLN />} /> */}
+            <Route path="/payment-selection" element={<PaymentPLN />} />
             {/* <Route path="/payment-confirmation" element={<ConfirmationPLN />} /> */}
             {/* <Route path="/payment-process" element={<ProcessPLN />} /> */}
             <Route path="/tagihan-listrik" element={<TagihanListrik />} />
@@ -92,8 +92,8 @@ const App = () => {
             {/* Next Page */}
               {/* Metode Payment */}
               {/* <Route path="/metode-payment" element={<MetodePayment paymentType="kuota" />} />
-              <Route path="/metode-payment-pln" element={<MetodePayment paymentType="pln" />} />
-              <Route path="/metode-payment-pulsa" element={<MetodePayment paymentType="pulsa" />} /> */}
+              <Route path="/metode-payment-pln" element={<MetodePayment paymentType="pln" />} /> */}
+              <Route path="/metode-payment-pulsa" element={<MetodePayment />} />
               <Route path="/metode-payment/:paymentType" element={<MetodePayment />} />
 
               {/* confirmation */}

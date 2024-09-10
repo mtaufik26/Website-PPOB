@@ -98,26 +98,24 @@ const MetodePayment = () => {
             provider: provider,
             denomination: denomination,
             phoneNumber: phoneNumber,
-            isOfflinePayment: true,  // Tambahkan flag untuk pembayaran offline
-            offlineStore: selectedPaymentMethod.name,  // Nama toko (Indomaret/Alfamart)
-            paymentCode: '1234567890',  // Simulasi kode pembayaran, ini bisa berasal dari server/API
+            isOfflinePayment: true,
+            offlineStore: selectedPaymentMethod.name,
+            paymentCode: '1234567890',
           },
         });
       } else {
-        // Untuk metode pembayaran lainnya, tetap arahkan ke halaman konfirmasi biasa
         navigate('/confirmation/pulsa', {
           state: {
             type: 'pulsa',
             selectedMethod,
             denomination,
             accountNumber: phoneNumber,
-            typemetode: selectedPaymentMethod.typemetode,  // Kirim typemetode ke halaman berikutnya
+            typemetode: selectedPaymentMethod.typemetode, 
             provider,
             phoneNumber,
-            harga, // Tambahkan harga ke state yang dikirim
+            harga,
           },
         });
-        
       }
     } else {
       setError('Silakan pilih metode pembayaran.');
@@ -142,10 +140,19 @@ const MetodePayment = () => {
     const selectedPaymentMethod = paymentMethods.find(method => method.id === methodId);
 
     if (selectedPaymentMethod && selectedPaymentMethod.typemetode) {
+      const selectedMethod = selectedPaymentMethod.name;
+
       navigate('/confirmation/pulsa', {
         state: {
+          type: 'pulsa',
+          selectedMethod,
+          denomination,
+          accountNumber: phoneNumber,
+          typemetode: selectedPaymentMethod.typemetode,
+          provider,
+          harga,
+          phoneNumber,
           methodId,
-          typemetode: selectedPaymentMethod.typemetode
         },
       });
     } else {
@@ -153,7 +160,7 @@ const MetodePayment = () => {
     }
   };
 
-  // Tentukan urutan kategori yang diinginkan
+
   const categoryOrder = [
     'Dompet Digital',
     'Gerai Offline',

@@ -8,7 +8,7 @@ import TotalPrice from './TotalPrice';
 
 const PLNPage = () => {
   const [selectedOperator, setSelectedOperator] = useState('Token Listrik');
-  const [harga, setHarga] = useState(null); // Mengganti selectedNominal dengan harga
+  const [harga, setHarga] = useState(null);
   const [meteranId, setMeteranId] = useState('');
   const [meteranIdError, setMeteranIdError] = useState('');
   const [notification, setNotification] = useState('');
@@ -80,7 +80,7 @@ const PLNPage = () => {
   const handlePaymentSelection = () => {
     if (meteranId.length >= 11 && harga && isCheckButtonClicked) {
       const selectedNominalObj = nominals.find((nominal) => nominal.value === harga); // Temukan kode produk yang sesuai
-      navigate('/metode-payment/:paymentType', {
+      navigate('/payment-selection', {
         state: {
           harga, // Menggunakan harga yang dipilih
           meteranId,
