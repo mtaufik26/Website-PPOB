@@ -118,6 +118,27 @@ const PaymentPLN = () => {
     }
   };
 
+  const handleMethodClick = (methodId) => {
+    const selectedPaymentMethod = paymentMethods.find(method => method.id === methodId);
+
+    if (selectedPaymentMethod && selectedPaymentMethod.typemetode) {
+      const selectedMethod = selectedPaymentMethod.name;
+
+      navigate('/confirmation/pln', {
+        state: {
+          type: 'pln',
+          selectedMethod,
+          harga, // Pastikan harga digunakan di sini
+          meteranId,
+          productCode,
+          typemetode: selectedPaymentMethod.typemetode,
+        },
+      });
+    } else {
+      setError('Metode pembayaran tidak valid.');
+    }
+  };
+
   // Tentukan urutan kategori yang diinginkan
   const categoryOrder = [
     'Dompet Digital',
@@ -189,39 +210,40 @@ const PaymentPLN = () => {
           </div>
 
           {showMoreMethods && (
-            <div className={`fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-500 ease-in-out transform ${isAnimating ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
-              <div className="max-w-lg mx-auto px-6 flex flex-col bg-white border rounded-xl shadow-lg h-[80vh] overflow-x-hidden overflow-y-auto">
-                <div className="sticky top-0 bg-white z-10 flex items-center justify-start space-x-1 p-4 border-b">
+            <div className={`fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50 p-6 transition-all duration-500 ease-in-out transform ${isAnimating ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
+              <div className="max-w-3xl mx-auto px-8 flex flex-col bg-white border rounded-2xl shadow-2xl h-[90vh] overflow-x-hidden overflow-y-auto">
+                <div className="sticky top-0 bg-white z-10 flex items-center justify-start space-x-2 p-6 border-b">
                   <button className="text-gray-600 hover:text-gray-800" onClick={toggleShowMoreMethods}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-7 h-7">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
-                  <p className="text-lg font-bold">Pilih Metode Pembayaran</p>
+                  <p className="text-2xl font-bold">Pilih Metode Pembayaran</p>
                 </div>
-                <div className="overflow-y-auto space-y-4 px-4">
+                <div className="overflow-y-auto space-y-6 px-6">
                   {categoryOrder.map((category) => (
                     groupedMethods[category] && groupedMethods[category].length > 0 && (
                       <div key={category}>
-                        <h3 className="text-lg font-bold text-gray-800">{category}</h3>
-                        <div className="space-y-3 mt-2">
+                        <h3 className="text-xl font-bold text-gray-800">{category}</h3>
+                        <div className="space-y-4 mt-4">
                           {groupedMethods[category].map((method) => (
-                            <div key={method.id} className="flex items-center justify-between py-2 px-5 border-b cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => handleSelection(method.id)}>
-                              <div className="flex items-center space-x-4">
-                                <img src={method.icon} alt={`${method.name} icon`} className="w-14 h-14 object-contain" />
+                            <div key={method.id} className="flex items-center justify-between py-3 px-6 border-b cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => handleMethodClick(method.id)}>
+                              <div className="flex items-center space-x-6">
+                                <img src={method.icon} alt={`${method.name} icon`} className="w-16 h-16 object-contain" />
                                 <span className="font-medium text-gray-800">{method.name}</span>
                               </div>
-                              <svg className={`w-6 h-6 text-sky-500 ${selectedMethod === method.id ? 'block' : 'hidden'}`} 
-                                fill="none" 
-                                stroke="currentColor" 
-                                viewBox="0 0 24 24" 
+                              <svg
+                                className="w-7 h-7 text-gray-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path 
                                   strokeLinecap="round" 
                                   strokeLinejoin="round" 
                                   strokeWidth={2} 
-                                  d="M5 13l4 4L19 7" 
+                                  d="M9 5l7 7-7 7" 
                                 />
                               </svg>
                             </div>
@@ -234,6 +256,7 @@ const PaymentPLN = () => {
               </div>
             </div>
           )}
+
         </div>
         <div className="mt-4 border-t-8 pt-4">
           <h3 className="text-gray-800 font-semibold">Ringkasan pembayaran</h3>

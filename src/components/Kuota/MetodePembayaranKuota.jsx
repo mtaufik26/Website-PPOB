@@ -268,7 +268,7 @@ const MetodePembayaranKuota = () => {
 
             {/* Modal untuk menampilkan metode pembayaran lengkap dan terurut */}
             {showMoreMethods && (
-              <div className={`fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-500 ease-in-out transform ${isAnimating ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
+              <div className={`fixed inset-0 bg-white bg-opacity-90 backdrop-blur-lg flex items-center justify-center z-50 p-4 transition-all duration-500 ease-in-out transform ${isAnimating ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
                 <div className="max-w-lg mx-auto px-6 flex flex-col bg-white border rounded-xl shadow-lg h-[80vh] overflow-x-hidden overflow-y-auto">
                   <div className="sticky top-0 bg-white z-10 flex items-center justify-start space-x-1 p-4 border-b">
                     <button className="text-gray-600 hover:text-gray-800" onClick={toggleShowMoreMethods}>
@@ -285,24 +285,25 @@ const MetodePembayaranKuota = () => {
                           <h3 className="text-lg font-bold text-gray-800">{category}</h3>
                           <div className="space-y-3 mt-2">
                             {groupedMethods[category].map((method) => (
-                              <div key={method.id} className="flex items-center justify-between py-2 px-5 border-b cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => handleSelection(method.id)}>
+                              <div key={method.id} className="flex items-center justify-between py-2 px-5 border-b cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => handleMethodClick(method.id)}>
                                 <div className="flex items-center space-x-4">
                                   <img src={method.icon} alt={`${method.name} icon`} className="w-14 h-14 object-contain" />
                                   <span className="font-medium text-gray-800">{method.name}</span>
                                 </div>
-                                <svg className={`w-6 h-6 text-sky-500 ${selectedMethod === method.id ? 'block' : 'hidden'}`} 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24" 
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                              <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                strokeWidth={2} 
-                                d="M5 13l4 4L19 7" 
-                              />
-                            </svg>
+                                <svg
+                                  className="w-6 h-6 text-gray-500"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 5l7 7-7 7"
+                                  ></path>
+                                </svg>
                           </div>
                         ))}
                       </div>
