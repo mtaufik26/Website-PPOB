@@ -92,7 +92,7 @@ const Login = () => {
           <div className="flex justify-end mb-4">
             <button
               onClick={toggleLanguage}
-              className="bg-gray-300 rounded-ss-2xl rounded-ee-2xl hover:bg-gray-400 focus:outline-none"
+              className="bg-gray-200 rounded-ss-2xl rounded-ee-2xl hover:bg-gray-300 focus:outline-none"
             >
               {language === 'en' ? 'ID' : 'EN'}
             </button>
