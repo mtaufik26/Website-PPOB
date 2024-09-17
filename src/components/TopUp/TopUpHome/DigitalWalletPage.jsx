@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Card from '../../Card';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // Icon loading
+import { MdCheckCircle, MdError } from 'react-icons/md'; // Icon check dan error
 
 const DigitalWalletPage = ({ walletName, options = [] }) => {
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState(options[0] || {});
+  const [selectedOption, setSelectedOption] = useState({});
   const [phone, setPhone] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [purchaseDetails, setPurchaseDetails] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [inputTouched, setInputTouched] = useState(false); // New state to check if input has been touched
 
   const handleBack = () => navigate('/');
 
   const handlePhoneChange = (e) => {
     const input = e.target.value.replace(/[^0-9]/g, '');
     setPhone(input);
+    setInputTouched(true); // Set input as touched when changed
 
     if (input.length === 0) {
       setErrorMessage('');
@@ -43,7 +46,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
           setPurchaseDetails({
             phone,
             amount: selectedOption?.amount || 0,
-            productCode: selectedOption?.productCode || '',  // Menyimpan productCode
+            productCode: selectedOption?.productCode || '',
           });
         } else {
           setErrorMessage('Gagal memproses top-up, coba lagi nanti.');
@@ -60,7 +63,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
         total: selectedOption?.amount || 0,
         phone,
         nominal: selectedOption?.amount || 0,
-        productCode: selectedOption?.productCode || '',  // Meneruskan productCode ke halaman berikutnya
+        productCode: selectedOption?.productCode || '',
         walletName,
         productType: 'wallet',
       },
@@ -68,60 +71,46 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
   };
 
   return (
-    <div className='max-w-md mx-auto p-2 flex-col h-screen justify-between'>
-      <header className="sticky top-0 bg-white z-10 border-b">
-        <div className="flex items-center p-2">
-          <button onClick={handleBack} className="mr-4" aria-label="Go back">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="text-lg font-semibold">Dompet Digital - {walletName}</h1>
-        </div>
-      </header>
-
-      <section className="max-w-md mx-auto p-4 flex flex-col h-screen justify-between">
-        <div>
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Pilih Nominal Anda
-          </label>
-          <div className="relative mb-4">
-            <select
-              value={selectedOption?.amount || ''}
-              onChange={(e) => setSelectedOption(options.find(option => option.amount === parseInt(e.target.value)))}
-              className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            >
-              {options.map((option) => (
-                <option key={option.amount} value={option.amount}>
-                  Rp {option.amount?.toLocaleString('id-ID') || '0'}
-                </option>
-              ))}
-            </select>
+    <div className='max-w-md mx-auto p-2 flex flex-col h-screen justify-between'>
+      <div className="flex-grow">
+        <header className="sticky top-0 bg-white z-10 border-b">
+          <div className="flex items-center p-2">
+            <button onClick={handleBack} className="mr-4" aria-label="Go back">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <h1 className="text-lg font-semibold">Dompet Digital - {walletName}</h1>
           </div>
-
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            No. Telepon
-          </label>
-          <div className="relative">
+        </header>
+        <div className="max-w-lg mx-auto p-4">
+          <h1 className="text-2xl font-bold mb-3">TopUp {walletName}</h1>
+          <label className="block text-gray-700 text-sm font-bold mb-1">No. Telepon</label>
+          <div className="relative mb-1">
             <input
               type="text"
               placeholder="08xxxxxxxxxxx"
               value={phone}
               onChange={handlePhoneChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                inputTouched && !isValid ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
             <button
               onClick={handleCheck}
-              className={`absolute right-2 top-1/2 transform -translate-y-1/2 text-sky-500 px-4 py-1 rounded-lg ${!isValid ? ' opacity-50' : ''}`}
+              className={`absolute right-2 top-1/2 transform -translate-y-1/2 text-sky-500 px-4 py-1 rounded-lg transition duration-150 ${
+                !isValid ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sky-100'
+              }`}
               disabled={!isValid || loading}
             >
-              {loading ? 'Memproses...' : 'Cek'}
+              {loading ? <AiOutlineLoading3Quarters className="animate-spin" /> : 'Cek'}
             </button>
           </div>
-          {errorMessage && (
-            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+          {inputTouched && errorMessage && (
+            <p className="text-red-500 text-sm mt-0.5 flex items-center">
+              <MdError className="mr-1" /> {errorMessage}
+            </p>
           )}
-
           {checked && purchaseDetails && (
             <div className="mt-6 bg-gray-100 p-4 rounded-lg">
               <h2 className="text-lg font-semibold mb-4">Top-up {walletName}</h2>
@@ -141,26 +130,43 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
               </div>
             </div>
           )}
-        </div>
-
-        <div className="sticky bottom-0 bg-white shadow-md p-4 border-t">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-gray-700 font-bold">Total Bayar</span>
-              <p className="text-gray-700 font-bold">
-                {checked ? `Rp ${(selectedOption?.amount || 0).toLocaleString('id-ID')}` : 'Rp 0'}
-              </p>
-            </div>
-            <button
-              onClick={handleConfirmPayment}
-              className={`${checked ? 'bg-sky-500 text-white' : 'bg-gray-200 text-gray-500'} py-2 px-4 rounded-lg`}
-              disabled={!checked}
-            >
-              Lanjut Verifikasi
-            </button>
+          <label className="block text-gray-700 text-sm font-bold mt-4 mb-2">Pilih Nominal Anda</label>
+          <div className="relative mb-4 grid grid-cols-2 gap-4">
+            {options.map((option) => (
+              <button
+                key={option.amount}
+                onClick={() => setSelectedOption(option)}
+                className={`p-2 rounded-lg flex items-center justify-center transition-all duration-200 text-lg font-semibold shadow ${
+                  selectedOption.amount === option.amount ? 'bg-blue-100 border-blue-500 shadow-lg'
+                : 'bg-white border border-gray-200 hover:shadow-md'
+                }`}
+              >
+                Rp {option.amount?.toLocaleString('id-ID') || '0'}
+              </button>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
+
+      <div className="sticky bottom-0 bg-white shadow-md p-4 border-t">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-gray-700 font-bold">Total Bayar</span>
+            <p className="text-gray-700 font-bold">
+              {checked ? `Rp ${(selectedOption?.amount || 0).toLocaleString('id-ID')}` : 'Rp 0'}
+            </p>
+          </div>
+          <button
+            onClick={handleConfirmPayment}
+            className={`py-2 px-4 rounded-lg transition duration-150 ${
+              checked ? 'bg-sky-500 text-white hover:bg-sky-600' : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            }`}
+            disabled={!checked}
+          >
+            Lanjut Verifikasi
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
