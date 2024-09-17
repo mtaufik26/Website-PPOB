@@ -53,6 +53,7 @@ const PulsaPage = () => {
     }
   };
 
+  // Perbaiki kondisi validasi ini dengan memastikan nilai benar
   const isPhoneNumberValid = phoneNumber.length >= 10 && !error;
   const isProviderSelected = provider !== '';
   const isDenominationSelected = denomination.harga !== null;

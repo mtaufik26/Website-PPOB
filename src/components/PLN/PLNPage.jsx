@@ -60,7 +60,7 @@ const PLNPage = () => {
         } else {
           setNotification('Nomor valid! Anda bisa melanjutkan.');
           setPurchaseDetails({
-            amount: harga, // Mengganti selectedNominal dengan harga
+            amount: harga,
             id: meteranId,
             name: '',
             rate: '',
@@ -79,13 +79,13 @@ const PLNPage = () => {
 
   const handlePaymentSelection = () => {
     if (meteranId.length >= 11 && harga && isCheckButtonClicked) {
-      const selectedNominalObj = nominals.find((nominal) => nominal.value === harga); // Temukan kode produk yang sesuai
+      const selectedNominalObj = nominals.find((nominal) => nominal.value === harga);
       navigate('/payment-selection', {
         state: {
-          harga, // Menggunakan harga yang dipilih
+          harga,
           meteranId,
           productType: 'electricity',
-          productCode: selectedNominalObj?.productCode, // Mengirimkan productCode ke halaman berikutnya
+          productCode: selectedNominalObj?.productCode,
         },
       });
     } else {
@@ -129,7 +129,7 @@ const PLNPage = () => {
             handleMeteranIdChange={handleMeteranIdChange}
             meteranIdError={meteranIdError}
             handleCheckMeteranId={handleCheckMeteranId}
-            harga={harga} // Mengganti selectedNominal dengan harga
+            harga={harga}
             isLoading={isLoading}
             notification={notification}
             nominalNotSelectedError={nominalNotSelectedError}
@@ -137,17 +137,17 @@ const PLNPage = () => {
           {purchaseDetails && <PurchaseDetails purchaseDetails={purchaseDetails} />}
           <NominalButtons
             nominals={nominals}
-            harga={harga} // Mengganti selectedNominal dengan harga
-            setHarga={setHarga} // Mengganti setSelectedNominal dengan setHarga
+            harga={harga}
+            setHarga={setHarga}
             meteranId={meteranId}
             setMeteranIdError={setMeteranIdError}
           />
         </div>
       </div>
       <TotalPrice
-        harga={harga} // Mengganti selectedNominal dengan harga
+        harga={harga}
         handlePaymentSelection={handlePaymentSelection}
-        isDisabled={!harga || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked} // Mengganti selectedNominal dengan harga
+        isDisabled={!harga || meteranIdError || meteranId.length < 11 || !isCheckButtonClicked}
       />
     </div>
   );

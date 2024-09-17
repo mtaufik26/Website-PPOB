@@ -19,7 +19,7 @@ const TotalPrice = ({ harga, handlePaymentSelection, isDisabled }) => {
               : 'bg-sky-500 hover:bg-sky-600'
           }`}
         >
-          Lanjutkan
+          Lanjut Verifikasi
         </button>
       </div>
     </div>
