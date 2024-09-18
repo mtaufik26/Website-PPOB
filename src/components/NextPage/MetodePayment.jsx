@@ -100,7 +100,7 @@ const MetodePayment = () => {
             phoneNumber: phoneNumber,
             isOfflinePayment: true,
             offlineStore: selectedPaymentMethod.name,
-            paymentCode: '1234567890',
+            paymentCode: '123456789',
           },
         });
       } else {
