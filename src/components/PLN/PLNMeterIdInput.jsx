@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdError } from 'react-icons/md';
 
 const PLNMeterIdInput = ({
   meteranId,
@@ -24,8 +25,8 @@ const PLNMeterIdInput = ({
           aria-label="Meter/ID Input"
         />
         <button
-          className={`absolute right-2 top-1 px-3 py-1 rounded-lg ${
-            !harga || meteranId.length < 11 ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-white'
+          className={`absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-1 rounded-lg transition duration-150 ${
+            !harga || meteranId.length < 11 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white'
           }`}
           onClick={handleCheckMeteranId}
           aria-label="Check Meteran ID"
@@ -34,7 +35,12 @@ const PLNMeterIdInput = ({
           {isLoading ? 'Memproses...' : 'Cek'}
         </button>
       </div>
-      {meteranIdError && <p className="text-red-500 text-sm mt-2">{meteranIdError}</p>}
+      {/* Tampilkan pesan error hanya sekali dengan ikon tanda seru */}
+      {meteranIdError && (
+        <p className="text-red-500 text-sm mt-1 flex items-center">
+          <MdError className="mr-1" /> {meteranIdError}
+        </p>
+      )}
       {notification && (
         <p className={`text-sm mt-2 ${notification.includes('tidak valid') ? 'text-red-500' : 'text-green-500'}`}>
           {notification}
