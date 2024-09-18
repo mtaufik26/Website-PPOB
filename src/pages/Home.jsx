@@ -1,4 +1,3 @@
-// Home.js
 import React, { useState } from 'react';
 import Card from '../components/Card';
 import ServiceCard from '../components/ServiceCard';
@@ -11,11 +10,6 @@ const services = [
   { iconName: 'pulsa', title: 'Pulsa', category: 'pembelian' },
   { iconName: 'kuota', title: 'Paket Data', category: 'pembelian' },
   { iconName: 'listrik', title: 'PLN', category: 'pembelian' },
-  // { iconName: 'air', title: 'PDAM', category: 'pembayaran' },
-  // { iconName: 'game', title: 'TopUp Game', category: 'pembelian' },/
-  // { iconName: 'bpjs', title: 'BPJS', category: 'pembayaran' },
-  // { iconName: 'send', title: 'Kirim Uang', category: 'pembayaran' },
-  // { iconName: 'emoney', title: 'E-Money', category: 'pembelian' },
   { iconName: 'dana', title: 'TopUp Dana', category: 'dompet digital' },
   { iconName: 'linkaja', title: 'TopUp LinkAja!', category: 'dompet digital' },
   { iconName: 'ovo', title: 'TopUp OVO', category: 'dompet digital' },
@@ -39,23 +33,20 @@ const Home = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-white">
+    <div className="w-full min-h-screen p-0 bg-white">
       <Header />
-      <div className="mb-10"></div>
-      <UserInfo
-        username="Muhammad"
-        balance="10"
-        methods=""
-      />
+      <div className="my-4">
+        <UserInfo username="Muhammad" balance="10" methods="" />
+      </div>
       <Card>
         <PromoBanner />
         <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-4 cursor-pointer my-6">
           {services.map((service, index) => (
-            <ServiceCard 
-              key={index} 
-              iconName={service.iconName} 
-              title={service.title} 
-              onClick={service.iconName === 'lainnya' ? handleAllCategoriesClick : null} 
+            <ServiceCard
+              key={index}
+              iconName={service.iconName}
+              title={service.title}
+              onClick={service.iconName === 'lainnya' ? handleAllCategoriesClick : null}
             />
           ))}
         </div>
