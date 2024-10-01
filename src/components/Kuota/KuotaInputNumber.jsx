@@ -5,10 +5,10 @@ const KuotaInputNumber = ({ value, onChange, errorMessage }) => (
   <div className="mb-4">
     <label className="block text-sm font-medium text-gray-700">Nomor HP</label>
     <input
-      type="text"
+      type="number"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`w-full p-3 border rounded-lg ${errorMessage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-sky-500'} focus:outline-none focus:ring-1 shadow-sm`}
+      className={`w-full p-2 border rounded-lg ${errorMessage ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-sky-500'} focus:outline-none focus:ring-1 shadow-sm`}
       placeholder="Masukkan nomor HP"
     />
     {/* Tampilkan pesan error dengan ikon tanda seru merah */}

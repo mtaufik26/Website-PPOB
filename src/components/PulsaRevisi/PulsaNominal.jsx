@@ -13,9 +13,9 @@ const PulsaNominal = ({ availableDenominations, handleDenominationSelect, denomi
               handleDenominationSelect(denominationItem.harga, denominationItem.code)
             }
             className={classNames(
-              'p-2 rounded-lg flex items-center justify-center transition-all duration-200 text-lg font-semibold shadow',
+              'p-2 rounded-lg flex items-center justify-center transition-all duration-200 text-lg font-semibold',
               denomination?.harga === denominationItem.harga
-                ? 'bg-blue-100 border-blue-500 shadow-lg'
+                ? 'bg-blue-100 border-blue-500 transform scale-105 shadow-lg'
                 : 'bg-white border border-gray-200 hover:shadow-md'
             )}
             aria-pressed={denomination?.harga === denominationItem.harga}
