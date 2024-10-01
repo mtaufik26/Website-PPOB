@@ -1,45 +1,68 @@
 import React from 'react';
 
-const KuotaPaketItem = ({ nama, harga, diskon, hargaBaru, isSelected, onClick }) => {
-  return (
-    <div
-      onClick={onClick}
-      className={`p-4 border rounded-lg mb-2 cursor-pointer relative ${
-        isSelected ? 'bg-sky-100 border-sky-500' : 'bg-white'
-      }`}
-    >
-      {/* Label Promo di sudut kiri atas, dengan jarak dari nama paket */}
-      {diskon && diskon !== '0' && (
-        <div className="absolute top-0 left-0 bg-orange-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-br-lg">
-          Promo
-        </div>
-      )}
+const KuotaPaketItem = ({ nama, harga, diskon, kuota, masaBerlaku, productCode }) => {
+  const hargaNumber = parseInt(harga.replace(/\./g, ''), 10); // Menghapus titik dan mengubah harga jadi angka
+  const diskonPercentage = diskon ? parseInt(diskon, 10) : 0;
 
-      <div className="flex flex-col mt-1"> {/* Menambahkan margin-top untuk memberikan jarak */}
-        <h2 className="font-medium text-gray-800">{nama}</h2>
-        <div className="flex flex-col mt-2">
-          {/* Harga Asli dengan coretan jika ada diskon */}
-          {diskon && diskon !== '0' ? (
-            <>
-              <span className="text-sm text-gray-500 line-through">
-                Rp{parseInt(harga.replace(/\./g, ''), 10).toLocaleString()}
-              </span>
-              <div className="flex items-center">
-                {/* Harga setelah diskon */}
-                <span className="text-lg font-bold text-black mr-2">
-                  Rp{parseInt(hargaBaru, 10).toLocaleString()}
+  // Menghitung harga diskon jika ada diskon
+  const hargaDiskon = diskonPercentage > 0 ? Math.round(hargaNumber - (hargaNumber * diskonPercentage) / 100) : hargaNumber;
+
+  // Format harga ke IDR
+  const hargaFormatted = `Rp${hargaNumber.toLocaleString('id-ID')}`;
+  const hargaDiskonFormatted = `Rp${hargaDiskon.toLocaleString('id-ID')}`;
+
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-4 mb-4 flex justify-between items-start border">
+      {/* Bagian Kiri untuk Harga */}
+      <div className="flex flex-col justify-center items-center bg-slate-100 fill p-6 rounded-lg flex-shrink-0 w-32">
+        {diskonPercentage > 0 ? (
+          <>
+            <div className="flex items-center mb-1">
+              {/* Harga sebelum diskon */}
+              <div className="text-sm text-gray-400 line-through">{hargaFormatted}</div>
+              {/* Badge diskon */}
+              <div className="text-orange-600 bg-orange-100 px-1 py-1 ml-1 rounded-full text-xs font-bold flex items-center">
+                <span className="mr-1">
+                <svg className="h-4 w-4 text-orange-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  
+                  <path stroke="none" d="M0 0h24v24H0z"/>  
+                  <line x1="9" y1="15" x2="15" y2="9" />  
+                  <circle cx="9.5" cy="9.5" r=".5" fill="currentColor" />  
+                  <circle cx="14.5" cy="14.5" r=".5" fill="currentColor" />  
+                  <path d="M5 7.2a2.2 2.2 0 0 1 2.2 -2.2h1a2.2 2.2 0 0 0 1.55 -.64l.7 -.7a2.2 2.2 0 0 1 3.12 0l.7 .7a2.2 2.2 0 0 0 1.55 .64h1a2.2 2.2 0 0 1 2.2 2.2v1a2.2 2.2 0 0 0 .64 1.55l.7 .7a2.2 2.2 0 0 1 0 3.12l-.7 .7a2.2 2.2 0 0 0 -.64 1.55v1a2.2 2.2 0 0 1 -2.2 2.2h-1a2.2 2.2 0 0 0 -1.55 .64l-.7 .7a2.2 2.2 0 0 1 -3.12 0l-.7 -.7a2.2 2.2 0 0 0 -1.55 -.64h-1a2.2 2.2 0 0 1 -2.2 -2.2v-1a2.2 2.2 0 0 0 -.64 -1.55l-.7 -.7a2.2 2.2 0 0 1 0 -3.12l.7 -.7a2.2 2.2 0 0 0 .64 -1.55v-1" />
+                </svg>
                 </span>
-                {/* Persentase Diskon */}
-                <span className="text-xs font-bold text-red-500 bg-red-100 px-2 py-0.5 rounded-lg">
-                  {diskon}%
-                </span>
+                {diskonPercentage}%
               </div>
-            </>
-          ) : (
-            <span className="text-lg font-bold text-black">
-              Rp{parseInt(harga.replace(/\./g, ''), 10).toLocaleString()}
-            </span>
-          )}
+            </div>
+            {/* Harga setelah diskon */}
+            <div className="text-blue-500 text-xl font-bold">{hargaDiskonFormatted}</div>
+          </>
+        ) : (
+          <div className="text-blue-500 text-xl font-bold">{hargaFormatted}</div>
+        )}
+      </div>
+
+      {/* Bagian Kanan untuk Detail Paket */}
+      <div className="flex-grow ml-4 overflow-hidden">
+        <div className="flex justify-between items-center mb-2">
+          <div className="text-center">
+            <div className="text-lg text-gray-500">Kuota</div>
+            <div className="text-sm font-bold">{kuota}</div>
+          </div>
+
+          <div className="border-r border-gray-300 h-10 mx-4"></div>
+
+          <div className="text-center">
+            <div className="text-lg text-gray-500">Berlaku</div>
+            <div className="text-sm font-bold">{masaBerlaku}</div>
+          </div>
+        </div>
+
+        {/* Deskripsi Paket */}
+        <div className="flex items-center mt-2 text-sm text-gray-500">
+          <span className="truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+            {nama}
+          </span>
         </div>
       </div>
     </div>

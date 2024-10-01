@@ -18,9 +18,9 @@ const PLNNominal = ({ nominals, harga, setHarga, meteranId, setMeteranIdError })
               }
             }}
             className={classNames(
-              'p-2 rounded-lg flex items-center justify-center transition-all duration-200 text-lg font-semibold shadow',
+              'p-2 rounded-lg flex items-center justify-center transition-all duration-200 text-lg font-semibold',
               harga === nominal.value
-                ? 'bg-blue-100 border-blue-500 shadow-lg'
+                ? 'bg-blue-100 border-blue-500 transform scale-105 shadow-lg'
                 : 'bg-white border border-gray-200 hover:shadow-md'
             )}
             aria-pressed={harga === nominal.value} // Menggunakan harga

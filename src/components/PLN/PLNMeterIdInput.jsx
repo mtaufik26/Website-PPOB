@@ -19,8 +19,9 @@ const PLNMeterIdInput = ({
           type="number"
           value={meteranId}
           onChange={(e) => handleMeteranIdChange(e.target.value)}
-          className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-1 ${
-            meteranIdError ? 'focus:ring-red-500 border-red-500' : 'focus:ring-sky-500 border-gray-300'
+          className={`w-full  border rounded-lg focus:outline-none focus:ring-1 ${
+            meteranIdError ? 'focus:ring-red-500 border-red-500' 
+            : 'focus:ring-sky-500 border-gray-300'
           } shadow-sm`}
           aria-label="Meter/ID Input"
         />
