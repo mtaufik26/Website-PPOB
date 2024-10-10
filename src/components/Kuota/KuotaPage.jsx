@@ -109,11 +109,12 @@ const KuotaPage = () => {
           <InputNumber value={phoneNumber} onChange={handlePhoneNumberChange} errorMessage={errorMessage} />
           {selectedProvider && (
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Pilih Paket</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Pilih Paket</label>
               {packages.map((pkg, index) => {
                 const hargaBaru = pkg.diskon
                   ? (parseInt(pkg.harga.replace(/\./g, ''), 10) * (100 - pkg.diskon) / 100).toFixed(0)
                   : pkg.harga;
+                
                 return (
                   <KuotaPaketItem
                     key={index}
