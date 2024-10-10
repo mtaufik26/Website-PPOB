@@ -46,7 +46,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
           setChecked(true);
           setPurchaseDetails({
             phone,
-            amount: selectedOption?.amount || 0,
+            harga: selectedOption?.harga || 0,
             productCode: selectedOption?.productCode || '',
           });
         } else {
@@ -61,9 +61,9 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
     navigate('/payment-page', {
       state: {
         serviceType: 'ewallet',
-        total: selectedOption?.amount || 0,
+        total: selectedOption?.harga || 0,
         phone,
-        nominal: selectedOption?.amount || 0,
+        harga: selectedOption?.harga || 0,
         productCode: selectedOption?.productCode || '',
         walletName,
         productType: 'wallet',
@@ -136,7 +136,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
                 </p>
                 <p className="flex justify-between">
                   <span className="font-semibold">Nominal Top-up:</span>
-                  <span>Rp {purchaseDetails.amount?.toLocaleString('id-ID') || '0'}</span>
+                  <span>Rp {purchaseDetails.harga?.toLocaleString('id-ID') || '0'}</span>
                 </p>
               </div>
             </div>
@@ -146,17 +146,17 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
           <div className="grid grid-cols-2 gap-4">
             {options.map((option) => (
               <button
-                key={option.amount}
+                key={option.harga}
                 onClick={() => setSelectedOption(option)}
                 className={classNames(
                   'p-2 rounded-lg flex items-center justify-center transition-all text-lg font-semibold',
-                  selectedOption.amount === option.amount
+                  selectedOption.harga === option.harga
                     ? 'bg-blue-100 border-blue-500 transform scale-105 shadow-lg'
                     : 'bg-white border border-gray-200 hover:shadow-md'
                 )}
-                aria-pressed={selectedOption.amount === option.amount}
+                aria-pressed={selectedOption.harga === option.harga}
               >
-                <span>Rp {option.amount?.toLocaleString('id-ID') || '0'}</span>
+                <span>Rp {option.harga?.toLocaleString('id-ID') || '0'}</span>
               </button>
             ))}
           </div>
@@ -168,7 +168,7 @@ const DigitalWalletPage = ({ walletName, options = [] }) => {
           <div>
             <span className="text-gray-700 font-bold">Total Bayar</span>
             <p className="text-gray-700 font-bold">
-              {checked ? `Rp ${(selectedOption?.amount || 0).toLocaleString('id-ID')}` : 'Rp 0'}
+              {checked ? `Rp ${(selectedOption?.harga || 0).toLocaleString('id-ID')}` : 'Rp 0'}
             </p>
           </div>
           <button

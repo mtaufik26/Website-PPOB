@@ -9,9 +9,12 @@ const PaymentProcess = () => {
 
   const {
     selectedMethod,
-    amount,
+    harga,
     phone,
-    productCode,  
+    productCode,
+    walletName,
+    serviceType,
+    productType,
     titles = {},
     messages = {},
   } = location.state || {};
@@ -37,8 +40,8 @@ const PaymentProcess = () => {
     navigate('/');
   };
 
-  const formatAmount = (amount) => {
-    return amount && amount > 0 ? `Rp ${parseInt(amount, 10).toLocaleString()}` : 'Rp -';
+  const formatHarga = (harga) => {
+    return harga && harga > 0 ? `Rp ${parseInt(harga, 10).toLocaleString()}` : 'Rp -';
   };
 
   const renderContent = () => {
@@ -69,6 +72,7 @@ const PaymentProcess = () => {
             {messages.selesai.map((message, index) => (
               <p key={index} className="text-gray-600 mb-2 font-semibold">{message}</p>
             ))}
+              <p className="font-bold p-5 text-lg">Total Pembayaran: {formatHarga(harga)}</p>
             <button
               className="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold transition duration-300"
               onClick={handleClose}
