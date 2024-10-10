@@ -8,11 +8,14 @@ const ConfirmationTopUp = () => {
   const {
     selectedMethod = '',
     phone = '',
-    nominal = 0,
-    productCode = '',  // Menambahkan productCode
+    harga = 0,
+    productCode = '',
+    walletName = '',
+    serviceType = '',
+    productType = '',
   } = location.state || {};
 
-  const totalAmount = nominal;  // Hapus adminFee dari perhitungan
+  const total = harga;
 
   const handleBack = () => {
     navigate(-1);
@@ -22,26 +25,28 @@ const ConfirmationTopUp = () => {
     navigate('/process-topup', {
       state: {
         selectedMethod,
-        amount: totalAmount,
+        harga: total,
         phone,
-        productCode,  // Pastikan productCode diteruskan
+        productCode,
+        walletName,
+        serviceType,
+        productType,
         titles: {
           verifikasi: 'Memverifikasi Pembayaran',
           proses: 'Proses Pembayaran',
-          selesai: 'Pembayaran Selesai'
+          selesai: 'Pembayaran Selesai',
         },
         messages: {
           verifikasi: ['Mohon tunggu sebentar, sedang memverifikasi pembayaran Anda.'],
           proses: 'Pembayaran sedang diproses.',
-          selesai: ['Pembayaran berhasil!', 'Terima kasih atas pembayaran Anda.']
-        }
+          selesai: ['Pembayaran berhasil!', 'Terima kasih atas pembayaran Anda.'],
+        },
       },
     });
   };
-  
 
   return (
-    <Card className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
+    <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
       <header className="p-2 border-b flex items-center mb-8">
         <button className="mr-4" onClick={handleBack} aria-label="Go back">
           <svg
@@ -59,13 +64,14 @@ const ConfirmationTopUp = () => {
       <main className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Konfirmasi Pembelian</h2>
         <div className="space-y-3">
-          <InfoItem term="Nominal" description={`Rp ${nominal.toLocaleString('id-ID')}`} />
+          <InfoItem term="Layanan" description={`${serviceType} - ${walletName}`} />
+          <InfoItem term="Nominal" description={`Rp ${harga.toLocaleString('id-ID')}`} />
           <InfoItem term="No. Telepon" description={phone} />
           <InfoItem term="Metode pembayaran" description={selectedMethod.toUpperCase()} />
         </div>
         <div className="flex items-center justify-between border-t border-gray-300 pt-4 mt-4">
           <span className="text-lg font-semibold text-gray-900">Total Harga</span>
-          <span className="text-xl font-bold text-red-600">Rp {totalAmount.toLocaleString('id-ID')}</span>
+          <span className="text-xl font-bold text-red-600">Rp {harga.toLocaleString('id-ID')}</span>
         </div>
       </main>
       <button
@@ -82,7 +88,7 @@ const ConfirmationTopUp = () => {
       >
         Kembali
       </button>
-    </Card>
+    </div>
   );
 };
 

@@ -62,7 +62,7 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { total = 50000 } = location.state || {}; // Replace with real state data
+  const { serviceType, total = 50000, phone, harga, productCode, walletName, productType } = location.state || {};
 
   useEffect(() => {
     if (!total) {
@@ -76,12 +76,22 @@ const PaymentPage = () => {
   };
 
   const handleContinue = () => {
-    if (selectedMethod) {
-      setError('');
-      navigate('/confirmation', { state: { selectedMethod, total } });
-    } else {
-      setError('Silakan pilih metode pembayaran.');
+    if (!selectedMethod) {
+      setError('Silakan pilih metode pembayaran');
+      return;
     }
+
+    navigate('/confirmation', {
+      state: {
+        selectedMethod,
+        phone,
+        harga,
+        productCode,
+        walletName,
+        serviceType,
+        productType,
+      },
+    });
   };
 
   const toggleShowMoreMethods = () => {
@@ -109,7 +119,7 @@ const PaymentPage = () => {
       </div>
 
       {/* Payment Methods */}
-      <div className="px-4 pt-4">
+      <div className="px-4 pt-4 flex-grow overflow-auto">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Pilih Metode Pembayaran</h2>
 
         {error && (
@@ -151,6 +161,14 @@ const PaymentPage = () => {
           >
             Lihat Semua
           </button>
+        </div>
+
+        <div className="mt-4 border-t-8 pt-4">
+          <h3 className="text-gray-800 font-semibold">Ringkasan Pembayaran</h3>
+          <div className="flex justify-between items-center">
+            <p className="text-sm text-gray-600">Total Belanja</p>
+            <p className="text-base text-gray-800">Rp{total.toLocaleString()}</p>
+          </div>
         </div>
 
         {/* More Payment Methods (Modal Style) */}
@@ -197,16 +215,9 @@ const PaymentPage = () => {
           </div>
         )}
       </div>
+      
 
       {/* Payment Summary and Continue Button */}
-      <div className="mt-4 border-t-8 pt-4">
-        <h3 className="text-gray-800 font-semibold">Ringkasan Pembayaran</h3>
-        <div className="flex justify-between items-center">
-          <p className="text-sm text-gray-600">Total Belanja</p>
-          <p className="text-base text-gray-800">Rp{total.toLocaleString()}</p>
-        </div>
-      </div>
-
       <div className="sticky bottom-0 bg-white shadow-md p-3 border-t">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
@@ -229,4 +240,3 @@ const PaymentPage = () => {
 };
 
 export default PaymentPage;
-  
