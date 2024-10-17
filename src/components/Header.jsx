@@ -2,8 +2,8 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header className="relative bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-lg">
-      <nav className="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header className="relative bg-gradient-to-r from-sky-600 via-blue-500 to-blue-700 text-white shadow-lg">
+      <nav className="relative z-10 max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo Section */}
         <a
           href="/"
@@ -20,33 +20,11 @@ const Header = () => {
           <span className="text-2xl font-semibold tracking-wide">PPOB App</span>
         </a>
 
-        {/* Navigation Section */}
-        {/* <div className="space-x-4">
-          <a
-            href="/about"
-            className="text-white font-medium transition-colors duration-300 hover:text-gray-200"
-          >
-            About Us
-          </a>
-          <a
-            href="/services"
-            className="text-white font-medium transition-colors duration-300 hover:text-gray-200"
-          >
-            Services
-          </a>
-          <a
-            href="/contact"
-            className="text-white font-medium transition-colors duration-300 hover:text-gray-200"
-          >
-            Contact
-          </a>
-        </div> */}
-
         {/* Login Button */}
         <div>
           <a
             href="/login"
-            className="px-5 py-2 font-medium border border-white rounded-full shadow-md transition-all duration-300 ease-in-out hover:bg-white hover:text-sky-600 focus:outline-none focus:ring-2 focus:ring-white"
+            className="px-5 py-2 -mr-3 font-medium border border-white rounded-full shadow-md transition-colors duration-200 ease-in-out hover:bg-white hover:text-sky-600 focus:outline-none focus:ring-2 focus:ring-white"
             aria-label="Login or Masuk"
           >
             Login
@@ -54,18 +32,29 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* SVG Wave */}
-      <div className="absolute bottom-0 w-full overflow-hidden leading-none">
+      {/* SVG Wave with white gradient at the bottom */}
+      <div className="absolute bottom-0 w-full overflow-hidden leading-none z-0">
         <svg
-          className="relative block w-full h-12"
+          className="relative block w-full h-16"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
         >
+          <defs>
+            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 0.9 }} />
+              <stop offset="100%" style={{ stopColor: '#f0f8ff', stopOpacity: 0.9 }} />
+            </linearGradient>
+            <linearGradient id="bottomGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'rgba(255,255,255,0)', stopOpacity: 0 }} />
+              <stop offset="100%" style={{ stopColor: '#ffffff', stopOpacity: 0.9 }} />
+            </linearGradient>
+          </defs>
           <path
-            fill="#ffffff"
-            d="M0,224L60,213.3C120,203,240,181,360,192C480,203,600,245,720,234.7C840,224,960,160,1080,160C1200,160,1320,224,1380,256L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+            fill="url(#waveGradient)"
+            d="M0,160L40,186.7C80,213,160,267,240,272C320,277,400,235,480,202.7C560,171,640,149,720,149.3C800,149,880,171,960,176C1040,181,1120,171,1200,181.3C1280,192,1360,224,1400,240L1440,256L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
           />
+          <rect x="0" y="0" width="1440" height="320" fill="url(#bottomGradient)" />
         </svg>
       </div>
     </header>

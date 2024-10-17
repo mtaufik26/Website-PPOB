@@ -7,7 +7,7 @@ import InputNumber from './KuotaInputNumber';
 
 const KuotaPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); 
 
   const [selectedProvider, setSelectedProvider] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(location.state?.phoneNumber || '');

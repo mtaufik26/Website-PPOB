@@ -15,14 +15,16 @@ const images = [
 const PromoBanner = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isPaused, setIsPaused] = useState(false); // State untuk pause
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+    if (!isPaused) {
+      const intervalId = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      }, 3000);
+      return () => clearInterval(intervalId);
+    }
+  }, [currentImageIndex, isPaused]);
 
   const goToPrevious = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
@@ -35,8 +37,14 @@ const PromoBanner = () => {
   return (
     <div
       className="relative p-4 rounded-lg overflow-hidden max-w-xl mx-auto"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        setIsPaused(true); // Pause saat di-hover
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsPaused(false); // Lanjutkan scrolling otomatis saat tidak di-hover
+      }}
     >
       <div 
         className="flex transition-transform duration-500 ease-out" 
